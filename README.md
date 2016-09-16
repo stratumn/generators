@@ -1,2 +1,2 @@
-# generators
-A repository of generators which can be generated using `strat generate`
+# Generators
+A repository of generators which can generate projects using `strat generate`.
