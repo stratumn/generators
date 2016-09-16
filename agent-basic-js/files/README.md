@@ -17,7 +17,10 @@ $ strat serve
 
 The agent is bound to port :3000. It will automatically restart when a file is changed.
 
+{{- if eq (input "developmentStore") "stratumn/filestore"}}
+
 The segments will be saved to the `./segments` folder. Note that the file storage adapter is very slow and is suited only for development.
+{{- end}}
 
 A web user interface is also available on port :4000.
 

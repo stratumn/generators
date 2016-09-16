@@ -78,7 +78,6 @@
     }
   },
   "priorities": [
-    "README.md",
     "package.json",
     "LICENSE",
     "docker-compose.yml"
