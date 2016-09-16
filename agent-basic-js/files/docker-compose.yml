@@ -1,0 +1,45 @@
+{{- with $store := (input "developmentStore") -}}
+{{- with $fossilizer := (input "developmentFossilizer") -}}
+version: '2'
+services:
+  ui:
+    image: stratumn/agent-ui
+    ports:
+    - "4000:4000"
+    depends_on:
+    - agent
+  agent:
+    build: .
+    ports:
+    - "3000:3000"
+    volumes:
+    - .:/src/server
+    depends_on:
+    - store
+    - fossilizer
+  store:
+    image: {{$store}}
+{{- if eq $store "stratumn/filestore" }}
+    volumes:
+    - ./segments:/var/filestore
+{{- end}}
+{{- if eq $store "stratumn/postgresstore" }}
+  postgres:
+    image: postgres
+    ports:
+    - "5432:5432"
+    volumes:
+    - postgres:/var/lib/postgresql/data
+{{- end}}
+  fossilizer:
+    image: {{$fossilizer}}
+{{- if eq $store "stratumn/postgresstore" }}
+    command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
+{{- end}}
+{{- if eq $store "stratumn/postgresstore" }}
+volumes:
+  postgres:
+    driver: local
+{{- end}}
+{{- end}}
+{{- end}}
