@@ -5,7 +5,6 @@
 ## Requirements
 
 - [Docker >= 1.12 + Docker Compose](https://www.docker.com/products/docker)
-- [NodeJS >= 4 (optional, for faster tests)](https://nodejs.org)
 
 ## Launch dev server
 
