@@ -33,7 +33,7 @@ services:
 {{- end}}
   fossilizer:
     image: {{$fossilizer}}
-{{- if eq $store "stratumn/postgresstore" }}
+{{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
 {{- end}}
 {{- if eq $store "stratumn/postgresstore" }}
