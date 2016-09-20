@@ -41,7 +41,7 @@ services:
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
-    image: rethink
+    image: rethinkdb
     ports:
     - "28015:28015"
     volumes:
