@@ -24,6 +24,14 @@ services:
     - ./segments:/var/filestore
 {{- end}}
 {{- if eq $store "stratumn/postgresstore" }}
+    depends_on:
+    - postgres
+{{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+    depends_on:
+    - rethinkdb
+{{- end}}
+{{- if eq $store "stratumn/postgresstore" }}
   postgres:
     image: postgres
     ports:
@@ -31,14 +39,26 @@ services:
     volumes:
     - postgres:/var/lib/postgresql/data
 {{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+  rethinkdb:
+    image: rethink
+    ports:
+    - "28015:28015"
+    volumes:
+    - rethinkdb:/data
+{{- end}}
   fossilizer:
     image: {{$fossilizer}}
 {{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
 {{- end}}
-{{- if eq $store "stratumn/postgresstore" }}
 volumes:
+{{- if eq $store "stratumn/postgresstore" }}
   postgres:
+    driver: local
+{{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+  rethinkdb:
     driver: local
 {{- end}}
 {{- end}}

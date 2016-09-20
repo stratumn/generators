@@ -51,6 +51,10 @@
         "input": "3",
         "value": "stratumn/postgresstore",
         "text": "Stratumn PostgreSQL Store (license required)"
+      }, {
+        "input": "4",
+        "value": "stratumn/rethinkstore",
+        "text": "Stratumn RethinkDB Store (license required)"
       }]
     },
     "developmentFossilizer": {
