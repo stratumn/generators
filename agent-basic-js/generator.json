@@ -64,7 +64,7 @@
       "options": [{
         "input": "1",
         "value": "stratumn/dummyfossilizer",
-        "text": "Stratumn Dummy Fossilize"
+        "text": "Stratumn Dummy Fossilizer"
       }, {
         "input": "2",
         "value": "stratumn/dummybatchfossilizer",
