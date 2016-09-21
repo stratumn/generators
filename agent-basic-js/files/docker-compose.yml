@@ -52,12 +52,13 @@ services:
 {{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
 {{- end}}
-volumes:
 {{- if eq $store "stratumn/postgresstore" }}
+volumes:
   postgres:
     driver: local
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
+volumes:
   rethinkdb:
     driver: local
 {{- end}}

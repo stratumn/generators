@@ -1,0 +1,5 @@
+segments
+node_modules
+Dockerfile
+Dockerfile.test
+stratumn.json

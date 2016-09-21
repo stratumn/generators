@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "docker-compose up",
+    "test": "docker-compose run agent npm test"
+  }
+}
