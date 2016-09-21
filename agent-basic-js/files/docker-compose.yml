@@ -4,14 +4,10 @@ version: '2'
 services:
   ui:
     image: stratumn/agent-ui
-    ports:
-    - "4000:4000"
     depends_on:
     - agent
   agent:
     build: .
-    ports:
-    - "3000:3000"
     volumes:
     - .:/src/server
     depends_on:
@@ -19,10 +15,6 @@ services:
     - fossilizer
   store:
     image: {{$store}}
-{{- if eq $store "stratumn/filestore" }}
-    volumes:
-    - ./segments:/var/filestore
-{{- end}}
 {{- if eq $store "stratumn/postgresstore" }}
     depends_on:
     - postgres
@@ -34,33 +26,15 @@ services:
 {{- if eq $store "stratumn/postgresstore" }}
   postgres:
     image: postgres
-    ports:
-    - "5432:5432"
-    volumes:
-    - postgres:/var/lib/postgresql/data
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
     image: rethinkdb
-    ports:
-    - "28015:28015"
-    volumes:
-    - rethinkdb:/data
 {{- end}}
   fossilizer:
     image: {{$fossilizer}}
 {{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
-{{- end}}
-{{- if eq $store "stratumn/postgresstore" }}
-volumes:
-  postgres:
-    driver: local
-{{- end}}
-{{- if eq $store "stratumn/rethinkstore" }}
-volumes:
-  rethinkdb:
-    driver: local
 {{- end}}
 {{- end}}
 {{- end}}

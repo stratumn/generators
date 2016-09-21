@@ -1,6 +1,10 @@
 {
+  "name": "{{input `name`}}",
+  "author": "{{input `author`}}",
+  "description": "{{input `description`}}",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "start": "docker-compose up",
-    "test": "docker-compose run --rm agent npm test"
+    "up": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml up",
+    "test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml run agent npm test"
   }
 }

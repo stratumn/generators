@@ -1,0 +1,40 @@
+{{- with $store := (input "developmentStore") -}}
+version: '2'
+services:
+  ui:
+    ports:
+    - "4000:4000"
+  agent:
+    ports:
+    - "3000:3000"
+  store:
+{{- if eq $store "stratumn/filestore" }}
+    volumes:
+    - ./segments:/var/filestore
+{{- end}}
+{{- if eq $store "stratumn/postgresstore" }}
+  postgres:
+    volumes:
+    - postgres:/var/lib/postgresql/data
+{{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+  rethinkdb:
+    volumes:
+    - rethinkdb:/data
+{{- end}}
+{{- if eq $store "stratumn/postgresstore" }}
+volumes:
+  postgres:
+    driver: local
+{{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+volumes:
+  rethinkdb:
+    driver: local
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+        name: {{input "name"}}_dev
+{{- end}}
+{{- end}}
