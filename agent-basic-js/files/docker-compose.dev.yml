@@ -31,10 +31,10 @@ volumes:
 volumes:
   rethinkdb:
     driver: local
+{{- end}}
 networks:
   default:
     driver: bridge
     driver_opts:
         name: {{input "name"}}_dev
-{{- end}}
 {{- end}}
