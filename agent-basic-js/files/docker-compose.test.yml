@@ -1,4 +1,7 @@
 version: '2'
+env_file:
+-./config/test.env
+-./config/test.secret.env
 networks:
   default:
     driver: bridge

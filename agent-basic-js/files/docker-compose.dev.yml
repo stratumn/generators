@@ -1,10 +1,18 @@
 {{- with $store := (input "developmentStore") -}}
 version: '2'
+env_file:
+-./config/dev.env
+-./config/dev.secret.env
 services:
   ui:
+    image: stratumn/agent-ui
     ports:
     - "4000:4000"
+    depends_on:
+    - agent
   agent:
+    environment:
+      STRATUMN_SALT: ${STRATUMN_SALT}
     ports:
     - "3000:3000"
   store:

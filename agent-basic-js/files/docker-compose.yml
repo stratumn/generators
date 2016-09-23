@@ -1,11 +1,9 @@
 {{- with $store := (input "developmentStore") -}}
 {{- with $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
+env_file:
+-./config/common.env
 services:
-  ui:
-    image: stratumn/agent-ui
-    depends_on:
-    - agent
   agent:
     build: .
     volumes:
