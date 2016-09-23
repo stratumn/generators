@@ -1,11 +1,11 @@
 {{- with $store := (input "developmentStore") -}}
 {{- with $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
-env_file:
--./config/common.env
 services:
   agent:
     build: .
+    env_file:
+    - ./config/common.env
     volumes:
     - .:/src/server
     depends_on:
@@ -13,6 +13,8 @@ services:
     - fossilizer
   store:
     image: {{$store}}
+    env_file:
+    - ./config/common.env
 {{- if eq $store "stratumn/postgresstore" }}
     depends_on:
     - postgres
@@ -23,13 +25,19 @@ services:
 {{- end}}
 {{- if eq $store "stratumn/postgresstore" }}
   postgres:
+    env_file:
+    - ./config/common.env
     image: postgres
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
+    env_file:
+    - ./config/common.env
     image: rethinkdb
 {{- end}}
   fossilizer:
+    env_file:
+    - ./config/common.env
     image: {{$fossilizer}}
 {{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}

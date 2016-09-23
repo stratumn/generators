@@ -1,9 +1,33 @@
+{{- with $store := (input "developmentStore") -}}
 version: '2'
-env_file:
--./config/test.env
--./config/test.secret.env
+services:
+  agent:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+  store:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- if eq $store "stratumn/postgresstore" }}
+  postgres:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- end}}
+{{- if eq $store "stratumn/rethinkstore" }}
+  rethinkdb:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- end}}
+  fossilizer:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
 networks:
   default:
     driver: bridge
     driver_opts:
         name: {{input "name"}}_test
+{{- end}}
