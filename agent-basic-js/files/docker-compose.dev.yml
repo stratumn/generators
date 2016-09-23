@@ -5,6 +5,7 @@ services:
     image: stratumn/agent-ui
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
     - ./config/dev.env
     - ./config/dev.secret.env
     ports:

@@ -6,6 +6,7 @@ services:
     build: .
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
     volumes:
     - .:/src/server
     depends_on:
@@ -15,6 +16,7 @@ services:
     image: {{$store}}
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
 {{- if eq $store "stratumn/postgresstore" }}
     depends_on:
     - postgres
@@ -27,17 +29,20 @@ services:
   postgres:
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
     image: postgres
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
     image: rethinkdb
 {{- end}}
   fossilizer:
     env_file:
     - ./config/common.env
+    - ./config/common.secret.env
     image: {{$fossilizer}}
 {{- if eq $fossilizer "stratumn/btcfossilizer" }}
     command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
