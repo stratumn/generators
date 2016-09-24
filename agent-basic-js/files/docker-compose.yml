@@ -3,7 +3,9 @@
 version: '2'
 services:
   agent:
-    build: .
+    build:
+      context: .
+    image: {{input "company"}}/{{input "name"}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
