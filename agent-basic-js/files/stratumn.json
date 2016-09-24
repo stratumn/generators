@@ -7,7 +7,9 @@
 {{- if eq (input `useGit`) `y` }}
     "init": "git init && git add . && git commit -am \"Generated {{input `name`}} from {{.generator}}\"",
 {{- end}}
+    "build": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml build",
     "up": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml up",
-    "test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml run agent npm test"
+    "test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml run agent npm test && docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml down",
+    "test:windows": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml run agent npm test & docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml down"
   }
 }
