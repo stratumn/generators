@@ -2,6 +2,7 @@
 version: '2'
 services:
   agent:
+    dockerfile: Dockerfile.test
     env_file:
     - ./config/test.env
     - ./config/test.secret.env

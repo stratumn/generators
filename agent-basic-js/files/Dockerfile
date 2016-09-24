@@ -1,3 +1,0 @@
-FROM stratumn/agent-js-development-alpine
-# Change to this if you are having trouble.
-# FROM stratumn/agent-js-development

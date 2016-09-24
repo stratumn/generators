@@ -13,6 +13,7 @@ services:
     depends_on:
     - agent
   agent:
+    dockerfile: Dockerfile.dev
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env

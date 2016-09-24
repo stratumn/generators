@@ -1,0 +1,1 @@
+FROM stratumn/agent-js-development-alpine
