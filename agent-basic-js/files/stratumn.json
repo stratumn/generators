@@ -4,7 +4,7 @@
   "description": "{{input `description`}}",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-{{- if eq input `useGit` `y` }}
+{{- if eq (input `useGit`) `y` }}
     "init": "git init . && git add . && git commit -am \"Generated {{.generator}}\"",
 {{- end}}
     "up": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml up",
