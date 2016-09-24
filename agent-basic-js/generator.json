@@ -85,7 +85,7 @@
     },
     "useGit": {
       "type": "select:string",
-      "prompt": "Initialize a GIT repository (require GIT)",
+      "prompt": "Initialize a Git repository (requires Git)",
       "default": "n",
       "options": [{
         "input": "y",
