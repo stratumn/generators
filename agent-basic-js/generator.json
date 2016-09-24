@@ -4,6 +4,9 @@
   "description": "A basic Javascript agent",
   "author": "Stratumn",
   "license": "Apache-2.0",
+  "variables": {
+    "generator": "agent-basic-js"
+  },
   "inputs": {
     "name": {
       "type": "string",
@@ -79,6 +82,20 @@
       "type": "string",
       "prompt": "Bitcoin Wallet Import Format key:",
       "format": ".+"
+    },
+    "useGit": {
+      "type": "select:string",
+      "prompt": "Initialize a GIT repository (require GIT)",
+      "default": "n",
+      "options": [{
+        "input": "y",
+        "value": "y",
+        "text": "Yes"
+      }, {
+        "input": "n",
+        "value": "n",
+        "text": "No"
+      }]
     }
   },
   "priorities": [
