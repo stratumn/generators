@@ -80,7 +80,12 @@
     },
     "developmentFossilizerWIF": {
       "type": "string",
-      "prompt": "Bitcoin Wallet Import Format key:",
+      "prompt": "Bitcoin Wallet Import Format key for development:",
+      "format": ".+"
+    },
+    "testFossilizerWIF": {
+      "type": "string",
+      "prompt": "Bitcoin Wallet Import Format key for tests:",
       "format": ".+"
     },
     "useGit": {

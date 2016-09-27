@@ -45,8 +45,5 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{$fossilizer}}
-{{- if eq $fossilizer "stratumn/btcfossilizer" }}
-    command: btcfossilizer -wif {{input "developmentFossilizerWIF"}}
-{{- end}}
 {{- end}}
 {{- end}}
