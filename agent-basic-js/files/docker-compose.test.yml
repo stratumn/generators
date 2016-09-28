@@ -7,7 +7,6 @@ services:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-    tty: true
   store:
     env_file:
     - ./config/test.env
@@ -18,14 +17,12 @@ services:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-    tty: true
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-    tty: true
 {{- end}}
   fossilizer:
     env_file:
