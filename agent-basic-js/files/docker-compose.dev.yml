@@ -24,7 +24,6 @@ services:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-    tty: true
 {{- if eq $store "stratumn/filestore" }}
     volumes:
     - ./segments:/var/filestore
@@ -49,7 +48,6 @@ services:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-    tty: true
 {{- if eq $store "stratumn/postgresstore" }}
 volumes:
   postgres:
