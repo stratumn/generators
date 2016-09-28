@@ -14,6 +14,8 @@
     "up": "strat run build && strat run compose up",
     "down": "strat run compose down",
     "down:test": "strat run compose:test down",
-    "test": "strat run build:test && strat run compose:test run agent npm test"
+    "test": "strat run build:test && strat run compose:test run agent npm test",
+    "pull": "strat run compose pull",
+    "push": "strat run compose push"
   }
 }
