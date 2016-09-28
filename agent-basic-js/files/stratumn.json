@@ -13,7 +13,7 @@
     "build:test": "strat run compose:test build",
     "up": "strat run build && strat run compose up",
     "down": "strat run compose down",
-    "down:test": "strat run compose:dev down",
+    "down:test": "strat run compose:test down",
     "test": "strat run build:test && strat run compose:test run agent npm test"
   }
 }
