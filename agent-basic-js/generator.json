@@ -41,7 +41,7 @@
     "developmentStore": {
       "type": "select:string",
       "prompt": "Development store:",
-      "default": "stratumn/filestore",
+      "default": "stratumn/filestore:v0.0.1-dev",
       "options": [{
         "input": "1",
         "value": "stratumn/filestore:0.0.1-dev",
