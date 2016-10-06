@@ -5,7 +5,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
 {{- if eq (input `useGit`) `y` }}
-    "init": "git init && git add . && git commit -am \"Generated {{input `name`}} from {{.generator}}\"",
+    "init": "git init && git add .",
 {{- end}}
     "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "compose:test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml",

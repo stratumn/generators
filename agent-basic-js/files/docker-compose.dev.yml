@@ -26,38 +26,24 @@ services:
     - ./config/dev.secret.env
 {{- if eq $store "stratumn/filestore" }}
     volumes:
-    - ./segments:/var/filestore
+    - ./segments:/var/stratumn/filestore
 {{- end}}
 {{- if eq $store "stratumn/postgresstore" }}
   postgres:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-    volumes:
-    - postgres:/var/lib/postgresql/data
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-    volumes:
-    - rethinkdb:/data
 {{- end}}
   fossilizer:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-{{- if eq $store "stratumn/postgresstore" }}
-volumes:
-  postgres:
-    driver: local
-{{- end}}
-{{- if eq $store "stratumn/rethinkstore" }}
-volumes:
-  rethinkdb:
-    driver: local
-{{- end}}
 networks:
   default:
     driver: bridge
