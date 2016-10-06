@@ -31,14 +31,14 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: postgres
+    image: postgres:9.6.0
 {{- end}}
 {{- if eq $store "stratumn/rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: rethinkdb
+    image: rethinkdb:2.0.4
 {{- end}}
   fossilizer:
     env_file:

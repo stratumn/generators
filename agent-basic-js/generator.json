@@ -44,38 +44,38 @@
       "default": "stratumn/filestore",
       "options": [{
         "input": "1",
-        "value": "stratumn/filestore",
-        "text": "Stratumn File Store"
+        "value": "stratumn/filestore:0.0.1-dev",
+        "text": "Stratumn File Store v0.0.1-dev"
       }, {
         "input": "2",
-        "value": "stratumn/dummystore",
-        "text": "Stratumn Dummy Store (in memory)"
+        "value": "stratumn/dummystore:0.0.1-dev",
+        "text": "Stratumn Dummy Store v0.0.1-dev (in memory)"
       }, {
         "input": "3",
-        "value": "stratumn/postgresstore",
-        "text": "Stratumn PostgreSQL Store (license required)"
+        "value": "stratumn/postgresstore:0.0.1-dev",
+        "text": "Stratumn PostgreSQL Store v0.0.1-dev (license required)"
       }, {
         "input": "4",
-        "value": "stratumn/rethinkstore",
-        "text": "Stratumn RethinkDB Store (license required)"
+        "value": "stratumn/rethinkstore:0.0.1-dev",
+        "text": "Stratumn RethinkDB Store v0.0.1-dev (license required)"
       }]
     },
     "developmentFossilizer": {
       "type": "select:string",
       "prompt": "Development fossilizer:",
-      "default": "stratumn/dummyfossilizer",
+      "default": "stratumn/dummyfossilizer:0.0.1-dev",
       "options": [{
         "input": "1",
-        "value": "stratumn/dummyfossilizer",
-        "text": "Stratumn Dummy Fossilizer"
+        "value": "stratumn/dummyfossilizer:0.0.1-dev",
+        "text": "Stratumn Dummy Fossilizer v0.0.1-dev"
       }, {
         "input": "2",
-        "value": "stratumn/dummybatchfossilizer",
-        "text": "Stratumn Dummy Batch Fossilizer"
+        "value": "stratumn/dummybatchfossilizer:0.0.1-dev",
+        "text": "Stratumn Dummy Batch Fossilizer v0.0.1-dev"
       }, {
         "input": "3",
         "value": "stratumn/btcfossilizer",
-        "text": "Stratumn Bitcoin Fossilizer (license required)"
+        "text": "Stratumn Bitcoin Fossilizer v0.0.1-dev (license required)"
       }]
     },
     "developmentFossilizerWIF": {

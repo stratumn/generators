@@ -2,7 +2,7 @@
 version: '2'
 services:
   ui:
-    image: stratumn/agent-ui
+    image: stratumn/agent-ui:0.2.0
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
