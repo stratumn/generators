@@ -23,7 +23,7 @@
     "author": {
       "type": "string",
       "prompt": "Your name:",
-      "default": "{{.author}}",
+      "default": "{{.fullName}}",
       "format": ".+"
     },
     "company": {

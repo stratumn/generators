@@ -4,20 +4,26 @@
   "description": "A Stratumn configuration",
   "author": "Stratumn",
   "license": "Apache-2.0",
+  "variables": {
+    "dir": "{{.dir}}"
+  },
   "inputs": {
     "fullName": {
       "type": "string",
       "prompt": "Your full name:",
+      "default": "{{.fullName}}",
       "format": ".+"
     },
     "email": {
       "type": "string",
       "prompt": "Email:",
+      "default": "{{.email}}",
       "format": ".+"
     },
     "company": {
       "type": "string",
       "prompt": "Company:",
+      "default": "{{.company}}",
       "format": ".+"
     },
     "sendUsageInfo": {
@@ -50,7 +56,7 @@
     }
   },
   "priorities": [
-    "config.json",
-    "variables.json"
+    "variables.json",
+    "config.json"
   ]
 }
