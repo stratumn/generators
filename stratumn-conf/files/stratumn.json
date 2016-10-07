@@ -1,3 +1,0 @@
-{
-  "init": "echo Your configuration was saved to `{{.dir}}`. && echo You can specify which configuration directory to use by setting a STRATUMN_CONF environment variable. && echo By default it uses the `.stratumn` directory in your home path."
-}
