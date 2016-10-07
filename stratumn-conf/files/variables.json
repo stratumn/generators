@@ -1,0 +1,4 @@
+{
+  "author": "{{input `author`}}",
+  "company": "{{input `company`}}"
+}

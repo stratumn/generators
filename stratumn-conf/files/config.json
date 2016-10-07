@@ -1,0 +1,12 @@
+{
+{{if eq (input "sendUsageInfo") "y" -}}
+  "sendUsageInfo": true,
+{{- else}}
+  "sendUsageInfo": false,
+{{- end}}
+{{if eq (input "sendCrashReports") "y" -}}
+  "sendCrashReports": true
+{{- else}}
+  "sendCrashReports": false
+{{- end}}
+}
