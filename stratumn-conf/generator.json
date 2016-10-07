@@ -17,7 +17,7 @@
       "default": "{{.company}}",
       "format": ".+"
     },
-    "useGit": {
+    "sendUsageInfo": {
       "type": "select:string",
       "prompt": "Send usage information to help us improve our products:",
       "default": "y",
@@ -31,7 +31,7 @@
         "text": "No"
       }]
     },
-    "useGit": {
+    "sendCrashReports": {
       "type": "select:string",
       "prompt": "Send crash reports to help us fix bugs:",
       "default": "y",
