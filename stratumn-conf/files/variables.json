@@ -1,4 +1,5 @@
 {
-  "author": "{{input `author`}}",
+  "author": "{{input `fullName`}}",
+  "email": "{{input `email`}}",
   "company": "{{input `company`}}"
 }

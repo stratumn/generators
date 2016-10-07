@@ -1,12 +1,7 @@
 {
-{{if eq (input "sendUsageInfo") "y" -}}
-  "sendUsageInfo": true,
-{{- else}}
-  "sendUsageInfo": false,
-{{- end}}
-{{if eq (input "sendCrashReports") "y" -}}
-  "sendCrashReports": true
-{{- else}}
-  "sendCrashReports": false
-{{- end}}
+  "fullName": "{{input `fullName`}}",
+  "company": "{{input `company`}}",
+  "email": "{{input `email`}}",
+  "sendUsageInfo": {{if eq (input "sendUsageInfo") "y"}}true{{else}}false{{end}},
+  "sendCrashReports": {{if eq (input "sendCrashReports") "y"}}true{{else}}false{{end}}
 }

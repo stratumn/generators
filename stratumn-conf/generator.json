@@ -5,16 +5,19 @@
   "author": "Stratumn",
   "license": "Apache-2.0",
   "inputs": {
-    "author": {
+    "fullName": {
       "type": "string",
-      "prompt": "Your name:",
-      "default": "{{.author}}",
+      "prompt": "Your full name:",
+      "format": ".+"
+    },
+    "email": {
+      "type": "string",
+      "prompt": "Email:",
       "format": ".+"
     },
     "company": {
       "type": "string",
       "prompt": "Company:",
-      "default": "{{.company}}",
       "format": ".+"
     },
     "sendUsageInfo": {
