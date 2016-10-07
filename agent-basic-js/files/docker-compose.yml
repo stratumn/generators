@@ -18,22 +18,22 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-{{- if eq $store "stratumn/postgresstore" }}
+{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
     depends_on:
     - postgres
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore" }}
+{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
     depends_on:
     - rethinkdb
 {{- end}}
-{{- if eq $store "stratumn/postgresstore" }}
+{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
   postgres:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
     image: postgres:9.6.0
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore" }}
+{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
   rethinkdb:
     env_file:
     - ./config/common.env
