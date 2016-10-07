@@ -1,0 +1,4 @@
+{
+  "sendUsageInfo": {{if eq (input "sendUsageInfo") "y"}}true{{else}}false{{end}},
+  "sendCrashReports": {{if eq (input "sendCrashReports") "y"}}true{{else}}false{{end}}
+}
