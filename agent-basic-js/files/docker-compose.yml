@@ -14,36 +14,36 @@ services:
     - store
     - fossilizer
   store:
-    image: {{$store}}
+    image: {{index . $store}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
+{{- if eq $store "postgresstore" }}
     depends_on:
     - postgres
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
+{{- if eq $store "rethinkstore" }}
     depends_on:
     - rethinkdb
 {{- end}}
-{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
+{{- if eq $store "postgresstore" }}
   postgres:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: postgres:9.6.0
+    image: {{.postgres}}
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
+{{- if eq $store "rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: rethinkdb:2.0.4
+    image: {{.rethink}}
 {{- end}}
   fossilizer:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{$fossilizer}}
+    image: {{index . $fossilizer}}
 {{- end}}
 {{- end}}

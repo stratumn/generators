@@ -2,7 +2,7 @@
 version: '2'
 services:
   ui:
-    image: stratumn/agent-ui:v0.2.0
+    image: {{.agentui}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
@@ -24,17 +24,17 @@ services:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
-{{- if eq $store "stratumn/filestore:0.0.2-dev" }}
+{{- if eq $store "filestore" }}
     volumes:
     - ./segments:/var/stratumn/filestore
 {{- end}}
-{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
+{{- if eq $store "postgresstore" }}
   postgres:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
+{{- if eq $store "rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/dev.env

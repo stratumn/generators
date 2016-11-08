@@ -58,22 +58,22 @@ have to run `strat up` again if you add NodeJS packages to `package.json`.
 
 {{with $store := (input "developmentStore") -}}
 {{- with $fossilizer := (input "developmentFossilizer") -}}
-{{- if eq $store "stratumn/dummystore:0.0.2-dev"}}
+{{- if eq $store .dummystore}}
 During development and testing, the segments will be saved in memory.
 They will not persist after the store is shut down.
 Note that the memory storage adapter is only suited for development and testing.
 {{- end}}
-{{- if eq $store "stratumn/filestore:0.0.2-dev"}}
+{{- if eq $store "filestore"}}
 During development, the segments will be saved to the `./segments` directory.
 Make sure Docker is configured to allow mounting that directory.
 Note that the file storage adapter is very slow and only suited for development and
 testing.
 {{- end}}
-{{- if eq $store "stratumn/postgresstore:0.0.1-dev"}}
+{{- if eq $store "postgresstore"}}
 During development and testing, the segments will be saved to a PostgreSQL database.
 A Docker container is created for the database.
 {{- end}}
-{{- if eq $store "stratumn/rethinktore:0.0.1-dev"}}
+{{- if eq $store "rethinktore"}}
 During development and testing, the segments will be saved to a RethinkDB database.
 A Docker container is created for the database.
 {{- end}}
