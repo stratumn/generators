@@ -4,12 +4,12 @@ version: '2'
 services:
   agent:
     build:
-      context: .
+      context: ./agent
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
     volumes:
-    - .:/src/server
+    - ./agent:/src/server
     depends_on:
     - store
     - fossilizer

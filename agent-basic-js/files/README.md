@@ -86,15 +86,18 @@ $ strat test
 
 ## Project structure
 
+The agent's files are in the `./agent` directory.
+
 ### Workflow actions
 
-The actions are defined in `./lib/actions.js`.
-You can arrange your actions in different files then `require()` them if you want.
+The actions are defined in `./agent/lib/actions.js`.
+You can arrange your actions in different files then `require()` them if you
+want.
 
 ### Tests
 
-The tests are defined in `./test/actions`. You can also arrange them in different
-files if you prefer.
+The tests are defined in `./agent/test/actions`. You can also arrange them in
+different files if you prefer.
 The `stratumn-mock-agent` module is preinstalled for easy testing of actions.
 
 During tests, the same store and fossilizer types used in development are
