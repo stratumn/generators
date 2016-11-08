@@ -49,4 +49,3 @@ networks:
     driver: bridge
     driver_opts:
         name: {{input "name"}}_dev
-{{- end}}

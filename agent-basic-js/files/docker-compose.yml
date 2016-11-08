@@ -45,5 +45,3 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{index . $fossilizer}}
-{{- end}}
-{{- end}}

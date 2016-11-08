@@ -77,8 +77,6 @@ A Docker container is created for the database.
 During development and testing, the segments will be saved to a RethinkDB database.
 A Docker container is created for the database.
 {{- end}}
-{{- end}}
-{{- end}}
 
 ## Run tests
 
