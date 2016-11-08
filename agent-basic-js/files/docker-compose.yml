@@ -1,5 +1,5 @@
-{{- with $store := (input "developmentStore") -}}
-{{- with $fossilizer := (input "developmentFossilizer") -}}
+{{- $store := (input "developmentStore") -}}
+{{- $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
 services:
   agent:

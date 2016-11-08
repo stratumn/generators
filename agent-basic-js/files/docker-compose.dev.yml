@@ -1,4 +1,4 @@
-{{- with $store := (input "developmentStore") -}}
+{{- $store := (input "developmentStore") -}}
 version: '2'
 services:
   ui:

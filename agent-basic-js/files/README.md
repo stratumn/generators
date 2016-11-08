@@ -56,8 +56,8 @@ Press `Ctrl^C` to stop the services.
 **Note:** While the agent will automatically restart if a file changes, you will
 have to run `strat up` again if you add NodeJS packages to `package.json`.
 
-{{with $store := (input "developmentStore") -}}
-{{- with $fossilizer := (input "developmentFossilizer") -}}
+{{$store := (input "developmentStore") -}}
+{{- $fossilizer := (input "developmentFossilizer") -}}
 {{- if eq $store .dummystore}}
 During development and testing, the segments will be saved in memory.
 They will not persist after the store is shut down.
