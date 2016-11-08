@@ -23,7 +23,7 @@
       "type": "string",
       "prompt": "Project name:",
       "default": "{{.dir}}",
-      "format": ".+"
+      "format": "^[a-z][a-z0-9-]*$"
     },
     "description": {
       "type": "string",
@@ -48,6 +48,12 @@
       "prompt": "Year:",
       "default": "{{now `2006`}}",
       "format": ".+"
+    },
+    "dockerorg": {
+      "type": "string",
+      "prompt": "Docker organization or user (to push images):",
+      "default": "{{.dockerorg}}",
+      "format": "^[a-z][a-z0-9-]*$"
     },
     "developmentStore": {
       "type": "select:string",
