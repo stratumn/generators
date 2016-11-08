@@ -14,7 +14,7 @@ services:
     - agent
   agent:
     build:
-      dockerfile: ./agent/Dockerfile.dev
+      dockerfile: Dockerfile.dev
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
