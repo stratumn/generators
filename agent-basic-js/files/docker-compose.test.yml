@@ -11,13 +11,13 @@ services:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-{{- if eq $store "stratumn/postgresstore:0.0.1-dev" }}
+{{- if eq $store "postgresstore" }}
   postgres:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
 {{- end}}
-{{- if eq $store "stratumn/rethinkstore:0.0.1-dev" }}
+{{- if eq $store "rethinkstore" }}
   rethinkdb:
     env_file:
     - ./config/test.env

@@ -5,7 +5,18 @@
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {
-    "generator": "agent-basic-js"
+    "generator": "agent-basic-js",
+    "agentdev": "stratumn/agent-js:dev-alpine-v0.12.4",
+    "agentui": "stratumn/agent-ui:v0.2.0",
+    "filestore": "stratumn/filestore:0.0.2-dev",
+    "dummystore": "stratumn/dummystore:0.0.2-dev",
+    "postgresstore": "stratumn/postgresstore:0.0.1-dev",
+    "rethinkstore": "stratumn/rethinkstore:0.0.1-dev",
+    "dummyfossilizer": "stratumn/dummyfossilizer:0.0.2-dev",
+    "dummybatchfossilizer": "stratumn/dummybatchfossilizer:0.0.1-dev",
+    "btcfossilizer": "stratumn/btcfossilizer:0.0.1-dev",
+    "postgres": "postgres:9.6.0",
+    "rethink": "rethinkdb:2.0.4"
   },
   "inputs": {
     "name": {
@@ -41,41 +52,41 @@
     "developmentStore": {
       "type": "select:string",
       "prompt": "Development store:",
-      "default": "stratumn/filestore:0.0.2-dev",
+      "default": "filestore",
       "options": [{
         "input": "1",
-        "value": "stratumn/filestore:0.0.2-dev",
-        "text": "Stratumn File Store v0.0.2-dev"
+        "value": "filestore",
+        "text": "Stratumn File Store"
       }, {
         "input": "2",
-        "value": "stratumn/dummystore:0.0.2-dev",
-        "text": "Stratumn Dummy Store v0.0.2-dev (in memory)"
+        "value": "dummystore",
+        "text": "Stratumn Dummy Store (in memory)"
       }, {
         "input": "3",
-        "value": "stratumn/postgresstore:0.0.1-dev",
-        "text": "Stratumn PostgreSQL Store v0.0.1-dev (license required)"
+        "value": "postgresstore",
+        "text": "Stratumn PostgreSQL Store (license required)"
       }, {
         "input": "4",
-        "value": "stratumn/rethinkstore:0.0.1-dev",
-        "text": "Stratumn RethinkDB Store v0.0.1-dev (license required)"
+        "value": "rethinkstore",
+        "text": "Stratumn RethinkDB Store (license required)"
       }]
     },
     "developmentFossilizer": {
       "type": "select:string",
       "prompt": "Development fossilizer:",
-      "default": "stratumn/dummyfossilizer:0.0.2-dev",
+      "default": "dummyfossilizer",
       "options": [{
         "input": "1",
-        "value": "stratumn/dummyfossilizer:0.0.2-dev",
-        "text": "Stratumn Dummy Fossilizer v0.0.2-dev"
+        "value": "dummyfossilizer",
+        "text": "Stratumn Dummy Fossilizer"
       }, {
         "input": "2",
-        "value": "stratumn/dummybatchfossilizer:0.0.1-dev",
-        "text": "Stratumn Dummy Batch Fossilizer v0.0.1-dev"
+        "value": "dummybatchfossilizer",
+        "text": "Stratumn Dummy Batch Fossilizer (license required)"
       }, {
         "input": "3",
-        "value": "stratumn/btcfossilizer:0.0.1-dev",
-        "text": "Stratumn Bitcoin Fossilizer v0.0.1-dev (license required)"
+        "value": "btcfossilizer",
+        "text": "Stratumn Bitcoin Fossilizer (license required)"
       }]
     },
     "developmentFossilizerWIF": {
