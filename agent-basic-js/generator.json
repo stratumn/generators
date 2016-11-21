@@ -121,7 +121,7 @@
     }
   },
   "priorities": [
-    "package.json",
+    "agent/package.json",
     "LICENSE",
     "docker-compose.yml"
   ]
