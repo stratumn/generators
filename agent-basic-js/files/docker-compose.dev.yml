@@ -25,6 +25,7 @@ services:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- if eq $store "filestore" }}
+    user: root
     volumes:
     - ./segments:/var/stratumn/filestore
 {{- end}}
