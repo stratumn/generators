@@ -7,7 +7,7 @@
   "variables": {
     "generator": "agent-basic-js",
     "agentdev": "stratumn/agent-js:dev-alpine-v0.12.4",
-    "agentui": "stratumn/agent-ui:v0.2.0",
+    "agentui": "stratumn/agent-ui:v0.2.1",
     "filestore": "stratumn/filestore:0.0.2-dev",
     "dummystore": "stratumn/dummystore:0.0.2-dev",
     "postgresstore": "stratumn/postgresstore:0.0.1-dev",
