@@ -1,13 +1,7 @@
 module.exports = {
   events: {
-    didFossilize: function(segment) {
-      console.log('Link ' + segment.meta.linkHash + ' was fossilized!');
-      console.log('Here is the evidence: ')
-      console.log(JSON.stringify(segment.meta.evidence, null, 2));
-    },
-
-    didAppend: function(segment) {
-      console.log('Link ' + segment.meta.linkHash + ' was appended!');
+    didSave: function(segment) {
+      console.log('Segment ' + segment.meta.linkHash + ' was saved!');
     }
   },
 
