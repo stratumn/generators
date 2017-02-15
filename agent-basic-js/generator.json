@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A basic Javascript agent",
   "author": "Stratumn",
-  "license": "Apache-2.0",
+  "license": "MPL-2.0",
   "variables": {
     "generator": "agent-basic-js",
     "agentdev": "stratumn/agent-js:dev-alpine-v0.13.0",
