@@ -1,4 +1,5 @@
-{{- with $store := (input "developmentStore") -}}
+{{- $store := (input "developmentStore") -}}
+{{- $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
 services:
   agent:
@@ -23,13 +24,23 @@ services:
     - ./config/test.env
     - ./config/test.secret.env
 {{- end}}
+{{- if eq $store "tmstore" }}
+  tmapp:
+    user: root
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+    volumes:
+    - ./tendermint.test:/data/tendermint
+{{- end}}
+{{- if ne $fossilizer "none" }}
   fossilizer:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
+{{- end}}
 networks:
   default:
     driver: bridge
     driver_opts:
         name: {{input "name"}}_test
-{{- end}}

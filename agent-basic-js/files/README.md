@@ -48,8 +48,12 @@ $ strat up
 The agent is bound to `http://localhost:3000`. It will automatically restart
 when a file is changed.
 
-A web user interface is also available on port `http://localhost:4000`. You can
-use it to test and visualize your workflows.
+A web user interface for the agent is available on `http://localhost:4000`.
+You can use it to test and visualize your workflows.
+{{- if eq $store "tmstore" }}
+A web user interface for the Indigo node is also available on
+`http://localhost:8000`. You can use it to explore blocks and view transactions.
+{{- end}
 
 Press `Ctrl^C` to stop the services.
 
@@ -63,7 +67,7 @@ During development and testing, the segments will be saved in memory.
 They will not persist after the store is shut down.
 Note that the memory storage adapter is only suited for development and testing.
 {{- end}}
-{{- if eq $store "filestore"}}
+{{- if or (eq $store "tmstore") (eq $store "filestore")}}
 During development, the segments will be saved to the `./segments` directory.
 Make sure Docker is configured to allow mounting that directory.
 Note that the file storage adapter is very slow and only suited for development and
