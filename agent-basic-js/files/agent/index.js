@@ -4,8 +4,6 @@
 var crypto = require('crypto');
 var express = require('express');
 var Agent = require('stratumn-agent');
-var stateHash = require('stratumn-agent/lib/plugins/stateHash');
-var actionArgs = require('stratumn-agent/lib/plugins/actionsArgs');
 
 // Load actions.
 // Assumes your actions are in ./lib/actions.
@@ -33,12 +31,7 @@ var agent = Agent.create(actions, storeHttpClient, fossilizerHttpClient, {
   salt: process.env.STRATUMN_SALT || crypto.randomBytes(32).toString('hex'),
 {{- end}}
   // the agent needs to know its root URL
-  agentUrl: process.env.STRATUMN_AGENT_URL || 'http://localhost:3000',
-  // list of plugins
-  plugins: [
-    stateHash, // add state hash to link meta
-    actionArgs // add action details to link meta
-  ]
+  agentUrl: process.env.STRATUMN_AGENT_URL || 'http://localhost:3000'
 });
 
 // Creates an HTTP server for the agent with CORS enabled.
