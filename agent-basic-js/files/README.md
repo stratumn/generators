@@ -54,7 +54,7 @@ You can use it to test and visualize your workflows.
 {{- if eq $store "tmstore" }}
 A web user interface for the Indigo node is also available on
 `http://localhost:8000`. You can use it to explore blocks and view transactions.
-{{- end}
+{{- end}}
 
 Press `Ctrl^C` to stop the services.
 
