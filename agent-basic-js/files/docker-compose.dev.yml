@@ -1,7 +1,8 @@
 {{- $store := (input "developmentStore") -}}
+{{- $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
 services:
-  ui:
+  agentui:
     image: {{.agentui}}
     env_file:
     - ./config/common.env
@@ -10,8 +11,17 @@ services:
     - ./config/dev.secret.env
     ports:
     - "4000:4000"
-    depends_on:
-    - agent
+{{- if eq $store "tmstore" }}
+  indigoexplorer:
+    image: {{.indigoexplorer}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "8000:4000"
+{{- end}}
   agent:
     build:
       dockerfile: Dockerfile.dev
@@ -41,10 +51,24 @@ services:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- end}}
+{{- if eq $store "tmstore" }}
+  tmapp:
+    user: root
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "46656-46657:46656-46657"
+    volumes:
+    - ./tendermint:/data/tendermint
+    - ./segments:/var/stratumn/filestore
+{{- end}}
+{{- if ne $fossilizer "none" }}
   fossilizer:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
+{{- end}}
 networks:
   default:
     driver: bridge

@@ -8,11 +8,14 @@
     "generator": "agent-basic-js",
     "agentdev": "stratumn/agent-js:dev-alpine-v0.13.0",
     "agentui": "stratumn/agent-ui:v0.2.4",
-    "filestore": "stratumn/filestore:0.0.6-dev",
-    "dummystore": "stratumn/dummystore:0.0.6-dev",
+    "indigoexplorer": "stratumn/indigo-explorer:v0.3.0",
+    "filetmpop": "stratumn/filetmpop:0.0.7-dev",
+    "tmstore": "stratumn/tmstore:0.0.7-dev",
+    "filestore": "stratumn/filestore:0.0.7-dev",
+    "dummystore": "stratumn/dummystore:0.0.7-dev",
     "postgresstore": "stratumn/postgresstore:0.0.2-dev",
     "rethinkstore": "stratumn/rethinkstore:0.0.2-dev",
-    "dummyfossilizer": "stratumn/dummyfossilizer:0.0.6-dev",
+    "dummyfossilizer": "stratumn/dummyfossilizer:0.0.7-dev",
     "dummybatchfossilizer": "stratumn/dummybatchfossilizer:0.0.2-dev",
     "btcfossilizer": "stratumn/btcfossilizer:0.0.2-dev",
     "postgres": "postgres:9.6.0",
@@ -58,21 +61,25 @@
     "developmentStore": {
       "type": "select:string",
       "prompt": "Development store:",
-      "default": "filestore",
+      "default": "tmstore",
       "options": [{
         "input": "1",
+        "value": "tmstore",
+        "text": "Stratumn Indigo Node With File Store"
+      }, {
+        "input": "2",
         "value": "filestore",
         "text": "Stratumn File Store"
       }, {
-        "input": "2",
+        "input": "3",
         "value": "dummystore",
         "text": "Stratumn Dummy Store (in memory)"
       }, {
-        "input": "3",
+        "input": "4",
         "value": "postgresstore",
         "text": "Stratumn PostgreSQL Store (license required)"
       }, {
-        "input": "4",
+        "input": "5",
         "value": "rethinkstore",
         "text": "Stratumn RethinkDB Store (license required)"
       }]
@@ -80,17 +87,21 @@
     "developmentFossilizer": {
       "type": "select:string",
       "prompt": "Development fossilizer:",
-      "default": "dummyfossilizer",
+      "default": "none",
       "options": [{
         "input": "1",
+        "value": "none",
+        "text": "None"
+      }, {
+        "input": "2",
         "value": "dummyfossilizer",
         "text": "Stratumn Dummy Fossilizer"
       }, {
-        "input": "2",
+        "input": "3",
         "value": "dummybatchfossilizer",
         "text": "Stratumn Dummy Batch Fossilizer (license required)"
       }, {
-        "input": "3",
+        "input": "4",
         "value": "btcfossilizer",
         "text": "Stratumn Bitcoin Fossilizer (license required)"
       }]
