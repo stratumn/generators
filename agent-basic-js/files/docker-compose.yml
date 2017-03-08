@@ -50,7 +50,7 @@ services:
 {{- end}}
 {{- if eq $store "tmstore" }}
   tmapp:
-    image: stratumn/filetmpop:0.0.6-dev
+    image: {{.filetmpop}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
