@@ -45,6 +45,7 @@ To launch all the services locally, run:
 $ strat up
 ```
 
+{{$store := (input "developmentStore") -}}
 The agent is bound to `http://localhost:3000`. It will automatically restart
 when a file is changed.
 
@@ -60,7 +61,6 @@ Press `Ctrl^C` to stop the services.
 **Note:** While the agent will automatically restart if a file changes, you will
 have to run `strat up` again if you add NodeJS packages to `package.json`.
 
-{{$store := (input "developmentStore") -}}
 {{- $fossilizer := (input "developmentFossilizer") -}}
 {{- if eq $store .dummystore}}
 During development and testing, the segments will be saved in memory.
