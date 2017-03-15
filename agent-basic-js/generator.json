@@ -7,7 +7,7 @@
   "variables": {
     "generator": "agent-basic-js",
     "agentdev": "stratumn/agent-js:dev-alpine-v0.13.0",
-    "agentui": "stratumn/agent-ui:v0.2.5",
+    "agentui": "stratumn/agent-ui:v0.2.4",
     "indigoexplorer": "stratumn/indigo-explorer:v0.3.0",
     "filetmpop": "stratumn/filetmpop:0.0.7-dev",
     "tmstore": "stratumn/tmstore:0.0.7-dev",
