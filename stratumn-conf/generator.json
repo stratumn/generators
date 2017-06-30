@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A Stratumn configuration",
   "author": "Stratumn",
-  "license": "MPL-2.0",
+  "license": "Apache-2.0",
   "variables": {
     "dir": "{{.dir}}"
   },
