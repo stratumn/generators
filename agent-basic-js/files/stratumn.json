@@ -8,6 +8,7 @@
 {{- if eq (input `useGit`) `y` }}
 {{- if eq $store "tmstore" }}
     "init": "strat run tm:init && git init && git add .",
+    "init:linux": "strat run tm:init && strat run tm:post-init:linux && git init && git add .",
 {{- else }}
     "init": "git init && git add .",
 {{- end}}
@@ -16,7 +17,9 @@
 {{- end}}
 {{- if eq $store "tmstore" }}
     "tm:init": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" tendermint/tendermint:0.8.0 init",
+    "tm:post-init:linux": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.8.0 init",
     "tm:init:test": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" tendermint/tendermint:0.8.0 init",
+    "tm:post-init:test:linux": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.8.0 init",
 {{- end}}
     "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "compose:test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml",
@@ -26,6 +29,7 @@
     "down": "strat run compose down",
 {{- if eq $store "tmstore" }}
     "down:test": "strat run compose:test down; rm -rf tendermint.test",
+    "down:test:linux": "strat run compose:test down; strat run tm:post-init:test:linux; rm -rf tendermint.test",
     "test": "strat run build:test && strat run tm:init:test && strat run compose:test run agent npm test",
 {{- else }}
     "down:test": "strat run compose:test down",
