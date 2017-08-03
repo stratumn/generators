@@ -16,9 +16,6 @@ describe('transitions', function() {
         .init('Hello, World!')
         .then(function(link) {
           link.state.title.should.be.exactly('Hello, World!');
-          link.state.messages.should.be.an.Array();
-          link.state.messages.length.should.be.exactly(0);
-          link.state.updatedAt.should.be.a.Number();
         });
     });
 
@@ -35,35 +32,30 @@ describe('transitions', function() {
 
   });
 
-  describe('#addMessage()', function() {
+  describe('#message()', function() {
 
     it('updates the state correctly', function() {
-      var prevUpdatedAt;
-
       return map
         .init('Hello, World!')
         .then(function(link) {
-          prevUpdatedAt = link.state.updatedAt;
-          return map.addMessage('Hi', 'Me');
+          return map.message('Hi', 'Me');
         })
         .then(function(link) {
-          link.state.messages.length.should.be.exactly(1);
-          link.state.messages.should.deepEqual([{ message: 'Hi', author: 'Me' }]);
-          link.state.updatedAt.should.not.be.below(prevUpdatedAt);
+          link.state.should.deepEqual({ body: 'Hi', author: 'Me' });
         });
     });
 
-    it('requires a message', function() {
+    it('requires a body', function() {
       return map
         .init('Hello, World!')
         .then(function(link) {
-          return map.addMessage();
+          return map.message();
         })
         .then(function(link) {
           throw new Error('link should not have been created');
         })
         .catch(function(err) {
-          err.message.should.be.exactly('a message is required');
+          err.message.should.be.exactly('a body is required');
         });
     });
 
@@ -71,48 +63,13 @@ describe('transitions', function() {
       return map
         .init('Hello, World!')
         .then(function(link) {
-          return map.addMessage('Hi');
+          return map.message('Hi');
         })
         .then(function(link) {
           throw new Error('link should not have been created');
         })
         .catch(function(err) {
           err.message.should.be.exactly('an author is required');
-        });
-    });
-
-  });
-
-  describe('#addTag()', function() {
-
-    it('updates the state correctly', function() {
-      var prevUpdatedAt;
-
-      return map
-        .init('Hello, World!')
-        .then(function(link) {
-          prevUpdatedAt = link.state.updatedAt;
-          return map.addTag('random');
-        })
-        .then(function(link) {
-          link.meta.tags.should.be.an.Array();
-          link.meta.tags.length.should.be.exactly(1);
-          link.meta.tags.should.deepEqual(['random']);
-          link.state.updatedAt.should.not.be.below(prevUpdatedAt);
-        });
-    });
-
-    it('requires a tag', function() {
-      return map
-        .init('Hello, World!')
-        .then(function(link) {
-          return map.addTag();
-        })
-        .then(function(link) {
-          throw new Error('link should not have been created');
-        })
-        .catch(function(err) {
-          err.message.should.be.exactly('a tag is required');
         });
     });
 
