@@ -1,6 +1,6 @@
 {
   "name": "agent-basic-js",
-  "version": "0.1.0-rc1",
+  "version": "0.1.0-dev",
   "description": "A basic Javascript agent",
   "author": "Stratumn",
   "license": "Apache-2.0",
