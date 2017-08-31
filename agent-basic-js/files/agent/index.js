@@ -23,21 +23,27 @@ var fossilizerHttpClient = null;
 var fossilizerHttpClient = Agent.fossilizerHttpClient(process.env.STRATUMN_FOSSILIZER_URL || 'http://fossilizer:6000');
 {{- end}}
 
-var agentUrl = process.env.STRATUMN_AGENT_URL || 'http://localhost:3000';
 
-// Create an agent from the actions, the store client, and the fossilizer client.
-var agent = Agent.create(actions, storeHttpClient, fossilizerHttpClient, {
+// Create an agent.
+var agentUrl = process.env.STRATUMN_AGENT_URL || 'http://localhost:3000';
+var agent = Agent.create({
+  agentUrl: agentUrl,
+});
+
+// Adds all processes from a name, its actions, the store client, and the fossilizer client.
+// As many processes as one needs can be added. A different storeHttpClient and fossilizerHttpClient may be used.
+{{- range $index, $proc := (input "process")}}
+agent.addProcess('{{$proc}}', actions, storeHttpClient, fossilizerHttpClient, {
 {{- if ne $fossilizer "none" }}
   // the fossilizer must be able to reach the agent via this url
   evidenceCallbackUrl: process.env.STRATUMN_EVIDENCE_CALLBACK_URL || process.env.STRATUMN_AGENT_URL || 'http://agent:3000',
   // change to a unique salt
   salt: process.env.STRATUMN_SALT || crypto.randomBytes(32).toString('hex'),
 {{- end}}
-  // the agent needs to know its root URL
-  agentUrl: agentUrl,
   // plugins you want to use
   plugins: [plugins.agentUrl(agentUrl), plugins.actionArgs, plugins.stateHash]
 });
+{{- end}}
 
 // Creates an HTTP server for the agent with CORS enabled.
 var agentHttpServer = Agent.httpServer(agent, { cors: {} });
