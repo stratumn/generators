@@ -34,6 +34,13 @@
       "default": "A basic Javascript agent.",
       "format": ".+"
     },
+    "process": {
+      "type": "slice:string",
+      "prompt": "List of process names:",
+      "default": "{{.process}}",
+      "format": "^[a-zA-Z].*$",
+      "separator": ","
+    },
     "author": {
       "type": "string",
       "prompt": "Your name:",
