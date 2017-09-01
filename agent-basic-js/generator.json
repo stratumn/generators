@@ -21,6 +21,9 @@
     "postgres": "postgres:9.6.0",
     "rethink": "rethinkdb:2.0.4"
   },
+  "filename-substitutions": {
+    "PROCESS": "process"
+  },
   "inputs": {
     "name": {
       "type": "string",

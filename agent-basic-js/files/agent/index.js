@@ -8,7 +8,9 @@ var plugins = Agent.plugins;
 
 // Load actions.
 // Assumes your actions are in ./lib/actions.
-var actions = require('./lib/actions');
+{{- range $index, $proc := (input "process")}}
+var actions_{{$proc}} = require('./lib/actions-{{$proc}}');
+{{- end}}
 
 // Create an HTTP store client to save segments.
 // Assumes an HTTP store server is available on env.STRATUMN_STORE_URL or http://store:5000.
@@ -33,7 +35,7 @@ var agent = Agent.create({
 // Adds all processes from a name, its actions, the store client, and the fossilizer client.
 // As many processes as one needs can be added. A different storeHttpClient and fossilizerHttpClient may be used.
 {{- range $index, $proc := (input "process")}}
-agent.addProcess('{{$proc}}', actions, storeHttpClient, fossilizerHttpClient, {
+agent.addProcess('{{$proc}}', actions_{{$proc}}, storeHttpClient, fossilizerHttpClient, {
 {{- if ne $fossilizer "none" }}
   // the fossilizer must be able to reach the agent via this url
   evidenceCallbackUrl: process.env.STRATUMN_EVIDENCE_CALLBACK_URL || process.env.STRATUMN_AGENT_URL || 'http://agent:3000',
