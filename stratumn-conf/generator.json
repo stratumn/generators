@@ -1,6 +1,6 @@
 {
   "name": "stratumn-conf",
-  "version": "0.1.0-dev",
+  "version": "0.1.0",
   "description": "A Stratumn configuration",
   "author": "Stratumn",
   "license": "Apache-2.0",
