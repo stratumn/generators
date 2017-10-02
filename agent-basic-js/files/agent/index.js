@@ -58,7 +58,10 @@ app.disable('x-powered-by');
 // Mount agent on the root path of the server.
 app.use('/', agentHttpServer);
 
+// Create server by binding app and websocket connection
+const server = Agent.websocketServer(app, storeHttpClient);
+
 // Start the server.
-app.listen(3000, function() {
+server.listen(3000, function() {
   console.log('Listening on :' + this.address().port);
 });
