@@ -1,5 +1,6 @@
 {
 {{- range $index, $proc := (input "process")}}
+    {{if $index}},{{end}}
     "{{$proc}}": [
         {
             "type": "init",
