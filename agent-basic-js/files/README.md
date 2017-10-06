@@ -102,7 +102,6 @@ want.
 
 The tests are defined in `./agent/test/actions`. You can also arrange them in
 different files if you prefer.
-The `stratumn-mock-agent` module is preinstalled for easy testing of actions.
 
 During tests, the same store and fossilizer types used in development are
 launched. They are started in a different namespace so that they don't conflict
@@ -125,6 +124,11 @@ during development.
 
 The variables defined in `test.env` and `test.secret.env` are only accessible
 during testing.
+
+### Validation
+
+There is a json file in `./validation` named `rules.json`. 
+It contains json schema validation rules that are executed for each action your processes handle.
 
 ## License
 
