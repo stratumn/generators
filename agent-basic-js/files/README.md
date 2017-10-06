@@ -125,6 +125,11 @@ during development.
 The variables defined in `test.env` and `test.secret.env` are only accessible
 during testing.
 
+### Validation
+
+There is a json file in `./validation` named `rules.json`. 
+It contains json schema validation rules that are executed for each action your processes handle.
+
 ## License
 
 See `LICENSE` file.
