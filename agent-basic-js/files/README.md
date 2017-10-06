@@ -102,7 +102,6 @@ want.
 
 The tests are defined in `./agent/test/actions`. You can also arrange them in
 different files if you prefer.
-The `stratumn-mock-agent` module is preinstalled for easy testing of actions.
 
 During tests, the same store and fossilizer types used in development are
 launched. They are started in a different namespace so that they don't conflict
