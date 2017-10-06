@@ -1,4 +1,4 @@
-var mockAgent = require('stratumn-mock-agent').mockAgent;
+var processify = require('stratumn-agent').processify;
 {{- range $index, $proc := (input "process")}}
 var transitions_{{$proc}} = require('../lib/actions-{{$proc}}');
 
@@ -7,7 +7,7 @@ describe('transitions', function() {
   var map;
 
   beforeEach(function() {
-    map = mockAgent(transitions_{{$proc}});
+    map = processify(transitions_{{$proc}});
   });
 
   describe('#init()', function() {
