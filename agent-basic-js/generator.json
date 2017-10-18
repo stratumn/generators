@@ -72,49 +72,56 @@
       "type": "select:string",
       "prompt": "Development store:",
       "default": "tmstore",
-      "options": [{
-        "input": "1",
-        "value": "tmstore",
-        "text": "Stratumn Indigo Node With File Store"
-      }, {
-        "input": "2",
-        "value": "filestore",
-        "text": "Stratumn File Store"
-      }, {
-        "input": "3",
-        "value": "dummystore",
-        "text": "Stratumn Dummy Store (in memory)"
-      }, {
-        "input": "4",
-        "value": "postgresstore",
-        "text": "Stratumn PostgreSQL Store (license required)"
-      }, {
-        "input": "5",
-        "value": "rethinkstore",
-        "text": "Stratumn RethinkDB Store (license required)"
-      }]
+      "options": [
+        {
+          "input": "1",
+          "value": "tmstore",
+          "text": "Stratumn Indigo Node With File Store"
+        },
+        {
+          "input": "2",
+          "value": "filestore",
+          "text": "Stratumn File Store"
+        },
+        {
+          "input": "3",
+          "value": "dummystore",
+          "text": "Stratumn Dummy Store (in memory)"
+        },
+        {
+          "input": "4",
+          "value": "postgresstore",
+          "text": "Stratumn PostgreSQL Store (license required)"
+        },
+        {
+          "input": "5",
+          "value": "rethinkstore",
+          "text": "Stratumn RethinkDB Store (license required)"
+        }
+      ]
     },
     "developmentFossilizer": {
-      "type": "select:string",
-      "prompt": "Development fossilizer:",
-      "default": "none",
-      "options": [{
-        "input": "1",
-        "value": "none",
-        "text": "None"
-      }, {
-        "input": "2",
-        "value": "dummyfossilizer",
-        "text": "Stratumn Dummy Fossilizer"
-      }, {
-        "input": "3",
-        "value": "dummybatchfossilizer",
-        "text": "Stratumn Dummy Batch Fossilizer (license required)"
-      }, {
-        "input": "4",
-        "value": "btcfossilizer",
-        "text": "Stratumn Bitcoin Fossilizer (license required)"
-      }]
+      "type": "selectmulti:string",
+      "prompt": "List of development fossilizers:",
+      "separator": ",",
+      "isRequired": false,
+      "options": [
+        {
+          "input": "1",
+          "value": "dummyfossilizer",
+          "text": "Stratumn Dummy Fossilizer"
+        },
+        {
+          "input": "2",
+          "value": "dummybatchfossilizer",
+          "text": "Stratumn Dummy Batch Fossilizer (license required)"
+        },
+        {
+          "input": "3",
+          "value": "btcfossilizer",
+          "text": "Stratumn Bitcoin Fossilizer (license required)"
+        }
+      ]
     },
     "developmentFossilizerWIF": {
       "type": "string",
@@ -130,20 +137,19 @@
       "type": "select:string",
       "prompt": "Initialize a Git repository (requires Git)",
       "default": "n",
-      "options": [{
-        "input": "y",
-        "value": "y",
-        "text": "Yes"
-      }, {
-        "input": "n",
-        "value": "n",
-        "text": "No"
-      }]
+      "options": [
+        {
+          "input": "y",
+          "value": "y",
+          "text": "Yes"
+        },
+        {
+          "input": "n",
+          "value": "n",
+          "text": "No"
+        }
+      ]
     }
   },
-  "priorities": [
-    "agent/package.json",
-    "LICENSE",
-    "docker-compose.yml"
-  ]
+  "priorities": ["agent/package.json", "LICENSE", "docker-compose.yml"]
 }
