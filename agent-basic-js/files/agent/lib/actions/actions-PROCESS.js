@@ -5,6 +5,8 @@ module.exports = {
     }
   },
 
+  name: '{{- .fileSubstitutionInput -}}',
+
   init: function(title) {
     if (!title) {
       return this.reject('a title is required');

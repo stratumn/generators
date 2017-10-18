@@ -1,23 +1,18 @@
 var processify = require('stratumn-agent').processify;
-{{- range $index, $proc := (input "process")}}
-var transitions_{{$proc}} = require('../lib/actions-{{$proc}}');
+var actions = require('../lib/actions/actions-{{- .fileSubstitutionInput -}}');
 
-describe('transitions', function() {
-
+describe('{{- .fileSubstitutionInput -}}-transitions', function() {
   var map;
 
   beforeEach(function() {
-    map = processify(transitions_{{$proc}});
+    map = processify(actions);
   });
 
   describe('#init()', function() {
-
     it('sets the state correctly', function() {
-      return map
-        .init('Hello, World!')
-        .then(function(link) {
-          link.state.title.should.be.exactly('Hello, World!');
-        });
+      return map.init('Hello, World!').then(function(link) {
+        link.state.title.should.be.exactly('Hello, World!');
+      });
     });
 
     it('requires a title', function() {
@@ -30,11 +25,9 @@ describe('transitions', function() {
           err.message.should.be.exactly('a title is required');
         });
     });
-
   });
 
   describe('#message()', function() {
-
     it('updates the state correctly', function() {
       return map
         .init('Hello, World!')
@@ -73,8 +66,5 @@ describe('transitions', function() {
           err.message.should.be.exactly('an author is required');
         });
     });
-
   });
-
 });
-{{- end}}
