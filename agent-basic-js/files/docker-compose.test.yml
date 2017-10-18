@@ -1,5 +1,4 @@
 {{- $store := (input "developmentStore") -}}
-{{- $fossilizer := (input "developmentFossilizer") -}}
 version: '2'
 services:
   agent:
@@ -33,11 +32,13 @@ services:
     volumes:
     - ./tendermint.test:/data/tendermint
 {{- end}}
-{{- if ne $fossilizer "none" }}
-  fossilizer:
+{{- range $i, $fossilizer := (input "developmentFossilizer")}}
+  {{$fossilizer}}:
     env_file:
-    - ./config/test.env
-    - ./config/test.secret.env
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "{{(add 6000 $i)}}"
 {{- end}}
 networks:
   default:

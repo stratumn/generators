@@ -1,4 +1,4 @@
-{{- $fossilizer := (input "developmentFossilizer") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
 // This file creates an Express server and mounts the agent on it.
 
 const fs = require('fs');
@@ -11,19 +11,17 @@ const plugins = Agent.plugins;
 // Assumes an HTTP store server is available on env.STRATUMN_STORE_URL or http://store:5000.
 const storeHttpClient = Agent.storeHttpClient(process.env.STRATUMN_STORE_URL || 'http://store:5000');
 
-{{- if eq $fossilizer "none" }}
-// Do not use a fossilizer.
-const fossilizerHttpClient = null;
-{{- else }}
+const fossilizerHttpClients = [];
+{{- range $i, $fossilizer := $fossilizers}}
 // Create an HTTP fossilizer client to fossilize segments.
-// Assumes an HTTP fossilizer server is available on env.STRATUMN_FOSSILIZER_URL or http://fossilizer:6000.
-const fossilizerHttpClient = Agent.fossilizerHttpClient(process.env.STRATUMN_FOSSILIZER_URL || 'http://fossilizer:6000');
+// Assumes an HTTP fossilizer server is available on env.STRATUMN_FOSSILIZER_URL or 'http://{{$fossilizer}}:{{(add 6000 $i)}}'.
+fossilizerHttpClients.push(Agent.fossilizerHttpClient(process.env.STRATUMN_FOSSILIZER_URL || 'http://{{$fossilizer}}:{{(add 6000 $i)}}'));
 {{- end}}
 
 // Create an agent.
-const agentUrl = process.env.STRATUMN_AGENT_URL || 'http://localhost:3000';
+const agentUrl = process.env.STRATUMN_AGENT_URL || 'http://agent:3000';
 const agent = Agent.create({
-  agentUrl: agentUrl,
+  agentUrl: agentUrl
 });
 
 // List of plugins used for our process actions
@@ -49,11 +47,11 @@ fs.readdir('./lib/actions', (err, processFiles) => {
         actions.name,
         actions,
         storeHttpClient,
-        fossilizerHttpClient,
+        fossilizerHttpClients,
         {
-{{- if ne $fossilizer "none" }}
+{{- if $fossilizers }}
           // the fossilizer must be able to reach the agent via this url
-          evidenceCallbackUrl: process.env.STRATUMN_EVIDENCE_CALLBACK_URL || process.env.STRATUMN_AGENT_URL || 'http://agent:3000',
+          evidenceCallbackUrl: process.env.STRATUMN_EVIDENCE_CALLBACK_URL || agentUrl,
           // change to a unique salt
           salt: process.env.STRATUMN_SALT || crypto.randomBytes(32).toString('hex'),
 {{- end}}
