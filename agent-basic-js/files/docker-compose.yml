@@ -1,5 +1,5 @@
 {{- $store := (input "developmentStore") -}}
-{{- $fossilizer := (input "developmentFossilizer") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
 version: '2'
 services:
   agent:
@@ -13,8 +13,8 @@ services:
     - ./agent:/src/server
     depends_on:
     - store
-{{- if ne $fossilizer "none" }}
-    - fossilizer
+{{- range $i, $fossilizer := $fossilizers}}
+    - {{$fossilizer}}
 {{- end}}
   store:
     image: {{index . $store}}
@@ -58,10 +58,12 @@ services:
     volumes:
     - ./validation:/data/validation
 {{- end}}
-{{- if ne $fossilizer "none" }}
-  fossilizer:
+{{- $root := . }}
+{{- range $i, $fossilizer := $fossilizers}}
+  {{$fossilizer}}:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{index . $fossilizer}}
+    image: {{index $root $fossilizer }}
+    command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
