@@ -26,6 +26,16 @@ services:
     depends_on:
     - tmapp
 {{- end}}
+{{- if eq $store "fabricstore" }}
+    user: root
+    environment:
+      - CLIENT_CONFIG_PATH=/var/stratumn/fabricstore/client-config.yaml
+      - CHANNEL_ID=mychannel
+      - CHAINCODE_ID=pop
+    volumes:
+      - ./fabric/crypto-config:/var/stratumn/fabricstore/crypto-config
+      - ./fabric/client-config/client-config.yaml:/var/stratumn/fabricstore/client-config.yaml
+{{- end}}
 {{- if eq $store "postgresstore" }}
     depends_on:
     - postgres
@@ -57,6 +67,36 @@ services:
     command: [filetmpop, -home, "/data/tendermint"]
     volumes:
     - ./validation:/data/validation
+{{- end}}
+{{- if eq $store "fabricstore" }}
+  orderer.example.com:
+    container_name: orderer.example.com
+    extends:
+      file: fabric/docker-compose.yml
+      service: orderer.example.com
+  peer0.org1.example.com:
+    container_name: peer0.org1.example.com
+    extends:
+      file: fabric/docker-compose.yml
+      service: peer0.org1.example.com
+    environment:
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE={{input "name"}}_default
+    depends_on:
+      - orderer.example.com
+      - couchdb0
+  couchdb0:
+    container_name: couchdb0
+    extends:
+      file: fabric/docker-compose.yml
+      service: couchdb0
+  cli:
+    container_name: cli
+    extends:
+      file: fabric/docker-compose.yml
+      service: cli
+    depends_on:
+      - orderer.example.com
+      - peer0.org1.example.com
 {{- end}}
 {{- $root := . }}
 {{- range $i, $fossilizer := $fossilizers}}
