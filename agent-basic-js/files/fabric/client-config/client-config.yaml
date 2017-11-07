@@ -1,0 +1,101 @@
+name: "indigo-network"
+x-type: "hlfv1"
+x-loggingLevel: "info"
+description: "Hyperledger Fabric network used for Indigo framework"
+version: 0.0.1
+
+client:
+  # Organization to which this application relates to
+  organization: Org1
+
+  tls:
+    enabled: true
+  
+  logging:
+    level: info
+
+  # Absolute path to load users crypto keys and certs
+  cryptoconfig:
+    path: /var/stratumn/fabricstore/crypto-config
+
+  credentialStore:
+    path: /home/credentials
+
+  BCCSP:
+    security:
+     enabled: true
+     default:
+      provider: "SW"
+     hashAlgorithm: "SHA2"
+     softVerify: true
+     ephemeral: false
+     level: 256
+
+  peer:
+    timeout:
+      connection: 3s
+      queryResponse: 30s
+      executeTxResponse: 30s
+
+  eventService:
+    timeout:
+      connection: 3s
+      registrationResponse: 3s
+
+  orderer:
+    timeout:
+      connection: 3s
+      response: 5s
+
+channels:
+  mychannel:
+    orderers:
+      - orderer.example.com
+
+    peers:
+      peer0.org1.example.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+    
+    chaincodes:
+      - pop:1.0
+
+organizations:
+  Org1:
+    mspid: Org1MSP
+    cryptoPath: peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    peers:
+      - peer0.org1.example.com
+    certificateAuthorities:
+      - ca.example.com
+  
+  ordererOrg:
+    mspID: "OrdererOrg"
+    cryptopath: ordererOrganizations/example.com/users/Admin@example.com/msp
+
+orderers:
+  orderer.example.com:
+    url: grpcs://orderer.example.com:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.example.com
+      grpc-max-send-message-length: 15
+    tlsCACerts:
+      path: /var/stratumn/fabricstore/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+
+peers:
+  peer0.org1.example.com:
+    url: grpcs://peer0.org1.example.com:7051
+    eventUrl: grpcs://peer0.org1.example.com:7053
+
+    grpcOptions:
+      ssl-target-name-override: peer0.org1.example.com
+      grpc.http2.keepalive_time: 15
+
+    tlsCACerts:
+      path: /var/stratumn/fabricstore/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+
+certificateAuthorities:
+  ca.example.com:
+    

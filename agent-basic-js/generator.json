@@ -11,6 +11,7 @@
     "indigoexplorer": "stratumn/indigo-explorer:v0.8.0",
     "filetmpop": "stratumn/filetmpop:0.1.0",
     "tmstore": "stratumn/tmstore:0.1.0",
+    "fabricstore": "stratumn/fabricstore:0.1.0",
     "filestore": "stratumn/filestore:0.1.0",
     "dummystore": "stratumn/dummystore:0.1.0",
     "postgresstore": "stratumn/postgresstore:0.1.0",
@@ -97,6 +98,11 @@
           "input": "5",
           "value": "rethinkstore",
           "text": "Stratumn RethinkDB Store (license required)"
+        },
+        {
+          "input": "6",
+          "value": "fabricstore",
+          "text": "Stratumn Indigo Node With Fabric Store"
         }
       ]
     },

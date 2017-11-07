@@ -1,3 +1,4 @@
 {{"segments"}}
 node_modules
 {{"*.secret.env"}}
+fabric/data
