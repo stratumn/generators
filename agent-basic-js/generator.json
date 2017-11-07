@@ -11,7 +11,7 @@
     "indigoexplorer": "stratumn/indigo-explorer:v0.8.0",
     "filetmpop": "stratumn/filetmpop:0.1.0",
     "tmstore": "stratumn/tmstore:0.1.0",
-    "fabricstore": "stratumn/fabricstore",
+    "fabricstore": "stratumn/fabricstore:0.1.0",
     "filestore": "stratumn/filestore:0.1.0",
     "dummystore": "stratumn/dummystore:0.1.0",
     "postgresstore": "stratumn/postgresstore:0.1.0",
@@ -81,28 +81,28 @@
         },
         {
           "input": "2",
-          "value": "fabricstore",
-          "text": "Stratumn Indigo Node With Fabric Store"
-        },
-        {
-          "input": "3",
           "value": "filestore",
           "text": "Stratumn File Store"
         },
         {
-          "input": "4",
+          "input": "3",
           "value": "dummystore",
           "text": "Stratumn Dummy Store (in memory)"
         },
         {
-          "input": "5",
+          "input": "4",
           "value": "postgresstore",
           "text": "Stratumn PostgreSQL Store (license required)"
         },
         {
-          "input": "6",
+          "input": "5",
           "value": "rethinkstore",
           "text": "Stratumn RethinkDB Store (license required)"
+        },
+        {
+          "input": "6",
+          "value": "fabricstore",
+          "text": "Stratumn Indigo Node With Fabric Store"
         }
       ]
     },
