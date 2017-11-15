@@ -25,7 +25,7 @@ const agent = Agent.create({
 });
 
 // List of plugins used for our process actions
-const processPlugins = [plugins.agentUrl(agentUrl), plugins.actionArgs, plugins.stateHash];
+const processPlugins = [plugins.agentUrl(agentUrl), plugins.actionArgs, plugins.stateHash, plugins.agentVersion];
 
 // Load process actions.
 // Assumes your action files are in ./lib/actions and export a 'name' field.
