@@ -1,4 +1,6 @@
 {{- $store := (input "developmentStore") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
 version: '2'
 services:
   agent:
@@ -23,8 +25,8 @@ services:
     - ./config/test.env
     - ./config/test.secret.env
 {{- end}}
-{{- if eq $store "tmstore" }}
-  tmapp:
+{{- if $require_tmstore }}
+  tmnode:
     user: root
     env_file:
     - ./config/test.env
@@ -37,7 +39,7 @@ services:
     environment:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE={{input "name"}}test_default
 {{- end}}
-{{- range $i, $fossilizer := (input "developmentFossilizer")}}
+{{- range $i, $fossilizer := $fossilizers}}
   {{$fossilizer}}:
     env_file:
     - ./config/dev.env

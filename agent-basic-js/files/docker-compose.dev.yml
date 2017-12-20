@@ -1,4 +1,6 @@
 {{- $store := (input "developmentStore") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
 version: '2'
 services:
   agentui:
@@ -10,7 +12,7 @@ services:
     - ./config/dev.secret.env
     ports:
     - "4000:4000"
-{{- if eq $store "tmstore" }}
+{{- if $require_tmstore }}
   indigoexplorer:
     image: {{.indigoexplorer}}
     env_file:
@@ -55,8 +57,8 @@ services:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- end}}
-{{- if eq $store "tmstore" }}
-  tmapp:
+{{- if $require_tmstore }}
+  tmnode:
     user: root
     env_file:
     - ./config/dev.env
@@ -65,9 +67,11 @@ services:
     - "46656-46657:46656-46657"
     volumes:
     - ./tendermint:/data/tendermint
+{{- if eq $store "filetmstore" }}
     - ./segments:/var/stratumn/filestore
 {{- end}}
-{{- range $i, $fossilizer := (input "developmentFossilizer")}}
+{{- end}}
+{{- range $i, $fossilizer := $fossilizers}}
   {{$fossilizer}}:
     env_file:
     - ./config/dev.env

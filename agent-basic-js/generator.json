@@ -6,21 +6,26 @@
   "license": "Apache-2.0",
   "variables": {
     "generator": "agent-basic-js",
-    "agentdev": "stratumn/agent-js:dev-alpine-v0.18.0",
-    "agentui": "stratumn/agent-ui:v0.5.0",
-    "indigoexplorer": "stratumn/indigo-explorer:v0.8.0",
-    "filetmpop": "stratumn/filetmpop:0.1.1",
-    "tmstore": "stratumn/tmstore:0.1.1",
-    "fabricstore": "stratumn/fabricstore:0.1.0",
-    "filestore": "stratumn/filestore:0.1.1",
-    "dummystore": "stratumn/dummystore:0.1.1",
-    "postgresstore": "stratumn/postgresstore:0.1.1",
-    "rethinkstore": "stratumn/rethinkstore:0.1.1",
-    "dummyfossilizer": "stratumn/dummyfossilizer:0.1.1",
-    "dummybatchfossilizer": "stratumn/dummybatchfossilizer:0.1.1",
-    "btcfossilizer": "stratumn/btcfossilizer:0.1.1",
-    "postgres": "postgres:9.6.0",
-    "rethink": "rethinkdb:2.0.4"
+    "agentdev": "indigoframework/agent-js:latest",
+    "agentui": "stratumn/agent-ui:latest",
+    "indigoexplorer": "indigoframework/tmpop-explorer:latest",
+    "filetmpop": "indigoframework/filetmpop:0.2.0-rc1",
+    "dummytmpop": "indigoframework/dummytmpop:0.2.0-rc1",
+    "postgrestmpop": "indigoframework/postgrestmpop:0.2.0-rc1",
+    "rethinktmpop": "indigoframework/rethinktmpop:0.2.0-rc1",
+    "tmstore": "indigoframework/tmstore:0.2.0-rc1",
+    "fabricstore": "indigoframework/fabricstore:0.2.0-rc1",
+    "filestore": "indigoframework/filestore:0.2.0-rc1",
+    "dummystore": "indigoframework/dummystore:0.2.0-rc1",
+    "couchstore": "indigoframework/couchstore:0.2.0-rc1",
+    "postgresstore": "indigoframework/postgresstore:0.2.0-rc1",
+    "rethinkstore": "indigoframework/rethinkstore:0.2.0-rc1",
+    "dummyfossilizer": "indigoframework/dummyfossilizer:0.2.0-rc1",
+    "dummybatchfossilizer": "indigoframework/dummybatchfossilizer:0.2.0-rc1",
+    "btcfossilizer": "indigoframework/btcfossilizer:0.2.0-rc1",
+    "couchdb": "couchdb:2.1",
+    "postgres": "postgres:10.1",
+    "rethinkdb": "rethinkdb:2.3"
   },
   "filename-substitutions": {
     "PROCESS": "process"
@@ -72,37 +77,57 @@
     "developmentStore": {
       "type": "select:string",
       "prompt": "Development store:",
-      "default": "tmstore",
+      "default": "filetmpop",
       "options": [
         {
           "input": "1",
-          "value": "tmstore",
-          "text": "Stratumn Indigo Node With File Store"
+          "value": "filetmpop",
+          "text": "Stratumn Tendermint Node With File Store"
         },
         {
           "input": "2",
+          "value": "dummytmpop",
+          "text": "Stratumn Tendermint Node With Dummy Store"
+        },
+        {
+          "input": "3",
+          "value": "postgrestmpop",
+          "text": "Stratumn Tendermint Node With PostgreSQL Store"
+        },
+        {
+          "input": "4",
+          "value": "rethinktmpop",
+          "text": "Stratumn Tendermint Node With RethinkDB Store"
+        },
+        {
+          "input": "5",
+          "value": "fabricstore",
+          "text": "Stratumn Fabric Node"
+        },
+        {
+          "input": "6",
           "value": "filestore",
           "text": "Stratumn File Store"
         },
         {
-          "input": "3",
+          "input": "7",
           "value": "dummystore",
           "text": "Stratumn Dummy Store (in memory)"
         },
         {
-          "input": "4",
+          "input": "8",
           "value": "postgresstore",
-          "text": "Stratumn PostgreSQL Store (license required)"
+          "text": "Stratumn PostgreSQL Store"
         },
         {
-          "input": "5",
+          "input": "9",
           "value": "rethinkstore",
-          "text": "Stratumn RethinkDB Store (license required)"
+          "text": "Stratumn RethinkDB Store"
         },
         {
-          "input": "6",
-          "value": "fabricstore",
-          "text": "Stratumn Indigo Node With Fabric Store"
+          "input": "10",
+          "value": "couchstore",
+          "text": "Stratumn CouchDB Store"
         }
       ]
     },
@@ -120,12 +145,12 @@
         {
           "input": "2",
           "value": "dummybatchfossilizer",
-          "text": "Stratumn Dummy Batch Fossilizer (license required)"
+          "text": "Stratumn Dummy Batch Fossilizer"
         },
         {
           "input": "3",
           "value": "btcfossilizer",
-          "text": "Stratumn Bitcoin Fossilizer (license required)"
+          "text": "Stratumn Bitcoin Fossilizer"
         }
       ]
     },
