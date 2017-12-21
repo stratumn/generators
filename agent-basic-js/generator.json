@@ -7,7 +7,7 @@
   "variables": {
     "generator": "agent-basic-js",
     "agentdev": "indigoframework/agent-js:latest",
-    "agentui": "stratumn/agent-ui:latest",
+    "agentui": "indigoframework/agent-ui:latest",
     "indigoexplorer": "indigoframework/tmpop-explorer:latest",
     "filetmpop": "indigoframework/filetmpop:0.2.0-rc1",
     "dummytmpop": "indigoframework/dummytmpop:0.2.0-rc1",
