@@ -1,7 +1,7 @@
 {{- $store := (input "developmentStore") -}}
 {{- $require_tmstore := (eq $store "tmstore") -}}
 {{- if $require_tmstore -}}
-{{- (input "tmpopUnderlyingStore") -}}
+{{- $tmstore := (input "tmpopUnderlyingStore") -}}
 {{- end -}}
 {{- $require_postgresql := (eq $store "postgresstore") -}}
 {{- $require_rethinkdb := (eq $store "rethinkstore") -}}
@@ -104,7 +104,7 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [{{$store}}, -home, "/data/tendermint"]
+    command: [{{$tmstore}}, -home, "/data/tendermint"]
     volumes:
     - ./validation:/data/validation
 {{- end}}
