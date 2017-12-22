@@ -13,8 +13,8 @@ services:
     ports:
     - "4000:4000"
 {{- if $require_tmstore }}
-  indigoexplorer:
-    image: {{.indigoexplorer}}
+  tmpopexplorer:
+    image: {{.tmpopexplorer}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env

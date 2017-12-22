@@ -1,14 +1,14 @@
 {
   "name": "agent-basic-js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A basic Javascript agent",
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {
     "generator": "agent-basic-js",
-    "agentdev": "indigoframework/agent-js:latest",
-    "agentui": "indigoframework/agent-ui:latest",
-    "indigoexplorer": "indigoframework/tmpop-explorer:latest",
+    "agentdev": "indigoframework/agent-js:dev-alpine-0.2.0-3",
+    "agentui": "indigoframework/agent-ui:0.2.0-3",
+    "tmpopexplorer": "indigoframework/tmpop-explorer:0.2.0-3",
     "filetmpop": "indigoframework/filetmpop:0.2.0-rc1",
     "dummytmpop": "indigoframework/dummytmpop:0.2.0-rc1",
     "postgrestmpop": "indigoframework/postgrestmpop:0.2.0-rc1",
@@ -82,52 +82,52 @@
         {
           "input": "1",
           "value": "filetmpop",
-          "text": "Stratumn Tendermint Node With File Store"
+          "text": "Indigo's Tendermint Node With File Store"
         },
         {
           "input": "2",
           "value": "dummytmpop",
-          "text": "Stratumn Tendermint Node With Dummy Store"
+          "text": "Indigo's Tendermint Node With Dummy Store"
         },
         {
           "input": "3",
           "value": "postgrestmpop",
-          "text": "Stratumn Tendermint Node With PostgreSQL Store"
+          "text": "Indigo's Tendermint Node With PostgreSQL Store"
         },
         {
           "input": "4",
           "value": "rethinktmpop",
-          "text": "Stratumn Tendermint Node With RethinkDB Store"
+          "text": "Indigo's Tendermint Node With RethinkDB Store"
         },
         {
           "input": "5",
           "value": "fabricstore",
-          "text": "Stratumn Fabric Node"
+          "text": "Hyperledger Fabric Node"
         },
         {
           "input": "6",
           "value": "filestore",
-          "text": "Stratumn File Store"
+          "text": "Indigo's File Store"
         },
         {
           "input": "7",
           "value": "dummystore",
-          "text": "Stratumn Dummy Store (in memory)"
+          "text": "Indigo's Dummy Store (in memory)"
         },
         {
           "input": "8",
           "value": "postgresstore",
-          "text": "Stratumn PostgreSQL Store"
+          "text": "Indigo's PostgreSQL Store"
         },
         {
           "input": "9",
           "value": "rethinkstore",
-          "text": "Stratumn RethinkDB Store"
+          "text": "Indigo's RethinkDB Store"
         },
         {
           "input": "10",
           "value": "couchstore",
-          "text": "Stratumn CouchDB Store"
+          "text": "Indigo's CouchDB Store"
         }
       ]
     },
@@ -140,17 +140,17 @@
         {
           "input": "1",
           "value": "dummyfossilizer",
-          "text": "Stratumn Dummy Fossilizer"
+          "text": "Indigo's Dummy Fossilizer"
         },
         {
           "input": "2",
           "value": "dummybatchfossilizer",
-          "text": "Stratumn Dummy Batch Fossilizer"
+          "text": "Indigo's Dummy Batch Fossilizer"
         },
         {
           "input": "3",
           "value": "btcfossilizer",
-          "text": "Stratumn Bitcoin Fossilizer"
+          "text": "Indigo's Bitcoin Fossilizer"
         }
       ]
     },
