@@ -77,57 +77,69 @@
     "developmentStore": {
       "type": "select:string",
       "prompt": "Development store:",
+      "default": "tmstore",
+      "options": [
+        {
+          "input": "1",
+          "value": "tmstore",
+          "text": "Indigo's Tendermint Node"
+        },
+        {
+          "input": "2",
+          "value": "fabricstore",
+          "text": "Indigo's Hyperledger Fabric Node"
+        },
+        {
+          "input": "3",
+          "value": "filestore",
+          "text": "Indigo's File Store"
+        },
+        {
+          "input": "4",
+          "value": "dummystore",
+          "text": "Indigo's Dummy Store (in memory)"
+        },
+        {
+          "input": "5",
+          "value": "postgresstore",
+          "text": "Indigo's PostgreSQL Store"
+        },
+        {
+          "input": "6",
+          "value": "rethinkstore",
+          "text": "Indigo's RethinkDB Store"
+        },
+        {
+          "input": "7",
+          "value": "couchstore",
+          "text": "Indigo's CouchDB Store"
+        }
+      ]
+    },
+    "tmpopUnderlyingStore": {
+      "type": "select:string",
+      "prompt": "Tendermint underlying store:",
       "default": "filetmpop",
       "options": [
         {
           "input": "1",
           "value": "filetmpop",
-          "text": "Indigo's Tendermint Node With File Store"
+          "text": "Indigo's File Store"
         },
         {
           "input": "2",
           "value": "dummytmpop",
-          "text": "Indigo's Tendermint Node With Dummy Store"
+          "text": "Indigo's Dummy Store"
         },
         {
           "input": "3",
           "value": "postgrestmpop",
-          "text": "Indigo's Tendermint Node With PostgreSQL Store"
+          "text": "Indigo's PostgreSQL Store"
         },
         {
           "input": "4",
           "value": "rethinktmpop",
-          "text": "Indigo's Tendermint Node With RethinkDB Store"
-        },
-        {
-          "input": "5",
-          "value": "fabricstore",
-          "text": "Hyperledger Fabric Node"
-        },
-        {
-          "input": "6",
-          "value": "filestore",
-          "text": "Indigo's File Store"
-        },
-        {
-          "input": "7",
-          "value": "dummystore",
-          "text": "Indigo's Dummy Store (in memory)"
-        },
-        {
-          "input": "8",
-          "value": "postgresstore",
-          "text": "Indigo's PostgreSQL Store"
-        },
-        {
-          "input": "9",
-          "value": "rethinkstore",
           "text": "Indigo's RethinkDB Store"
-        },
-        {
-          "input": "10",
-          "value": "couchstore",
-          "text": "Indigo's CouchDB Store"
         }
       ]
     },

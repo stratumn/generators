@@ -1,9 +1,12 @@
 {{- $store := (input "developmentStore") -}}
+{{- $require_tmstore := (eq $store "tmstore") -}}
+{{- if $require_tmstore -}}
+{{- (input "tmpopUnderlyingStore") -}}
+{{- end -}}
+{{- $require_postgresql := (eq $store "postgresstore") -}}
+{{- $require_rethinkdb := (eq $store "rethinkstore") -}}
+{{- $require_couchdb := (eq $store "couchstore") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
-{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
-{{- $require_postgresql := (or (eq $store "postgresstore") (eq $store "postgrestmpop")) -}}
-{{- $require_rethinkdb := (or (eq $store "rethinkstore") (eq $store "rethinktmpop")) -}}
-{{- $require_couchdb := (or (eq $store "fabricstore") (eq $store "couchstore")) -}}
 version: '2'
 services:
   agent:
@@ -21,11 +24,7 @@ services:
     - {{$fossilizer}}
 {{- end}}
   store:
-{{- if $require_tmstore }}
-    image: {{index . "tmstore"}}
-{{- else}}
     image: {{index . $store}}
-{{- end}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
@@ -33,6 +32,12 @@ services:
     command: [tmstore, -endpoint, "tcp://tmnode:46657"]
     depends_on:
     - tmnode
+{{- $tmstore := (input "tmpopUnderlyingStore") }}
+{{- if eq $tmstore "postgrestmpop" }}
+    - postgres
+{{- else if eq $tmstore "rethinktmpop" }}
+    - rethinkdb
+{{- end}}
 {{- else if eq $store "couchstore"}}
     command: [{{$store}}, -endpoint, "http://couchdb:5986"]
 {{- end}}
@@ -46,29 +51,46 @@ services:
       - ./fabric/crypto-config:/var/stratumn/fabricstore/crypto-config
       - ./fabric/client-config/client-config.yaml:/var/stratumn/fabricstore/client-config.yaml
 {{- end}}
+{{/* Ugly if cascade and DRY */}}
+{{/* https://github.com/stratumn/generators/issues/31 */}}
 {{- if $require_postgresql }}
     depends_on:
     - postgres
-{{- else if $require_rethinkdb }}
-    depends_on:
-    - rethinkdb
-{{- else if $require_couchdb }}
-    depends_on:
-    - couchdb
-{{- end}}
-{{- if $require_postgresql }}
   postgres:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{.postgres}}
-{{- else if $require_rethinkdb }}
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "postgrestmpop" }}
+  postgres:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.postgres}}
+{{- end}}
+{{- end}}
+{{- if $require_rethinkdb }}
+    depends_on:
+    - rethinkdb
   rethinkdb:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{.rethinkdb}}
-{{- else if $require_couchdb }}
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "rethinktmpop" }}
+  rethinkdb:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.rethinkdb}}
+{{- end}}
+{{- end}}
+{{/* End of ugly if cascade and DRY */}}
+{{- if $require_couchdb }}
+    depends_on:
+    - couchdb
   couchdb:
     env_file:
     - ./config/common.env
@@ -76,8 +98,9 @@ services:
     image: {{.couchdb}}
 {{- end}}
 {{- if $require_tmstore }}
+{{- $tmstore := (input "tmpopUnderlyingStore") }}
   tmnode:
-    image: {{index . $store}}
+    image: {{index . $tmstore}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env

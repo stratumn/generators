@@ -1,6 +1,9 @@
 {{- $store := (input "developmentStore") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
-{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
+{{- $require_tmstore := (eq $store "tmstore") -}}
+{{- $require_postgresql := (eq $store "postgresstore") -}}
+{{- $require_rethinkdb := (eq $store "rethinkstore") -}}
+{{- $require_couchdb := (eq $store "couchstore") -}}
 version: '2'
 services:
   agent:
@@ -13,14 +16,38 @@ services:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-{{- if eq $store "postgresstore" }}
+
+{{/* Ugly if cascade and DRY */}}
+{{/* https://github.com/stratumn/generators/issues/31 */}}
+{{- if $require_postgresql }}
+  postgres:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "postgrestmpop" }}
   postgres:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
 {{- end}}
-{{- if eq $store "rethinkstore" }}
+{{- end}}
+{{- if $require_rethinkdb }}
   rethinkdb:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "rethinktmpop" }}
+  rethinkdb:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- end}}
+{{- end}}
+{{/* End of ugly if cascade and DRY */}}
+{{- if $require_couchdb }}
+  couchdb:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
