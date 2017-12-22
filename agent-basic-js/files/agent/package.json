@@ -1,6 +1,6 @@
 {
   "name": "{{input `name`}}",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "{{input `description`}}",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
     "express": "^4.14.0",
-    "stratumn-agent": "^0.18.0"
+    "@indigoframework/agent": "^0.2.0"
   },
   "devDependencies": {
     "mocha": "^2.5.3",
