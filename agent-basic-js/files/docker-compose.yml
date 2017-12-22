@@ -104,7 +104,7 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [{{$store}}, -home, "/data/tendermint"]
+    command: [{{$tmstore}}, -home, "/data/tendermint"]
     volumes:
     - ./validation:/data/validation
 {{- end}}
