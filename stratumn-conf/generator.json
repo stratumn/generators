@@ -1,6 +1,6 @@
 {
   "name": "stratumn-conf",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Stratumn configuration",
   "author": "Stratumn",
   "license": "Apache-2.0",
@@ -30,33 +30,36 @@
       "type": "select:string",
       "prompt": "Send usage information to help us improve our products:",
       "default": "y",
-      "options": [{
-        "input": "y",
-        "value": "y",
-        "text": "Yes"
-      }, {
-        "input": "n",
-        "value": "n",
-        "text": "No"
-      }]
+      "options": [
+        {
+          "input": "y",
+          "value": "y",
+          "text": "Yes"
+        },
+        {
+          "input": "n",
+          "value": "n",
+          "text": "No"
+        }
+      ]
     },
     "sendCrashReports": {
       "type": "select:string",
       "prompt": "Send crash reports to help us fix bugs:",
       "default": "y",
-      "options": [{
-        "input": "y",
-        "value": "y",
-        "text": "Yes"
-      }, {
-        "input": "n",
-        "value": "n",
-        "text": "No"
-      }]
+      "options": [
+        {
+          "input": "y",
+          "value": "y",
+          "text": "Yes"
+        },
+        {
+          "input": "n",
+          "value": "n",
+          "text": "No"
+        }
+      ]
     }
   },
-  "priorities": [
-    "variables.json",
-    "config.json"
-  ]
+  "priorities": ["variables.json", "config.json"]
 }
