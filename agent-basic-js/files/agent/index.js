@@ -43,7 +43,7 @@ fs.readdir('./lib/actions', (err, processFiles) => {
   }
 
   processFiles.forEach(file => {
-    const actions = require(`./lib/actions/${file}`);
+    const actions = require(`./lib/actions/${file}`).default;
     if (!actions.name) {
       console.log(`Process ${file} doesn't export a 'name' field. Skipping...`);
       return;
