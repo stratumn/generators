@@ -16,9 +16,8 @@ services:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
-
-{{/* Ugly if cascade and DRY */}}
-{{/* https://github.com/stratumn/generators/issues/31 */}}
+{{- /* Ugly if cascade and DRY */}}
+{{- /* https://github.com/stratumn/generators/issues/31 */}}
 {{- if $require_postgresql }}
   postgres:
     env_file:
@@ -45,7 +44,7 @@ services:
     - ./config/test.secret.env
 {{- end}}
 {{- end}}
-{{/* End of ugly if cascade and DRY */}}
+{{- /* End of ugly if cascade and DRY */}}
 {{- if $require_couchdb }}
   couchdb:
     env_file:
