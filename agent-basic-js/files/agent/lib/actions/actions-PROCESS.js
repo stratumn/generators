@@ -1,13 +1,13 @@
-module.exports = {
+export default {
   events: {
-    didSave: function(segment) {
-      console.log('Segment ' + segment.meta.linkHash + ' was saved!');
+    didSave(segment) {
+      console.log(`Segment ${segment.meta.linkHash} was saved!`);
     }
   },
 
   name: '{{- .fileSubstitutionInput -}}',
 
-  init: function(title) {
+  init(title) {
     if (!title) {
       return this.reject('a title is required');
     }
@@ -16,10 +16,10 @@ module.exports = {
       title: title
     };
 
-    this.append();
+    return this.append();
   },
 
-  message: function(body, author) {
+  message(body, author) {
     if (!body) {
       return this.reject('a body is required');
     }
@@ -33,6 +33,6 @@ module.exports = {
       author: author
     };
 
-    this.append();
+    return this.append();
   }
 };
