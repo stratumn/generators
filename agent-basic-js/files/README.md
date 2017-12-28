@@ -39,7 +39,10 @@ doing so).
 
 ## Launch development server
 
-To launch all the services locally, run:
+You first need to install the development dependencies (mainly babel) by going in the `agent` 
+directory and running `yarn`.
+
+After that, to launch all the services locally, go to the root folder and run:
 
 ```
 $ strat up
