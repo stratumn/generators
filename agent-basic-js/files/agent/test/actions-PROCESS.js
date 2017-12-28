@@ -1,68 +1,68 @@
-var processify = require('stratumn-agent').processify;
-var actions = require('../lib/actions/actions-{{- .fileSubstitutionInput -}}');
+import Agent from '@indigoframework/agent';
+import actions from '../lib/actions/actions-{{- .fileSubstitutionInput -}}';
 
-describe('{{- .fileSubstitutionInput -}}-transitions', function() {
-  var map;
-
-  beforeEach(function() {
-    map = processify(actions);
+describe('{{- .fileSubstitutionInput -}}-transitions', () => {
+  // Transform our actions into a process before every test
+  let map;
+  beforeEach(() => {
+    map = Agent.processify(actions);
   });
 
-  describe('#init()', function() {
-    it('sets the state correctly', function() {
-      return map.init('Hello, World!').then(function(link) {
+  describe('#init()', () => {
+    it('sets the state correctly', () => {
+      return map.init('Hello, World!').then(link => {
         link.state.title.should.be.exactly('Hello, World!');
       });
     });
 
-    it('requires a title', function() {
+    it('requires a title', () => {
       return map
         .init()
-        .then(function(link) {
+        .then(link => {
           throw new Error('link should not have been created');
         })
-        .catch(function(err) {
+        .catch(err => {
           err.message.should.be.exactly('a title is required');
         });
     });
   });
 
-  describe('#message()', function() {
-    it('updates the state correctly', function() {
+  describe('#message()', () => {
+    it('updates the state correctly', () => {
       return map
         .init('Hello, World!')
-        .then(function(link) {
+        .then(link => {
           return map.message('Hi', 'Me');
         })
-        .then(function(link) {
+        .then(link => {
           link.state.should.deepEqual({ body: 'Hi', author: 'Me' });
         });
     });
 
-    it('requires a body', function() {
+    it('requires a body', () => {
       return map
         .init('Hello, World!')
-        .then(function(link) {
+        .then(link => {
           return map.message();
         })
-        .then(function(link) {
+        .then(link => {
           throw new Error('link should not have been created');
         })
-        .catch(function(err) {
+        .catch(err => {
           err.message.should.be.exactly('a body is required');
         });
     });
 
-    it('requires an author', function() {
+    it('requires an author', () => {
       return map
         .init('Hello, World!')
-        .then(function(link) {
+        .then(link => {
           return map.message('Hi');
         })
-        .then(function(link) {
+        .then(link => {
           throw new Error('link should not have been created');
         })
-        .catch(function(err) {
+        .catch(err => {
           err.message.should.be.exactly('an author is required');
         });
     });

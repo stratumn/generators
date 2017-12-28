@@ -1,21 +1,28 @@
 {{- $fossilizers := (input "developmentFossilizer") -}}
 // This file creates an Express server and mounts the agent on it.
 
-const fs = require('fs');
-const crypto = require('crypto');
-const express = require('express');
-const Agent = require('stratumn-agent');
-const plugins = Agent.plugins;
+import fs from 'fs';
+import crypto from 'crypto';
+import express from 'express';
+import Agent from '@indigoframework/agent';
+
+const { plugins } = Agent;
 
 // Create an HTTP store client to save segments.
 // Assumes an HTTP store server is available on env.STRATUMN_STORE_URL or http://store:5000.
-const storeHttpClient = Agent.storeHttpClient(process.env.STRATUMN_STORE_URL || 'http://store:5000');
+const storeHttpClient = Agent.storeHttpClient(
+  process.env.STRATUMN_STORE_URL || 'http://store:5000'
+);
 
 const fossilizerHttpClients = [];
 {{- range $i, $fossilizer := $fossilizers}}
 // Create an HTTP fossilizer client to fossilize segments.
 // Assumes an HTTP fossilizer server is available on env.STRATUMN_FOSSILIZER_URL or 'http://{{$fossilizer}}:{{(add 6000 $i)}}'.
-fossilizerHttpClients.push(Agent.fossilizerHttpClient(process.env.STRATUMN_FOSSILIZER_URL || 'http://{{$fossilizer}}:{{(add 6000 $i)}}'));
+fossilizerHttpClients.push(
+  Agent.fossilizerHttpClient(
+    process.env.STRATUMN_FOSSILIZER_URL || 'http://{{$fossilizer}}:{{(add 6000 $i)}}'
+  )
+);
 {{- end}}
 
 // Create an agent.
@@ -52,23 +59,23 @@ fs.readdir('./lib/actions', (err, processFiles) => {
 {{- if $fossilizers }}
           // the fossilizer must be able to reach the agent via this url
           evidenceCallbackUrl: process.env.STRATUMN_EVIDENCE_CALLBACK_URL || agentUrl,
-          // change to a unique salt
-          salt: process.env.STRATUMN_SALT || crypto.randomBytes(32).toString('hex'),
-{{- end}}
-          plugins: processPlugins
+    // change to a unique salt
+    salt: process.env.STRATUMN_SALT || crypto.randomBytes(32).toString('hex'),
+    {{- end}}
+  plugins: processPlugins
         }
-      );
+);
     } catch (err) {
-      console.error(`Could not load process: ${actions.name}`);
-    }
+  console.error(`Could not load process: ${actions.name}`);
+}
   });
 });
 
 // Creates an HTTP server for the agent with CORS enabled.
-var agentHttpServer = Agent.httpServer(agent, { cors: {} });
+const agentHttpServer = Agent.httpServer(agent, { cors: {} });
 
 // Create the Express server.
-var app = express();
+const app = express();
 
 app.disable('x-powered-by');
 
@@ -79,6 +86,6 @@ app.use('/', agentHttpServer);
 const server = Agent.websocketServer(app, storeHttpClient);
 
 // Start the server.
-server.listen(3000, function() {
-  console.log('Listening on :' + this.address().port);
+server.listen(3000, () => {
+  console.log(`Listening on : ${agentUrl}`);
 });
