@@ -51,8 +51,8 @@ services:
       - ./fabric/crypto-config:/var/stratumn/fabricstore/crypto-config
       - ./fabric/client-config/client-config.yaml:/var/stratumn/fabricstore/client-config.yaml
 {{- end}}
-{{/* Ugly if cascade and DRY */}}
-{{/* https://github.com/stratumn/generators/issues/31 */}}
+{{- /* Ugly if cascade and DRY */}}
+{{- /* https://github.com/stratumn/generators/issues/31 */}}
 {{- if $require_postgresql }}
     depends_on:
     - postgres
@@ -87,7 +87,7 @@ services:
     image: {{.rethinkdb}}
 {{- end}}
 {{- end}}
-{{/* End of ugly if cascade and DRY */}}
+{{- /* End of ugly if cascade and DRY */}}
 {{- if $require_couchdb }}
     depends_on:
     - couchdb
