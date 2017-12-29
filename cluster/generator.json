@@ -55,10 +55,9 @@
         ]
       },
       "clusterSize": {
-        "type": "string",
+        "type": "int",
         "prompt": "Number of nodes in the cluster:",
-        "default": "4",
-        "format": "^[1-9][0-9]*$"
+        "default": 4
       },
       "developmentFossilizer": {
         "type": "selectmulti:string",
