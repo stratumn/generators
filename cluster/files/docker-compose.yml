@@ -6,8 +6,9 @@
 version: '3'
 services:
   dial:
+    build:
+      context: ./dial
     image: {{input "dockerorg"}}/dial_seeds:latest
-    command: [/dial.sh]
     depends_on:
 {{- range $i, $_ := loop 0 $clusterSize}}
     - tmapp{{(add 1 $i)}}
