@@ -1,0 +1,1 @@
+docker build -t {{input "dockerorg"}}/dial_seeds $(dirname $0)
