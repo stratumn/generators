@@ -10,19 +10,12 @@
 {{- else }}
     "init": "strat run tm:init",
 {{- end}}
-    "tm:init": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" tendermint/tendermint:0.13.0 init",
-    "tm:post-init:linux": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init",
-    "tm:init:test": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" tendermint/tendermint:0.13.0 init",
-    "tm:post-init:test:linux": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init",
+    "tm:init": "for i in `seq {{input `clusterSize`}}`; do docker run -it --rm -v \"$(pwd)/tmapp$i/tendermint:/tendermint\" tendermint/tendermint:0.13.0 init; done",
+    "tm:post-init:linux": "for i in `seq {{input `clusterSize`}}`; do docker run -it --rm -v \"$(pwd)/tmapp$i/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init; done",
     "compose": "docker-compose -p {{input `author`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
-    "compose:test": "docker-compose -p {{input `author`}}-test -f docker-compose.yml -f docker-compose.test.yml",
     "build": "strat run compose build",
-    "build:test": "strat run compose:test build",
     "up": "strat run build && strat run compose up",
     "down": "strat run compose down",
-    "down:test": "strat run compose:test down; rm -rf tendermint.test",
-    "down:test:linux": "strat run compose:test down; strat run tm:post-init:test:linux; rm -rf tendermint.test",
-    "test": "strat run build:test && strat run tm:init:test && strat run compose:test run agent npm test",
     "pull": "strat run compose pull",
     "push": "strat run compose push"
   }
