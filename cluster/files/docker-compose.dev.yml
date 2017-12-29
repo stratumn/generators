@@ -1,0 +1,79 @@
+{{- $tmstore := (input "tmpopUnderlyingStore") -}}
+{{- $require_postgresql := (eq $tmstore "postgrestmpop") -}}
+{{- $require_rethinkdb := (eq $tmstore "rethinktmpop") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $clusterSize := (input "clusterSize") -}}
+version: '3'
+services:
+  agentui:
+    image: {{.agentui}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "4000:4000"
+  tmpopexplorer:
+    image: {{.tmpopexplorer}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "8000:4000"
+  agent:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "3000:3000"
+  store:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "5000:5000"
+{{- if $require_postgresql }}
+  postgres:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+{{- end}}
+{{- if $require_rethinkdb }}
+  rethinkdb:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+{{- end}}
+{{- range $i, $_ := loop 0 $clusterSize}}
+{{- $node := add 1 $i}}
+  tmapp{{$node}}:
+    user: root
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    volumes:
+    - ./tmapp{{$node}}/tendermint:/data/tendermint
+{{- if eq $tmstore "filetmstore" }}
+    - ./tmapp{{$node}}/segments:/var/stratumn/filestore
+{{- end}}
+{{- if eq $node 1}}
+    ports:
+    - "46656-46657:46656-46657"
+{{- end}}
+{{- end}}
+{{- range $i, $fossilizer := $fossilizers}}
+  {{$fossilizer}}:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+    ports:
+    - "{{(add 6000 $i)}}"
+{{- end}}
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+        name: {{.dir}}_dev

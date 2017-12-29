@@ -1,0 +1,74 @@
+{{- $tmstore := (input "tmpopUnderlyingStore") -}}
+{{- $require_postgresql := (eq $tmstore "postgrestmpop") -}}
+{{- $require_rethinkdb := (eq $tmstore "rethinktmpop") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $clusterSize := (input "clusterSize") -}}
+version: '3'
+services:
+  dial:
+    image: {{input "dockerorg"}}/dial_seeds:latest
+    command: [/dial.sh]
+    depends_on:
+{{- range $i, $_ := loop 0 $clusterSize}}
+    - tmapp{{(add 1 $i)}}
+{{- end}}
+  agent:
+    image: {{.agentsample}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    depends_on:
+    - store
+{{- range $i, $_ := loop 0 $clusterSize}}
+    - tmapp{{(add 1 $i)}}
+{{- end}}
+{{- range $i, $fossilizer := $fossilizers}}
+    - {{$fossilizer}}
+{{- end}}
+  store:
+    image: {{.tmstore}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    command: [tmstore, -endpoint, "tcp://tmapp1:46657"]
+    depends_on:
+    - tmapp1
+{{- if $require_postgresql }}
+    - postgres
+{{- else if $require_rethinkdb }}
+    - rethinkdb
+{{- end}}
+{{- if $require_postgresql }}
+  postgres:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.postgres}}
+{{- end}}
+{{- if $require_rethinkdb }}
+  rethinkdb:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.rethinkdb}}
+{{- end}}
+{{- $tmstoreimage := index . $tmstore}}
+{{- range $i, $_ := loop 0 $clusterSize}}
+  tmapp{{(add 1 $i)}}:
+    image: {{$tmstoreimage}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    command: [{{$tmstore}}, -home, "/data/tendermint", "-create_empty_blocks=false"]
+    volumes:
+    - ./validation:/data/validation
+{{- end}}
+{{- $root := . }}
+{{- range $i, $fossilizer := $fossilizers}}
+  {{$fossilizer}}:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{index $root $fossilizer }}
+    command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
+{{- end}}
