@@ -1,0 +1,122 @@
+{
+    "name": "cluster",
+    "version": "0.2.0",
+    "description": "An Indigo Tendermint cluster",
+    "author": "Stratumn",
+    "license": "Apache-2.0",
+    "variables": {
+      "generator": "cluster",
+      "agentsample": "indigoframework/agent-sample:0.2.0",
+      "agentui": "indigoframework/agent-ui:0.2.0",
+      "tmpopexplorer": "indigoframework/tmpop-explorer:0.2.0",
+      "filetmpop": "indigoframework/filetmpop:0.2.0",
+      "dummytmpop": "indigoframework/dummytmpop:0.2.0",
+      "postgrestmpop": "indigoframework/postgrestmpop:0.2.0",
+      "rethinktmpop": "indigoframework/rethinktmpop:0.2.0",
+      "tmstore": "indigoframework/tmstore:0.2.0",
+      "dummyfossilizer": "indigoframework/dummyfossilizer:0.2.0",
+      "dummybatchfossilizer": "indigoframework/dummybatchfossilizer:0.2.0",
+      "btcfossilizer": "indigoframework/btcfossilizer:0.2.0",
+      "postgres": "postgres:10.1",
+      "rethinkdb": "rethinkdb:2.3"
+    },
+    "inputs": {
+      "author": {
+        "type": "string",
+        "prompt": "Your name:",
+        "default": "{{.fullName}}",
+        "format": ".+"
+      },
+      "tmpopUnderlyingStore": {
+        "type": "select:string",
+        "prompt": "Tendermint underlying store:",
+        "default": "filetmpop",
+        "options": [
+          {
+            "input": "1",
+            "value": "filetmpop",
+            "text": "Indigo's File Store"
+          },
+          {
+            "input": "2",
+            "value": "dummytmpop",
+            "text": "Indigo's Dummy Store"
+          },
+          {
+            "input": "3",
+            "value": "postgrestmpop",
+            "text": "Indigo's PostgreSQL Store"
+          },
+          {
+            "input": "4",
+            "value": "rethinktmpop",
+            "text": "Indigo's RethinkDB Store"
+          }
+        ]
+      },
+      "clusterSize": {
+        "type": "string",
+        "prompt": "Number of nodes in the cluster:",
+        "default": "4",
+        "format": "^[1-9][0-9]*$"
+      },
+      "developmentFossilizer": {
+        "type": "selectmulti:string",
+        "prompt": "List of development fossilizers:",
+        "separator": ",",
+        "isRequired": false,
+        "options": [
+          {
+            "input": "1",
+            "value": "dummyfossilizer",
+            "text": "Indigo's Dummy Fossilizer"
+          },
+          {
+            "input": "2",
+            "value": "dummybatchfossilizer",
+            "text": "Indigo's Dummy Batch Fossilizer"
+          },
+          {
+            "input": "3",
+            "value": "btcfossilizer",
+            "text": "Indigo's Bitcoin Fossilizer"
+          }
+        ]
+      },
+      "developmentFossilizerWIF": {
+        "type": "string",
+        "prompt": "Bitcoin Wallet Import Format key for development:",
+        "format": ".+"
+      },
+      "testFossilizerWIF": {
+        "type": "string",
+        "prompt": "Bitcoin Wallet Import Format key for tests:",
+        "format": ".+"
+      },
+      "dockerorg": {
+        "type": "string",
+        "prompt": "Docker organization or user (to build images):",
+        "default": "{{.dockerorg}}",
+        "format": "^[a-z][a-z0-9-]*$"
+      },
+      "useGit": {
+        "type": "select:string",
+        "prompt": "Initialize a Git repository (requires Git)",
+        "default": "n",
+        "options": [
+          {
+            "input": "y",
+            "value": "y",
+            "text": "Yes"
+          },
+          {
+            "input": "n",
+            "value": "n",
+            "text": "No"
+          }
+        ]
+      }
+    },
+    "priorities": ["LICENSE", "docker-compose.yml"]
+  }
+  
