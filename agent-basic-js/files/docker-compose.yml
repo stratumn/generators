@@ -131,6 +131,7 @@ services:
       service: couchdb0
   cli:
     container_name: cli
+    image: {{.fabricinstaller}}
     extends:
       file: fabric/docker-compose.yml
       service: cli

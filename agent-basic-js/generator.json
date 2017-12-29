@@ -15,6 +15,7 @@
     "rethinktmpop": "indigoframework/rethinktmpop:0.2.0-rc1",
     "tmstore": "indigoframework/tmstore:0.2.0-rc1",
     "fabricstore": "indigoframework/fabricstore:0.2.0-rc1",
+    "fabricinstaller": "indigoframework/fabricinstaller:0.2.0-rc1",
     "filestore": "indigoframework/filestore:0.2.0-rc1",
     "dummystore": "indigoframework/dummystore:0.2.0-rc1",
     "couchstore": "indigoframework/couchstore:0.2.0-rc1",
