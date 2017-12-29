@@ -15,7 +15,7 @@ verifyResult () {
 createChannelWithRetry () {
 	counter=0
 	while [ $counter -lt $MAX_RETRY ]; do
-		peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f $CONFIG_PATH/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+		peer channel create -o orderer.example.com:7050 -c $CHANNEL_ID -f $CONFIG_PATH/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
 		res=$?
 		if [ $res == 0 ]; then
 			break
@@ -42,35 +42,36 @@ joinWithRetry () {
 	verifyResult $res "After $MAX_RETRY attemps, failed to join peer to channel"
 }
 
-instantiateIfNeeded () {
-	peer chaincode query -C mychannel -n pop -c '{"Function":"GetValue","Args":["none"]}' >/dev/null
-	if [ $? -ne 0 ]; then 
-		peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n pop -v 1.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member')"
-		verifyResult $? "Chaincode instantiation on peer on channel '$CHANNEL_NAME' failed"
-		echo "===================== Chaincode Instantiation on peer on channel '$CHANNEL_NAME' is successful ===================== "
-	fi
-}
+# Check if network is already running
+peer chaincode query -C $CHANNEL_ID -n $CHAINCODE_ID -c '{"Function":"GetValue","Args":["none"]}' >&log.txt
 
-echo "Creating channel..."
-createChannelWithRetry
-echo "===================== Channel \"$CHANNEL_NAME\" is created successfully ===================== "
+# If not create channel, join channel, install and instantiate chaincode
+if [ $? -ne 0 ]; then
 
-echo "Joining peer to channel..."
-joinWithRetry
-echo "===================== PEER joined on the channel \"$CHANNEL_NAME\" ===================== "
+	echo "Creating channel..."
+	createChannelWithRetry
+	echo "===================== Channel \"$CHANNEL_ID\" is created successfully ===================== "
 
-echo "Updating anchor peer for org1..."
-peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f $CONFIG_PATH/Org1MSPanchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
-verifyResult $?  "Anchor peer update failed"
-echo "===================== Anchor peers for org \"$CORE_PEER_LOCALMSPID\" on \"$CHANNEL_NAME\" is updated successfully ===================== "
+	echo "Joining peer to channel..."
+	joinWithRetry
+	echo "===================== PEER joined on the channel \"$CHANNEL_ID\" ===================== "
 
-echo "Installing chaincode on peer0.org1.example.com..."
-peer chaincode install -n pop -v 1.0 -p github.com/stratumn/chaincode/pop
-verifyResult $? "Chaincode installation on remote peer has Failed"
-echo "===================== Chaincode is installed on remote peer ===================== "
+	echo "Updating anchor peer for org1..."
+	peer channel update -o orderer.example.com:7050 -c $CHANNEL_ID -f $CONFIG_PATH/Org1MSPanchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
+	verifyResult $?  "Anchor peer update failed"
+	echo "===================== Anchor peers for org \"$CORE_PEER_LOCALMSPID\" on \"$CHANNEL_ID\" is updated successfully ===================== "
 
-echo "Instantiate chaincode..."
-instantiateIfNeeded
+	echo "Installing chaincode on peer0.org1.example.com..."
+	peer chaincode install -n $CHAINCODE_ID -v 1.0 -p github.com/stratumn/chaincode/pop
+	verifyResult $? "Chaincode installation on remote peer has Failed"
+	echo "===================== Chaincode is installed on remote peer ===================== "
+
+	echo "Instantiate chaincode..."
+	peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_ID -n $CHAINCODE_ID -v 1.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member')"
+	verifyResult $? "Chaincode instantiation on peer on channel '$CHANNEL_ID' failed"
+	echo "===================== Chaincode Instantiation on peer on channel '$CHANNEL_ID' is successful ===================== "
+
+fi
 
 echo ""
 echo "===================== Network ready and initialized ======================== "
