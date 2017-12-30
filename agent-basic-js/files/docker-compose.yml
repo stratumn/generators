@@ -39,7 +39,7 @@ services:
     - rethinkdb
 {{- end}}
 {{- else if eq $store "couchstore"}}
-    command: [{{$store}}, -endpoint, "http://couchdb:5986"]
+    command: [{{$store}}, -endpoint, "http://couchdb:5984"]
 {{- end}}
 {{- if eq $store "fabricstore" }}
     user: root
@@ -96,6 +96,8 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{.couchdb}}
+    volumes:
+    - ./data:/opt/couchdb/data
 {{- end}}
 {{- if $require_tmstore }}
 {{- $tmstore := (input "tmpopUnderlyingStore") }}
