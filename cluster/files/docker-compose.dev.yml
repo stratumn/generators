@@ -1,6 +1,6 @@
-{{- $tmstore := (input "tmpopUnderlyingStore") -}}
-{{- $require_postgresql := (eq $tmstore "postgrestmpop") -}}
-{{- $require_rethinkdb := (eq $tmstore "rethinktmpop") -}}
+{{- $tmpopstore := (input "tmpopUnderlyingStore") -}}
+{{- $require_postgresql := (eq $tmpopstore "postgrestmpop") -}}
+{{- $require_rethinkdb := (eq $tmpopstore "rethinktmpop") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $clusterSize := (input "clusterSize") -}}
 version: '3'
@@ -38,13 +38,13 @@ services:
     ports:
     - "5000:5000"
 {{- if $require_postgresql }}
-  postgres:
+  postgres{{$node}}:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- end}}
 {{- if $require_rethinkdb }}
-  rethinkdb:
+  rethinkdb{{$node}}:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
@@ -56,7 +56,7 @@ services:
     - ./config/dev.secret.env
     volumes:
     - ./tmapp{{$node}}/tendermint:/data/tendermint
-{{- if eq $tmstore "filetmstore" }}
+{{- if eq $tmpopstore "filetmstore" }}
     - ./tmapp{{$node}}/segments:/var/stratumn/filestore
 {{- end}}
     ports:
