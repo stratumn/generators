@@ -36,7 +36,7 @@ services:
     - ./config/dev.env
     - ./config/dev.secret.env
     ports:
-    - "5000:5000"
+    - "{{(add 5000 $i)}}:5000"
 {{- if $require_postgresql }}
   postgres{{$node}}:
     env_file:
@@ -59,8 +59,10 @@ services:
 {{- if eq $tmpopstore "filetmstore" }}
     - ./tmapp{{$node}}/segments:/var/stratumn/filestore
 {{- end}}
+{{- if $i eq 0 }}
     ports:
     - "46656-46657:46656-46657"
+{{- end}}
 {{- end}}
 {{- range $i, $fossilizer := $fossilizers}}
   {{$fossilizer}}:
