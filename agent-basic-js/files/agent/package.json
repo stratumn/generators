@@ -10,7 +10,7 @@
   "author": "{{input `author`}}",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@indigoframework/agent": "^0.2.0-3",
+    "@indigoframework/agent": "^0.2.0",
     "express": "^4.14.0"
   },
   "devDependencies": {
