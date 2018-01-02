@@ -41,7 +41,7 @@
 {{- end}}
 {{- if eq $store "fabricstore" }}
     "clean": "strat run clean:fabric && strat run clean:couchdb",
-    "clean:couchdb": "rm -rf fabric/data/{*,.*}",
+    "clean:couchdb": "rm -rf fabric/data",
     "clean:fabric": "docker container rm $(docker container ls -a | grep dev-peer0.org1.example.com-pop-1.0 | awk '{print $1}') && docker rmi $(docker images | grep dev-peer0.org1.example.com-pop-1.0 | awk '{print $3}')",
 {{- end}}
     "pull": "strat run compose pull",
