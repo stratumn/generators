@@ -29,7 +29,9 @@ services:
     - ./config/dev.secret.env
     ports:
     - "3000:3000"
-  store:
+{{- range $i, $_ := loop 0 $clusterSize}}
+{{- $node := add 1 $i}}
+  store{{$node}}:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
@@ -47,8 +49,6 @@ services:
     - ./config/dev.env
     - ./config/dev.secret.env
 {{- end}}
-{{- range $i, $_ := loop 0 $clusterSize}}
-{{- $node := add 1 $i}}
   tmapp{{$node}}:
     user: root
     env_file:
@@ -59,10 +59,8 @@ services:
 {{- if eq $tmstore "filetmstore" }}
     - ./tmapp{{$node}}/segments:/var/stratumn/filestore
 {{- end}}
-{{- if eq $node 1}}
     ports:
     - "46656-46657:46656-46657"
-{{- end}}
 {{- end}}
 {{- range $i, $fossilizer := $fossilizers}}
   {{$fossilizer}}:
