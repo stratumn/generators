@@ -66,7 +66,7 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
 {{- if $require_postgresql }}
-    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "TODO"]
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "postgres://postgres@postgres{{$node}}/postgres?sslmode=disable"]
 {{- else if $require_rethinkdb }}
     command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015"]
 {{- else }}
