@@ -1,4 +1,5 @@
 {{- $store := (input "developmentStore") -}}
+{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
 {
   "name": "{{input `name`}}",
   "author": "{{input `author`}}",
@@ -6,13 +7,13 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
 {{- if eq (input `useGit`) `y` }}
-{{- if eq $store "tmstore" }}
+{{- if $require_tmstore }}
     "init": "strat run tm:init && git init && git add .",
     "init:linux": "strat run tm:init && strat run tm:post-init:linux && git init && git add .",
 {{- else }}
     "init": "git init && git add .",
 {{- end}}
-{{- else if eq $store "tmstore" }}
+{{- else if $require_tmstore }}
     "init": "strat run tm:init",
 {{- end}}
 {{- if eq $store "tmstore" }}
@@ -21,8 +22,13 @@
     "tm:init:test": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" tendermint/tendermint:0.13.0 init",
     "tm:post-init:test:linux": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init",
 {{- end}}
+{{- if eq $store "fabricstore" }}
+    "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml -f fabric/docker-compose.yml",
+    "compose:test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml -f fabric/docker-compose.yml",
+{{- else }}
     "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "compose:test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml",
+{{- end }}
     "build": "strat run compose build",
     "build:test": "strat run compose:test build",
     "up": "strat run build && strat run compose up",
@@ -31,7 +37,7 @@
 {{- else }}
     "down": "strat run compose down",
 {{- end}}
-{{- if eq $store "tmstore" }}
+{{- if $require_tmstore }}
     "down:test": "strat run compose:test down; rm -rf tendermint.test",
     "down:test:linux": "strat run compose:test down; strat run tm:post-init:test:linux; rm -rf tendermint.test",
     "test": "strat run build:test && strat run tm:init:test && strat run compose:test run agent npm test",

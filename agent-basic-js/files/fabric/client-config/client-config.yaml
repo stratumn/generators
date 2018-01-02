@@ -60,7 +60,7 @@ channels:
         eventSource: true
     
     chaincodes:
-      - pop:1.0
+      - pop:0.2.0
 
 organizations:
   Org1:

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 MAX_RETRY=5
 DELAY=1
 
