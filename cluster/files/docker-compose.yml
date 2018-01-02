@@ -19,21 +19,25 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     depends_on:
-    - store
 {{- range $i, $_ := loop 0 $clusterSize}}
-    - tmapp{{(add 1 $i)}}
+{{- $node := add 1 $i}}
+    - store{{$node}}
+    - tmapp{{$node}}
 {{- end}}
 {{- range $i, $fossilizer := $fossilizers}}
     - {{$fossilizer}}
 {{- end}}
-  store:
+{{- $tmstoreimage := index . $tmstore}}
+{{- range $i, $_ := loop 0 $clusterSize}}
+{{- $node := add 1 $i}}
+  store{{$node}}:
     image: {{.tmstore}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [tmstore, -endpoint, "tcp://tmapp1:46657"]
+    command: [tmstore, -endpoint, "tcp://tmapp{{$node}}:46657"]
     depends_on:
-    - tmapp1
+    - tmapp{{$node}}
 {{- if $require_postgresql }}
     - postgres
 {{- else if $require_rethinkdb }}
@@ -53,14 +57,13 @@ services:
     - ./config/common.secret.env
     image: {{.rethinkdb}}
 {{- end}}
-{{- $tmstoreimage := index . $tmstore}}
-{{- range $i, $_ := loop 0 $clusterSize}}
-  tmapp{{(add 1 $i)}}:
+  tmapp{{$node}}:
     image: {{$tmstoreimage}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [{{$tmstore}}, -home, "/data/tendermint", "-create_empty_blocks=false"]
+    # TODO: I need to inject rethink / postgres url here (and have one per node in the cluster)
+    command: [{{$tmstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe"]
     volumes:
     - ./validation:/data/validation
 {{- end}}
