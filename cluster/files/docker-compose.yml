@@ -1,6 +1,9 @@
-{{- $tmstore := (input "tmpopUnderlyingStore") -}}
-{{- $require_postgresql := (eq $tmstore "postgrestmpop") -}}
-{{- $require_rethinkdb := (eq $tmstore "rethinktmpop") -}}
+{{- $tmstoreimage := .tmstore}}
+{{- $tmpopstore := (input "tmpopUnderlyingStore") -}}
+{{- $require_postgresql := (eq $tmpopstore "postgrestmpop") -}}
+{{- $postgresimage := .postgres}}
+{{- $require_rethinkdb := (eq $tmpopstore "rethinktmpop") -}}
+{{- $rethinkdbimage := .rethinkdb}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $clusterSize := (input "clusterSize") -}}
 version: '3'
@@ -27,11 +30,11 @@ services:
 {{- range $i, $fossilizer := $fossilizers}}
     - {{$fossilizer}}
 {{- end}}
-{{- $tmstoreimage := index . $tmstore}}
+{{- $tmpopstoreimage := index . $tmpopstore}}
 {{- range $i, $_ := loop 0 $clusterSize}}
 {{- $node := add 1 $i}}
   store{{$node}}:
-    image: {{.tmstore}}
+    image: {{$tmstoreimage}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
@@ -39,31 +42,36 @@ services:
     depends_on:
     - tmapp{{$node}}
 {{- if $require_postgresql }}
-    - postgres
+    - postgres{{$node}}
 {{- else if $require_rethinkdb }}
-    - rethinkdb
+    - rethinkdb{{$node}}
 {{- end}}
 {{- if $require_postgresql }}
-  postgres:
+  postgres{{$node}}:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{.postgres}}
+    image: {{$postgresimage}}
 {{- end}}
 {{- if $require_rethinkdb }}
-  rethinkdb:
+  rethinkdb{{$node}}:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{.rethinkdb}}
+    image: {{$rethinkdbimage}}
 {{- end}}
   tmapp{{$node}}:
-    image: {{$tmstoreimage}}
+    image: {{$tmpopstoreimage}}
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    # TODO: I need to inject rethink / postgres url here (and have one per node in the cluster)
-    command: [{{$tmstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe"]
+{{- if $require_postgresql }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "TODO"]
+{{- else if $require_rethinkdb }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015"]
+{{- else }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe"]
+{{- end}}
     volumes:
     - ./validation:/data/validation
 {{- end}}
