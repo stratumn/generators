@@ -10,7 +10,7 @@
 {{- else }}
     "init": "strat run tm:init",
 {{- end}}
-    "tm:init": "for i in `seq {{input `clusterSize`}}`; do docker run -it --rm -v \"$(pwd)/tmapp$i/tendermint:/tendermint\" tendermint/tendermint:0.13.0 init; done",
+    "tm:init": "sudo ./scripts/tminit.sh",
     "tm:post-init:linux": "for i in `seq {{input `clusterSize`}}`; do docker run -it --rm -v \"$(pwd)/tmapp$i/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init; done",
     "compose": "docker-compose -p {{input `author`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "build": "strat run compose build",
