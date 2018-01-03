@@ -1,0 +1,86 @@
+{{- $tmstoreimage := .tmstore}}
+{{- $tmpopstore := (input "tmpopUnderlyingStore") -}}
+{{- $require_postgresql := (eq $tmpopstore "postgrestmpop") -}}
+{{- $postgresimage := .postgres}}
+{{- $require_rethinkdb := (eq $tmpopstore "rethinktmpop") -}}
+{{- $rethinkdbimage := .rethinkdb}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $clusterSize := (input "clusterSize") -}}
+version: '3'
+services:
+  dial:
+    build:
+      context: ./dial
+    image: {{input "dockerorg"}}/dial_seeds:latest
+    depends_on:
+{{- range $i, $_ := loop 0 $clusterSize}}
+    - tmapp{{(add 1 $i)}}
+{{- end}}
+  agent:
+    image: {{.agentsample}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    depends_on:
+{{- range $i, $_ := loop 0 $clusterSize}}
+{{- $node := add 1 $i}}
+    - store{{$node}}
+    - tmapp{{$node}}
+{{- end}}
+{{- range $i, $fossilizer := $fossilizers}}
+    - {{$fossilizer}}
+{{- end}}
+{{- $tmpopstoreimage := index . $tmpopstore}}
+{{- range $i, $_ := loop 0 $clusterSize}}
+{{- $node := add 1 $i}}
+  store{{$node}}:
+    image: {{$tmstoreimage}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    command: [tmstore, -endpoint, "tcp://tmapp{{$node}}:46657"]
+    depends_on:
+    - tmapp{{$node}}
+{{- if $require_postgresql }}
+    - postgres{{$node}}
+{{- else if $require_rethinkdb }}
+    - rethinkdb{{$node}}
+{{- end}}
+{{- if $require_postgresql }}
+  postgres{{$node}}:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{$postgresimage}}
+{{- end}}
+{{- if $require_rethinkdb }}
+  rethinkdb{{$node}}:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{$rethinkdbimage}}
+{{- end}}
+  tmapp{{$node}}:
+    image: {{$tmpopstoreimage}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+{{- if $require_postgresql }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "postgres://postgres@postgres{{$node}}/postgres?sslmode=disable"]
+{{- else if $require_rethinkdb }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015"]
+{{- else }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe"]
+{{- end}}
+    volumes:
+    - ./validation:/data/validation
+{{- end}}
+{{- $root := . }}
+{{- range $i, $fossilizer := $fossilizers}}
+  {{$fossilizer}}:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{index $root $fossilizer }}
+    command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
+{{- end}}
