@@ -14,6 +14,7 @@
 {{- end}}
 {{- else if eq $store "tmstore" }}
     "init": "strat run tm:init",
+    "init:linux": "strat run tm:init && strat run tm:post-init:linux",
 {{- end}}
 {{- if eq $store "tmstore" }}
     "tm:init": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" tendermint/tendermint:0.13.0 init",
