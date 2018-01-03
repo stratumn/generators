@@ -62,12 +62,12 @@ if [ $? -ne 0 ]; then
 	echo "===================== Anchor peers for org \"$CORE_PEER_LOCALMSPID\" on \"$CHANNEL_ID\" is updated successfully ===================== "
 
 	echo "Installing chaincode on peer0.org1.example.com..."
-	peer chaincode install -n $CHAINCODE_ID -v 1.0 -p github.com/stratumn/chaincode/pop
+	peer chaincode install -n $CHAINCODE_ID -v $CHAINCODE_VERSION -p github.com/stratumn/chaincode/pop
 	verifyResult $? "Chaincode installation on remote peer has Failed"
 	echo "===================== Chaincode is installed on remote peer ===================== "
 
 	echo "Instantiate chaincode..."
-	peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_ID -n $CHAINCODE_ID -v 1.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member')"
+	peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_ID -n $CHAINCODE_ID -v $CHAINCODE_VERSION -c '{"Args":[]}' -P "AND ('Org1MSP.member')"
 	verifyResult $? "Chaincode instantiation on peer on channel '$CHANNEL_ID' failed"
 	echo "===================== Chaincode Instantiation on peer on channel '$CHANNEL_ID' is successful ===================== "
 
