@@ -26,7 +26,8 @@
     "btcfossilizer": "indigoframework/btcfossilizer:0.2.0",
     "couchdb": "couchdb:2.1",
     "postgres": "postgres:10.1",
-    "rethinkdb": "rethinkdb:2.3"
+    "rethinkdb": "rethinkdb:2.3",
+    "chaincodeversion": "0.2.0"
   },
   "filename-substitutions": {
     "PROCESS": "process"

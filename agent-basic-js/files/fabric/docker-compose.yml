@@ -98,6 +98,7 @@ services:
       # required to create and join channel
       - CHANNEL_ID=mychannel
       - CHAINCODE_ID=pop
+      - CHAINCODE_VERSION={{.chaincodeversion}}
       - CONFIG_PATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/config
       - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
       - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
