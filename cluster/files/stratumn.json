@@ -5,13 +5,15 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
 {{- if eq (input `useGit`) `y` }}
-    "init": "strat run tm:init && git init && git add .",
-    "init:linux": "strat run tm:init && strat run tm:post-init:linux && git init && git add .",
+    "init": "strat run tm:init && strat run tm:clusterize && git init && git add .",
+    "init:linux": "strat run tm:init && strat run tm:post-init:linux && strat run tm:clusterize && git init && git add .",
 {{- else }}
-    "init": "strat run tm:init",
+    "init": "strat run tm:init && strat run tm:clusterize",
+    "init:linux": "strat run tm:init && strat run tm:post-init:linux && strat run tm:clusterize",
 {{- end}}
-    "tm:init": "sudo ./scripts/tminit.sh",
-    "tm:post-init:linux": "for i in `seq {{input `clusterSize`}}`; do docker run -it --rm -v \"$(pwd)/tmapp$i/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.13.0 init; done",
+    "tm:init": "./scripts/tm-init.sh",
+    "tm:post-init:linux": "./scripts/tm-linux-post-init.sh",
+    "tm:clusterize": "./scripts/tm-clusterize.sh",
     "compose": "docker-compose -p {{input `author`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "build": "strat run compose build",
     "up": "strat run build && strat run compose up",
