@@ -35,165 +35,100 @@
   "inputs": {
     "name": {
       "type": "string",
-      "prompt": "Project name:",
+      "prompt": "Project name",
       "default": "{{.dir}}",
       "format": "^[a-z][a-z0-9-]*$"
     },
     "description": {
       "type": "string",
-      "prompt": "Project description:",
+      "prompt": "Project description",
       "default": "A basic Javascript agent.",
       "format": ".+"
     },
     "process": {
       "type": "slice:string",
-      "prompt": "List of process names:",
+      "prompt": "List of process names",
       "default": "{{.process}}",
       "format": "^[a-zA-Z].*$",
       "separator": ","
     },
     "author": {
       "type": "string",
-      "prompt": "Your name:",
+      "prompt": "Your name",
       "default": "{{.fullName}}",
       "format": ".+"
     },
     "company": {
       "type": "string",
-      "prompt": "Company:",
+      "prompt": "Company",
       "default": "{{.company}}",
       "format": ".+"
     },
     "year": {
       "type": "string",
-      "prompt": "Year:",
+      "prompt": "Year",
       "default": "{{now `2006`}}",
       "format": ".+"
     },
     "dockerorg": {
       "type": "string",
-      "prompt": "Docker organization or user (to push images):",
+      "prompt": "Docker organization or user (to push images)",
       "default": "{{.dockerorg}}",
       "format": "^[a-z][a-z0-9-]*$"
     },
     "developmentStore": {
       "type": "select:string",
-      "prompt": "Development store:",
+      "prompt": "Development store",
       "default": "tmstore",
-      "options": [
-        {
-          "input": "1",
-          "value": "tmstore",
-          "text": "Indigo's Tendermint Node"
-        },
-        {
-          "input": "2",
-          "value": "fabricstore",
-          "text": "Indigo's Hyperledger Fabric Node"
-        },
-        {
-          "input": "3",
-          "value": "filestore",
-          "text": "Indigo's File Store"
-        },
-        {
-          "input": "4",
-          "value": "dummystore",
-          "text": "Indigo's Dummy Store (in memory)"
-        },
-        {
-          "input": "5",
-          "value": "postgresstore",
-          "text": "Indigo's PostgreSQL Store"
-        },
-        {
-          "input": "6",
-          "value": "rethinkstore",
-          "text": "Indigo's RethinkDB Store"
-        },
-        {
-          "input": "7",
-          "value": "couchstore",
-          "text": "Indigo's CouchDB Store"
-        }
-      ]
+      "options": {
+        "tmstore": "Indigo's Tendermint Node",
+        "fabricstore": "Indigo's Hyperledger Fabric Node",
+        "filestore": "Indigo's File Store",
+        "dummystore": "Indigo's Dummy Store (in memory)",
+        "postgresstore": "Indigo's PostgreSQL Store",
+        "rethinkstore": "Indigo's RethinkDB Store",
+        "couchstore": "Indigo's CouchDB Store"
+      }
     },
     "tmpopUnderlyingStore": {
       "type": "select:string",
-      "prompt": "Tendermint underlying store:",
+      "prompt": "Tendermint underlying store",
       "default": "filetmpop",
-      "options": [
-        {
-          "input": "1",
-          "value": "filetmpop",
-          "text": "Indigo's File Store"
-        },
-        {
-          "input": "2",
-          "value": "dummytmpop",
-          "text": "Indigo's Dummy Store"
-        },
-        {
-          "input": "3",
-          "value": "postgrestmpop",
-          "text": "Indigo's PostgreSQL Store"
-        },
-        {
-          "input": "4",
-          "value": "rethinktmpop",
-          "text": "Indigo's RethinkDB Store"
-        }
-      ]
+      "options": {
+        "filetmpop": "Indigo's File Store",
+        "dummytmpop": "Indigo's Dummy Store",
+        "postgrestmpop": "Indigo's PostgreSQL Store",
+        "rethinktmpop": "Indigo's RethinkDB Store"
+      }
     },
     "developmentFossilizer": {
       "type": "selectmulti:string",
-      "prompt": "List of development fossilizers:",
-      "separator": ",",
+      "prompt": "List of development fossilizers",
       "isRequired": false,
-      "options": [
-        {
-          "input": "1",
-          "value": "dummyfossilizer",
-          "text": "Indigo's Dummy Fossilizer"
-        },
-        {
-          "input": "2",
-          "value": "dummybatchfossilizer",
-          "text": "Indigo's Dummy Batch Fossilizer"
-        },
-        {
-          "input": "3",
-          "value": "btcfossilizer",
-          "text": "Indigo's Bitcoin Fossilizer"
-        }
-      ]
+      "options": {
+        "dummyfossilizer": "Indigo's Dummy Fossilizer",
+        "dummybatchfossilizer": "Indigo's Dummy Batch Fossilizer",
+        "btcfossilizer": "Indigo's Bitcoin Fossilizer"
+      }
     },
     "developmentFossilizerWIF": {
       "type": "string",
-      "prompt": "Bitcoin Wallet Import Format key for development:",
+      "prompt": "Bitcoin Wallet Import Format key for development",
       "format": ".+"
     },
     "testFossilizerWIF": {
       "type": "string",
-      "prompt": "Bitcoin Wallet Import Format key for tests:",
+      "prompt": "Bitcoin Wallet Import Format key for tests",
       "format": ".+"
     },
     "useGit": {
       "type": "select:string",
       "prompt": "Initialize a Git repository (requires Git)",
       "default": "n",
-      "options": [
-        {
-          "input": "y",
-          "value": "y",
-          "text": "Yes"
-        },
-        {
-          "input": "n",
-          "value": "n",
-          "text": "No"
-        }
-      ]
+      "options": {
+        "y": "Yes",
+        "n": "No"
+      }
     }
   },
   "priorities": ["agent/package.json", "LICENSE", "docker-compose.yml"]
