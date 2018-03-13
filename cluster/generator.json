@@ -31,28 +31,12 @@
         "type": "select:string",
         "prompt": "Tendermint underlying store:",
         "default": "filetmpop",
-        "options": [
-          {
-            "input": "1",
-            "value": "filetmpop",
-            "text": "Indigo's File Store"
-          },
-          {
-            "input": "2",
-            "value": "dummytmpop",
-            "text": "Indigo's Dummy Store"
-          },
-          {
-            "input": "3",
-            "value": "postgrestmpop",
-            "text": "Indigo's PostgreSQL Store"
-          },
-          {
-            "input": "4",
-            "value": "rethinktmpop",
-            "text": "Indigo's RethinkDB Store"
-          }
-        ]
+        "options": {
+          "filetmpop": "Indigo's File Store",
+          "dummytmpop": "Indigo's Dummy Store",
+          "postgrestmpop": "Indigo's PostgreSQL Store",
+          "rethinktmpop": "Indigo's RethinkDB Store"
+        }
       },
       "clusterSize": {
         "type": "int",
@@ -62,25 +46,12 @@
       "developmentFossilizer": {
         "type": "selectmulti:string",
         "prompt": "List of development fossilizers:",
-        "separator": ",",
         "isRequired": false,
-        "options": [
-          {
-            "input": "1",
-            "value": "dummyfossilizer",
-            "text": "Indigo's Dummy Fossilizer"
-          },
-          {
-            "input": "2",
-            "value": "dummybatchfossilizer",
-            "text": "Indigo's Dummy Batch Fossilizer"
-          },
-          {
-            "input": "3",
-            "value": "btcfossilizer",
-            "text": "Indigo's Bitcoin Fossilizer"
-          }
-        ]
+        "options": {
+          "dummyfossilizer": "Indigo's Dummy Fossilizer",
+          "dummybatchfossilizer": "Indigo's Dummy Batch Fossilizer",
+          "btcfossilizer": "Indigo's Bitcoin Fossilizer"
+        }
       },
       "developmentFossilizerWIF": {
         "type": "string",
@@ -102,20 +73,11 @@
         "type": "select:string",
         "prompt": "Initialize a Git repository (requires Git)",
         "default": "n",
-        "options": [
-          {
-            "input": "y",
-            "value": "y",
-            "text": "Yes"
-          },
-          {
-            "input": "n",
-            "value": "n",
-            "text": "No"
-          }
-        ]
+        "options": {
+          "y": "Yes",
+          "n": "No"
+        }
       }
     },
     "priorities": ["LICENSE", "docker-compose.yml"]
   }
-  

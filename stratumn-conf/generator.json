@@ -30,35 +30,19 @@
       "type": "select:string",
       "prompt": "Send usage information to help us improve our products:",
       "default": "y",
-      "options": [
-        {
-          "input": "y",
-          "value": "y",
-          "text": "Yes"
-        },
-        {
-          "input": "n",
-          "value": "n",
-          "text": "No"
-        }
-      ]
+      "options": {
+        "y": "Yes",
+        "n": "No"
+      }
     },
     "sendCrashReports": {
       "type": "select:string",
       "prompt": "Send crash reports to help us fix bugs:",
       "default": "y",
-      "options": [
-        {
-          "input": "y",
-          "value": "y",
-          "text": "Yes"
-        },
-        {
-          "input": "n",
-          "value": "n",
-          "text": "No"
-        }
-      ]
+      "options": {
+        "y": "Yes",
+        "n": "No"
+      }
     }
   },
   "priorities": ["variables.json", "config.json"]
