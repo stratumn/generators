@@ -117,6 +117,6 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{index . $fossilizer }}
+    image: {{ $fossilizer }}
     command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
