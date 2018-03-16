@@ -112,11 +112,12 @@ services:
     volumes:
     - ./validation:/data/validation
 {{- end}}
+{{- $root := . }}
 {{- range $i, $fossilizer := $fossilizers}}
   {{$fossilizer}}:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    image: {{ $fossilizer }}
+    image: {{index $root $fossilizer }}
     command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
