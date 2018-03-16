@@ -1,5 +1,5 @@
 {{- $store := (input "developmentStore") -}}
-{{- $require_tmstore := (or (eq $store "filetmpop") (eq $store "dummytmpop") (eq $store "postgrestmpop") (eq $store "rethinktmpop")) -}}
+{{- $require_tmstore := (eq $store "tmstore") -}}
 {
   "name": "{{input `name`}}",
   "author": "{{input `author`}}",
