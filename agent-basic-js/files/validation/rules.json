@@ -1,39 +1,39 @@
 {
 {{- range $index, $proc := (input "process")}}
     {{if $index}},{{end}}
-    "{{$proc}}": [
-        {
-            "type": "init",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "title"
-                ]
-            }
-        },
-        {
-            "type": "message",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "body": {
-                        "type": "string"
+    "{{$proc}}": {
+        "types": {
+            "init": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string"
+                        }
                     },
-                    "author": {
-                        "type": "string"
-                    }
+                    "required": ["title"]
                 },
-                "required": [
-                    "body",
-                    "author"
-                ]
+                "transitions": [""]
+            },
+            "message": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "body": {
+                            "type": "string"
+                        },
+                        "author": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "body",
+                        "author"
+                    ]
+                },
+                "transitions": ["init", "message"]
             }
         }
-    ]
+    }
 {{- end}}
 }
