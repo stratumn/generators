@@ -1,0 +1,33 @@
+{{- $clusterSize := (input "clusterSize") -}}
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+  - job_name: "jaeger"
+    static_configs:
+      - targets: ["jaeger:14268"]
+  - job_name: "indigo-store"
+    static_configs:
+      - targets: [
+        {{- range $i, $_ := loop 0 $clusterSize}}
+        {{- $node := add 1 $i}}
+          "store{{$node}}:5000",
+        {{- end}}
+        ]
+  - job_name: "indigo-node"
+    static_configs:
+      - targets: [
+        {{- range $i, $_ := loop 0 $clusterSize}}    
+        {{- $node := add 1 $i}}    
+          "tmapp{{$node}}:5090",
+        {{- end}}        
+        ]
