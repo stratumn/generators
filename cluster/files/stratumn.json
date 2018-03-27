@@ -12,7 +12,7 @@
     "init:linux": "strat run tm:init && strat run tm:post-init:linux && strat run tm:clusterize",
 {{- end}}
     "tm:init": "./scripts/tm-init.sh",
-    "tm:post-init:linux": "./scripts/tm-linux-post-init.sh",
+    "tm:post-init:linux": "./scripts/tm-linux-post-init.sh && ./arch/linux/fix-monitoring-files-ownership.sh",
     "tm:clusterize": "./scripts/tm-clusterize.sh",
     "compose": "docker-compose -p {{input `author`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "build": "strat run compose build",
