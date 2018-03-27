@@ -1,0 +1,26 @@
+{{- $store := (input "developmentStore") -}}
+{{- $require_tmstore := (eq $store "tmstore") -}}
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+  - job_name: "jaeger"
+    static_configs:
+      - targets: ["jaeger:14268"]
+  - job_name: "indigo-store"
+    static_configs:
+      - targets: ["store:5000"]
+{{- if $require_tmstore }}
+  - job_name: "indigo-node"
+    static_configs:
+      - targets: ["tmnode:5090"]
+{{- end}}

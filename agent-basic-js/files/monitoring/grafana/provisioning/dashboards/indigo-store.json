@@ -1,0 +1,646 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Monitor your Indigo Store",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Indigo",
+      "description": "Number of store requests per second",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:915",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_count[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "All",
+          "refId": "A"
+        },
+        {
+          "$$hashKey": "object:916",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_count_by_method{http_method=\"GET\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "GET",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:917",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_count_by_method{http_method=\"POST\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "POST",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "HTTP Request Count",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Indigo",
+      "description": "Number of store responses per second",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:828",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"200\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Ok",
+          "refId": "A"
+        },
+        {
+          "$$hashKey": "object:770",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"301\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Moved",
+          "refId": "I"
+        },
+        {
+          "$$hashKey": "object:1109",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"400\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Bad Request",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:1151",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"401\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Unauthorized",
+          "refId": "D"
+        },
+        {
+          "$$hashKey": "object:1130",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"403\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Forbidden",
+          "refId": "C"
+        },
+        {
+          "$$hashKey": "object:1172",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"404\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Not Found",
+          "refId": "E"
+        },
+        {
+          "$$hashKey": "object:1193",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"500\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Internal Error",
+          "refId": "F"
+        },
+        {
+          "$$hashKey": "object:1214",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"502\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Bad Gateway",
+          "refId": "G"
+        },
+        {
+          "$$hashKey": "object:1235",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"503\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Unavailable",
+          "refId": "H"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "HTTP Response Count",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Indigo",
+      "description": "Latency in milliseconds",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 10,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:896",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"1\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 1ms",
+          "refId": "D"
+        },
+        {
+          "$$hashKey": "object:1886",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"100\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 100ms",
+          "refId": "A"
+        },
+        {
+          "$$hashKey": "object:2020",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"1000\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 1s",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:917",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"2000\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 2s",
+          "refId": "E"
+        },
+        {
+          "$$hashKey": "object:2041",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"10000\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 10s",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Response Latency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Indigo",
+      "description": "Size (in bytes) of incoming requests",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:1451",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"+Inf\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "All",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:1301",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"1024\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 1kB",
+          "refId": "A"
+        },
+        {
+          "$$hashKey": "object:1472",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"4096\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 4kB",
+          "refId": "C"
+        },
+        {
+          "$$hashKey": "object:1493",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"65536\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 64kB",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "HTTP Request Size",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Indigo",
+      "description": "Size (in bytes) of outgoing responses",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:1554",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"+Inf\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "All",
+          "refId": "A"
+        },
+        {
+          "$$hashKey": "object:1778",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"1024\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 1kB",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:1799",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"4096\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 4kB",
+          "refId": "C"
+        },
+        {
+          "$$hashKey": "object:1820",
+          "expr":
+            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"65536\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "<= 64kB",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "HTTP Response Size",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": ["indigo, http, store, database"],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+  },
+  "timezone": "",
+  "title": "Indigo Store",
+  "version": 1
+}

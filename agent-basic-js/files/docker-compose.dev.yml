@@ -105,6 +105,8 @@ services:
     ports:
     - "{{(add 6000 $i)}}"
 {{- end}}
+  prometheus:
+    user: root
 networks:
   default:
     driver: bridge
