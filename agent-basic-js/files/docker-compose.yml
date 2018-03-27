@@ -121,3 +121,69 @@ services:
     image: {{index $root $fossilizer }}
     command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
+
+  ##### Monitoring #####
+
+  # Prometheus collects metrics
+  prometheus:
+    image: prom/prometheus
+    depends_on:
+      - cadvisor
+      - node-exporter
+    volumes:
+      - ./monitoring/prometheus/:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: always
+
+  # Node-exporter exports machine-level metrics
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs|rootfs/run/user)($$|/)"
+    ports:
+      - 9100:9100
+    restart: always
+
+  # Cadvisor exports docker container metrics
+  cadvisor:
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - 8080:8080
+    restart: always
+
+  # Grafana exposes dashboards to visualize metrics
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    volumes:
+      - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+    ports:
+      - 7000:3000
+    restart: always
+  
+  jaeger:
+    # This keeps tracing in memory only.
+    # It's fine for development, but for production you'll need
+    # to configure jaeger with a proper storage backend.
+    image: jaegertracing/all-in-one
+    ports:
+      - 14268:14268
+      - 16686:16686
+    restart: always
