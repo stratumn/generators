@@ -1,0 +1,44 @@
+[
+  {
+    "type": "init",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "seller": {
+          "type": "string"
+        },
+        "lot": {
+          "type": "string"
+        },
+        "initialPrice": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "seller",
+        "lot",
+        "initialPrice"
+      ]
+    }
+  },
+  {
+    "type": "bid",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "buyer": {
+          "type": "string"
+        },
+        "bidPrice": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "buyer",
+        "bidPrice"
+      ]
+    }
+  }
+]

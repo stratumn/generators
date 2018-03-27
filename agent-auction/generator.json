@@ -1,0 +1,139 @@
+{
+  "name": "agent-auction",
+  "version": "0.1.0",
+  "description": "Auction process",
+  "author": "Stratumn",
+  "license": "MPL-2.0",
+  "variables": {
+    "generator": "agent-basic-js",
+    "agentdev": "stratumn/agent-js:dev-alpine-v0.13.0",
+    "agentui": "stratumn/agent-ui:v0.2.6",
+    "indigoexplorer": "stratumn/indigo-explorer:v0.3.0",
+    "filetmpop": "stratumn/filetmpop:0.0.8-dev",
+    "tmstore": "stratumn/tmstore:0.0.8-dev",
+    "filestore": "stratumn/filestore:0.0.8-dev",
+    "dummystore": "stratumn/dummystore:0.0.8-dev",
+    "postgresstore": "stratumn/postgresstore:0.0.2-dev",
+    "rethinkstore": "stratumn/rethinkstore:0.0.2-dev",
+    "dummyfossilizer": "stratumn/dummyfossilizer:0.0.8-dev",
+    "dummybatchfossilizer": "stratumn/dummybatchfossilizer:0.0.2-dev",
+    "btcfossilizer": "stratumn/btcfossilizer:0.0.2-dev",
+    "postgres": "postgres:9.6.0",
+    "rethink": "rethinkdb:2.0.4"
+  },
+  "inputs": {
+    "name": {
+      "type": "string",
+      "prompt": "Project name:",
+      "default": "{{.dir}}",
+      "format": "^[a-z][a-z0-9-]*$"
+    },
+    "description": {
+      "type": "string",
+      "prompt": "Project description:",
+      "default": "A basic Javascript agent.",
+      "format": ".+"
+    },
+    "author": {
+      "type": "string",
+      "prompt": "Your name:",
+      "default": "{{.fullName}}",
+      "format": ".+"
+    },
+    "company": {
+      "type": "string",
+      "prompt": "Company:",
+      "default": "{{.company}}",
+      "format": ".+"
+    },
+    "year": {
+      "type": "string",
+      "prompt": "Year:",
+      "default": "{{now `2006`}}",
+      "format": ".+"
+    },
+    "dockerorg": {
+      "type": "string",
+      "prompt": "Docker organization or user (to push images):",
+      "default": "{{.dockerorg}}",
+      "format": "^[a-z][a-z0-9-]*$"
+    },
+    "developmentStore": {
+      "type": "select:string",
+      "prompt": "Development store:",
+      "default": "tmstore",
+      "options": [{
+        "input": "1",
+        "value": "tmstore",
+        "text": "Stratumn Indigo Node With File Store"
+      }, {
+        "input": "2",
+        "value": "filestore",
+        "text": "Stratumn File Store"
+      }, {
+        "input": "3",
+        "value": "dummystore",
+        "text": "Stratumn Dummy Store (in memory)"
+      }, {
+        "input": "4",
+        "value": "postgresstore",
+        "text": "Stratumn PostgreSQL Store (license required)"
+      }, {
+        "input": "5",
+        "value": "rethinkstore",
+        "text": "Stratumn RethinkDB Store (license required)"
+      }]
+    },
+    "developmentFossilizer": {
+      "type": "select:string",
+      "prompt": "Development fossilizer:",
+      "default": "none",
+      "options": [{
+        "input": "1",
+        "value": "none",
+        "text": "None"
+      }, {
+        "input": "2",
+        "value": "dummyfossilizer",
+        "text": "Stratumn Dummy Fossilizer"
+      }, {
+        "input": "3",
+        "value": "dummybatchfossilizer",
+        "text": "Stratumn Dummy Batch Fossilizer (license required)"
+      }, {
+        "input": "4",
+        "value": "btcfossilizer",
+        "text": "Stratumn Bitcoin Fossilizer (license required)"
+      }]
+    },
+    "developmentFossilizerWIF": {
+      "type": "string",
+      "prompt": "Bitcoin Wallet Import Format key for development:",
+      "format": ".+"
+    },
+    "testFossilizerWIF": {
+      "type": "string",
+      "prompt": "Bitcoin Wallet Import Format key for tests:",
+      "format": ".+"
+    },
+    "useGit": {
+      "type": "select:string",
+      "prompt": "Initialize a Git repository (requires Git)",
+      "default": "n",
+      "options": [{
+        "input": "y",
+        "value": "y",
+        "text": "Yes"
+      }, {
+        "input": "n",
+        "value": "n",
+        "text": "No"
+      }]
+    }
+  },
+  "priorities": [
+    "agent/package.json",
+    "LICENSE",
+    "docker-compose.yml"
+  ]
+}

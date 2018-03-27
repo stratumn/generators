@@ -1,0 +1,64 @@
+{{- $store := (input "developmentStore") -}}
+{{- $fossilizer := (input "developmentFossilizer") -}}
+version: '2'
+services:
+  agent:
+    build:
+      context: ./agent
+    image: {{input "dockerorg"}}/{{input "name"}}-agent-js
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    volumes:
+    - ./agent:/src/server
+    depends_on:
+    - store
+{{- if ne $fossilizer "none" }}
+    - fossilizer
+{{- end}}
+  store:
+    image: {{index . $store}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+{{- if eq $store "tmstore" }}
+    command: [tmstore, -endpoint, "tcp://tmapp:46657"]
+    depends_on:
+    - tmapp
+{{- end}}
+{{- if eq $store "postgresstore" }}
+    depends_on:
+    - postgres
+{{- end}}
+{{- if eq $store "rethinkstore" }}
+    depends_on:
+    - rethinkdb
+{{- end}}
+{{- if eq $store "postgresstore" }}
+  postgres:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.postgres}}
+{{- end}}
+{{- if eq $store "rethinkstore" }}
+  rethinkdb:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.rethink}}
+{{- end}}
+{{- if eq $store "tmstore" }}
+  tmapp:
+    image: {{.filetmpop}}
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+{{- end}}
+{{- if ne $fossilizer "none" }}
+  fossilizer:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{index . $fossilizer}}
+{{- end}}
