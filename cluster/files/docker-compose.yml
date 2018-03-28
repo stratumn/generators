@@ -6,6 +6,7 @@
 {{- $rethinkdbimage := .rethinkdb}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $clusterSize := (input "clusterSize") -}}
+{{- $activateMonitoring := (input "monitoring") -}}
 version: '3'
 services:
   dial:
@@ -38,7 +39,7 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [tmstore, -endpoint, "tcp://tmapp{{$node}}:46657"]
+    command: [tmstore, -endpoint, "tcp://tmapp{{$node}}:46657", "-monitoring.active={{$activateMonitoring}}"]
     depends_on:
     - tmapp{{$node}}
 {{- if $require_postgresql }}
@@ -66,11 +67,11 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
 {{- if $require_postgresql }}
-    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "postgres://postgres@postgres{{$node}}/postgres?sslmode=disable"]
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "postgres://postgres@postgres{{$node}}/postgres?sslmode=disable", "-monitoring.active={{$activateMonitoring}}"]
 {{- else if $require_rethinkdb }}
-    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015"]
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015", "-monitoring.active={{$activateMonitoring}}"]
 {{- else }}
-    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe"]
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-monitoring.active={{$activateMonitoring}}"]
 {{- end}}
     volumes:
     - ./validation:/data/validation
@@ -84,6 +85,7 @@ services:
     image: {{index $root $fossilizer }}
     command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
+{{- if eq (input `monitoring`) `true` }}
 
   ##### Monitoring #####
 
@@ -150,3 +152,4 @@ services:
       - 14268:14268
       - 16686:16686
     restart: always
+{{- end}}

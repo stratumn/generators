@@ -72,8 +72,10 @@ services:
     ports:
     - "{{(add 6000 $i)}}"
 {{- end}}
+{{- if eq (input `monitoring`) `true` }}
   prometheus:
     user: root
+{{- end}}
 networks:
   default:
     driver: bridge

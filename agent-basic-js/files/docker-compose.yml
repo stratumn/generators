@@ -7,6 +7,7 @@
 {{- $require_rethinkdb := (eq $store "rethinkstore") -}}
 {{- $require_couchdb := (eq $store "couchstore") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
+{{- $activateMonitoring := (input "monitoring") -}}
 version: '3'
 services:
   agent:
@@ -29,7 +30,7 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
 {{- if $require_tmstore }}
-    command: [tmstore, -endpoint, "tcp://tmnode:46657"]
+    command: [tmstore, -endpoint, "tcp://tmnode:46657", "-monitoring.active={{$activateMonitoring}}"]
     depends_on:
     - tmnode
 {{- $tmstore := (input "tmpopUnderlyingStore") }}
@@ -39,7 +40,7 @@ services:
     - rethinkdb
 {{- end}}
 {{- else if $require_couchdb}}
-    command: [{{$store}}, -endpoint, "http://couchdb:5984"]
+    command: [{{$store}}, -endpoint, "http://couchdb:5984", "-monitoring.active={{$activateMonitoring}}"]
 {{- end}}
 {{- if eq $store "fabricstore" }}
     user: root
@@ -108,7 +109,7 @@ services:
     env_file:
     - ./config/common.env
     - ./config/common.secret.env
-    command: [{{$tmstore}}, -home, "/data/tendermint"]
+    command: [{{$tmstore}}, -home, "/data/tendermint", "-monitoring.active={{$activateMonitoring}}"]
     volumes:
     - ./validation:/data/validation
 {{- end}}
@@ -121,6 +122,7 @@ services:
     image: {{index $root $fossilizer }}
     command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
 {{- end}}
+{{- if eq (input `monitoring`) `true` }}
 
   ##### Monitoring #####
 
@@ -187,3 +189,4 @@ services:
       - 14268:14268
       - 16686:16686
     restart: always
+{{- end}}
