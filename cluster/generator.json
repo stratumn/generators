@@ -77,6 +77,15 @@
         "y": "Yes",
         "n": "No"
       }
+    },
+    "monitoring": {
+      "type": "select:string",
+      "prompt": "Setup monitoring",
+      "default": "false",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "priorities": ["LICENSE", "docker-compose.yml"]

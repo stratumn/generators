@@ -129,6 +129,15 @@
         "y": "Yes",
         "n": "No"
       }
+    },
+    "monitoring": {
+      "type": "select:string",
+      "prompt": "Setup monitoring",
+      "default": "false",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "priorities": ["agent/package.json", "LICENSE", "docker-compose.yml"]
