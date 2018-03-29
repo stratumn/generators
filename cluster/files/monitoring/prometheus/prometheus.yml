@@ -1,4 +1,5 @@
 {{- $clusterSize := (input "clusterSize") -}}
+{{- $fossilizers := (input "developmentFossilizer") -}}
 global:
   scrape_interval: 15s
 
@@ -31,3 +32,8 @@ scrape_configs:
           "tmapp{{$node}}:5090",
         {{- end}}        
         ]
+{{- range $i, $fossilizer := $fossilizers}}
+  - job_name: "indigo-{{$fossilizer}}"
+    static_configs:
+      - targets: ["{{$fossilizer}}:{{(add 6000 $i)}}"]
+{{- end}}
