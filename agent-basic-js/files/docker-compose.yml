@@ -120,7 +120,7 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{index $root $fossilizer }}
-    command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}"]
+    command: [{{$fossilizer}}, -http, ":{{(add 6000 $i)}}", "-monitoring.active={{$activateMonitoring}}"]
 {{- end}}
 {{- if eq (input `monitoring`) `true` }}
 
