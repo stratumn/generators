@@ -1,6 +1,7 @@
 {{- $tmpopstore := (input "tmpopUnderlyingStore") -}}
 {{- $require_postgresql := (eq $tmpopstore "postgrestmpop") -}}
 {{- $require_rethinkdb := (eq $tmpopstore "rethinktmpop") -}}
+{{- $require_elasticsearch := (eq $tmpopstore "elasticsearchtmpop") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $clusterSize := (input "clusterSize") -}}
 version: '3'
@@ -45,6 +46,12 @@ services:
 {{- end}}
 {{- if $require_rethinkdb }}
   rethinkdb{{$node}}:
+    env_file:
+    - ./config/dev.env
+    - ./config/dev.secret.env
+{{- end}}
+{{- if $require_elasticsearch }}
+  elasticsearch{{$node}}:
     env_file:
     - ./config/dev.env
     - ./config/dev.secret.env
