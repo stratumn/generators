@@ -4,8 +4,8 @@
 
 ## Requirements
 
-- [Docker >= 1.10](https://www.docker.com/products/docker)
-- [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
+* [Docker >= 1.10](https://www.docker.com/products/docker)
+* [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
 
 Docker Compose is already included in some distributions of Docker.
 
@@ -81,6 +81,10 @@ A Docker container is created for the database.
 During development and testing, the segments will be saved to a RethinkDB database.
 A Docker container is created for the database.
 {{- end}}
+{{- if eq $store "elasticsearchstore"}}
+During development and testing, the segments will be saved to a ElasticSearch database.
+A Docker container is created for the database.
+{{- end}}
 
 ## Run tests
 
@@ -127,7 +131,7 @@ during testing.
 
 ### Validation
 
-There is a json file in `./validation` named `rules.json`. 
+There is a json file in `./validation` named `rules.json`.
 It contains json schema validation rules that are executed for each action your processes handle.
 
 ## License

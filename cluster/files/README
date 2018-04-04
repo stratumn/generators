@@ -76,6 +76,10 @@ A Docker container is created for the database.
 During development and testing, the segments will be saved to a RethinkDB database.
 A Docker container is created for the database.
 {{- end}}
+{{- if eq $tmstore "elasticsearchtmpop"}}
+During development and testing, the segments will be saved to a ElasticSearch database.
+A Docker container is created for the database.
+{{- end}}
 
 ## Project structure
 

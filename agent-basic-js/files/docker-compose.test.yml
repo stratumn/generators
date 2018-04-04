@@ -3,6 +3,7 @@
 {{- $require_tmstore := (eq $store "tmstore") -}}
 {{- $require_postgresql := (eq $store "postgresstore") -}}
 {{- $require_rethinkdb := (eq $store "rethinkstore") -}}
+{{- $require_elasticsearch := (eq $store "elasticsearchstore") -}}
 {{- $require_couchdb := (eq $store "couchstore") -}}
 version: '3'
 services:
@@ -39,6 +40,19 @@ services:
 {{- else if $require_tmstore }}
 {{- if eq (input "tmpopUnderlyingStore") "rethinktmpop" }}
   rethinkdb:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- end}}
+{{- end}}
+{{- if $require_elasticsearch }}
+  elasticsearch:
+    env_file:
+    - ./config/test.env
+    - ./config/test.secret.env
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "elasticsearchtmpop" }}
+  elasticsearch:
     env_file:
     - ./config/test.env
     - ./config/test.secret.env
