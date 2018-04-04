@@ -4,6 +4,8 @@
 {{- $postgresimage := .postgres}}
 {{- $require_rethinkdb := (eq $tmpopstore "rethinktmpop") -}}
 {{- $rethinkdbimage := .rethinkdb}}
+{{- $require_elasticsearch := (eq $tmpopstore "elasticsearchtmpop") -}}
+{{- $elasticsearchimage := .elasticsearch}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $clusterSize := (input "clusterSize") -}}
 {{- $activateMonitoring := (input "monitoring") -}}
@@ -46,6 +48,8 @@ services:
     - postgres{{$node}}
 {{- else if $require_rethinkdb }}
     - rethinkdb{{$node}}
+{{- else if $require_elasticsearch }}
+    - elasticsearch{{$node}}
 {{- end}}
 {{- if $require_postgresql }}
   postgres{{$node}}:
@@ -61,6 +65,13 @@ services:
     - ./config/common.secret.env
     image: {{$rethinkdbimage}}
 {{- end}}
+{{- if $require_elasticsearch }}
+  elasticsearch{{$node}}:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{$elasticsearchimage}}
+{{- end}}
   tmapp{{$node}}:
     image: {{$tmpopstoreimage}}
     env_file:
@@ -70,6 +81,8 @@ services:
     command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "postgres://postgres@postgres{{$node}}/postgres?sslmode=disable", "-monitoring.active={{$activateMonitoring}}"]
 {{- else if $require_rethinkdb }}
     command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "rethinkdb{{$node}}:28015", "-monitoring.active={{$activateMonitoring}}"]
+{{- else if $require_elasticsearch }}
+    command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-url", "elasticsearch{{$node}}:9200", "-monitoring.active={{$activateMonitoring}}"]
 {{- else }}
     command: [{{$tmpopstore}}, -home, "/data/tendermint", "-create_empty_blocks=false", "-unsafe", "-monitoring.active={{$activateMonitoring}}"]
 {{- end}}

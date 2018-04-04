@@ -5,6 +5,7 @@
 {{- end -}}
 {{- $require_postgresql := (eq $store "postgresstore") -}}
 {{- $require_rethinkdb := (eq $store "rethinkstore") -}}
+{{- $require_elasticsearch := (eq $store "elasticsearchstore") -}}
 {{- $require_couchdb := (eq $store "couchstore") -}}
 {{- $fossilizers := (input "developmentFossilizer") -}}
 {{- $activateMonitoring := (input "monitoring") -}}
@@ -38,6 +39,8 @@ services:
     - postgres
 {{- else if eq $tmstore "rethinktmpop" }}
     - rethinkdb
+{{- else if eq $tmstore "elasticsearchtmpop" }}
+    - elasticsearch
 {{- end}}
 {{- else if $require_couchdb}}
     command: [{{$store}}, -endpoint, "http://couchdb:5984", "-monitoring.active={{$activateMonitoring}}"]
@@ -88,6 +91,23 @@ services:
     - ./config/common.env
     - ./config/common.secret.env
     image: {{.rethinkdb}}
+{{- end}}
+{{- end}}
+{{- if $require_elasticsearch }}
+    depends_on:
+    - elasticsearch
+  elasticsearch:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.elasticsearch}}
+{{- else if $require_tmstore }}
+{{- if eq (input "tmpopUnderlyingStore") "elasticsearchtmpop" }}
+  elasticsearch:
+    env_file:
+    - ./config/common.env
+    - ./config/common.secret.env
+    image: {{.elasticsearch}}
 {{- end}}
 {{- end}}
 {{- /* End of ugly if cascade and DRY */}}

@@ -13,12 +13,14 @@
     "dummytmpop": "indigocore/dummytmpop:latest",
     "postgrestmpop": "indigocore/postgrestmpop:latest",
     "rethinktmpop": "indigocore/rethinktmpop:latest",
+    "elasticsearchtmpop": "indigocore/elasticsearchtmpop:latest",
     "tmstore": "indigocore/tmstore:latest",
     "dummyfossilizer": "indigocore/dummyfossilizer:latest",
     "dummybatchfossilizer": "indigocore/dummybatchfossilizer:latest",
     "btcfossilizer": "indigocore/btcfossilizer:latest",
     "postgres": "postgres:10.1",
-    "rethinkdb": "rethinkdb:2.3"
+    "rethinkdb": "rethinkdb:2.3",
+    "elasticsearch": "docker.elastic.co/elasticsearch/elasticsearch:6.2.3"
   },
   "inputs": {
     "author": {
@@ -35,7 +37,8 @@
         "filetmpop": "Indigo's File Store",
         "dummytmpop": "Indigo's Dummy Store",
         "postgrestmpop": "Indigo's PostgreSQL Store",
-        "rethinktmpop": "Indigo's RethinkDB Store"
+        "rethinktmpop": "Indigo's RethinkDB Store",
+        "elasticsearchtmpop": "Indigo's ElasticSearch Store"
       }
     },
     "clusterSize": {
