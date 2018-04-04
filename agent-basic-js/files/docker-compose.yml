@@ -41,8 +41,7 @@ services:
 {{- end}}
 {{- else if $require_couchdb}}
     command: [{{$store}}, -endpoint, "http://couchdb:5984", "-monitoring.active={{$activateMonitoring}}"]
-{{- end}}
-{{- if eq $store "fabricstore" }}
+{{- else if eq $store "fabricstore" }}
     user: root
     environment:
       - CLIENT_CONFIG_PATH=/var/stratumn/fabricstore/client-config.yaml
@@ -53,6 +52,8 @@ services:
       - ./fabric/client-config/client-config.yaml:/var/stratumn/fabricstore/client-config.yaml
     depends_on:
       - peer0.org1.example.com
+{{- else}}
+    command: [{{$store}}, "-monitoring.active={{$activateMonitoring}}"]    
 {{- end}}
 {{- /* Ugly if cascade and DRY */}}
 {{- /* https://github.com/stratumn/generators/issues/31 */}}
