@@ -20,10 +20,10 @@
 {{- end}}
     "monitoring:post-init:linux": "./arch/linux/fix-monitoring-files-ownership.sh",
 {{- if eq $store "tmstore" }}
-    "tm:init": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" tendermint/tendermint:0.16.0 init",
-    "tm:post-init:linux": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.16.0 init",
-    "tm:init:test": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" tendermint/tendermint:0.16.0 init",
-    "tm:post-init:test:linux": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.16.0 init",
+    "tm:init": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" tendermint/tendermint:0.docker rm17.1 init",
+    "tm:post-init:linux": "docker run -it --rm -v \"$(pwd)/tendermint:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.17.1 init",
+    "tm:init:test": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" tendermint/tendermint:0.17.1 init",
+    "tm:post-init:test:linux": "docker run -it --rm -v \"$(pwd)/tendermint.test:/tendermint\" -v \"$(pwd)/arch/linux/fix-tendermint-files-ownership.sh:/tmp/fix-tendermint-files-ownership.sh\" -e \"UID=$(id -u)\" -e \"GID=$(id -g)\" --entrypoint=/tmp/fix-tendermint-files-ownership.sh tendermint/tendermint:0.17.1 init",
 {{- end}}
 {{- if eq $store "fabricstore" }}
     "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml -f fabric/docker-compose.yml",
