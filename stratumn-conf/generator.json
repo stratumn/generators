@@ -10,25 +10,25 @@
   "inputs": {
     "fullName": {
       "type": "string",
-      "prompt": "Your full name:",
+      "prompt": "Your full name",
       "default": "{{.fullName}}",
       "format": ".+"
     },
     "email": {
       "type": "string",
-      "prompt": "Email:",
+      "prompt": "Email",
       "default": "{{.email}}",
       "format": ".+"
     },
     "company": {
       "type": "string",
-      "prompt": "Company:",
+      "prompt": "Company",
       "default": "{{.company}}",
       "format": ".+"
     },
     "sendUsageInfo": {
       "type": "select:string",
-      "prompt": "Send usage information to help us improve our products:",
+      "prompt": "Send usage information to help us improve our products",
       "default": "y",
       "options": {
         "y": "Yes",
@@ -37,7 +37,7 @@
     },
     "sendCrashReports": {
       "type": "select:string",
-      "prompt": "Send crash reports to help us fix bugs:",
+      "prompt": "Send crash reports to help us fix bugs",
       "default": "y",
       "options": {
         "y": "Yes",
