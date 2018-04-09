@@ -25,13 +25,13 @@
   "inputs": {
     "author": {
       "type": "string",
-      "prompt": "Your name:",
+      "prompt": "Your name",
       "default": "{{.fullName}}",
       "format": ".+"
     },
     "tmpopUnderlyingStore": {
       "type": "select:string",
-      "prompt": "Tendermint underlying store:",
+      "prompt": "Tendermint underlying store",
       "default": "filetmpop",
       "options": {
         "filetmpop": "Indigo's File Store",
@@ -43,12 +43,12 @@
     },
     "clusterSize": {
       "type": "int",
-      "prompt": "Number of nodes in the cluster:",
+      "prompt": "Number of nodes in the cluster",
       "default": 4
     },
     "developmentFossilizer": {
       "type": "selectmulti:string",
-      "prompt": "List of development fossilizers:",
+      "prompt": "List of development fossilizers",
       "isRequired": false,
       "options": {
         "dummyfossilizer": "Indigo's Dummy Fossilizer",
@@ -58,17 +58,17 @@
     },
     "developmentFossilizerWIF": {
       "type": "string",
-      "prompt": "Bitcoin Wallet Import Format key for development:",
+      "prompt": "Bitcoin Wallet Import Format key for development",
       "format": ".+"
     },
     "testFossilizerWIF": {
       "type": "string",
-      "prompt": "Bitcoin Wallet Import Format key for tests:",
+      "prompt": "Bitcoin Wallet Import Format key for tests",
       "format": ".+"
     },
     "dockerorg": {
       "type": "string",
-      "prompt": "Docker organization or user (to build images):",
+      "prompt": "Docker organization or user (to build images)",
       "default": "{{.dockerorg}}",
       "format": "^[a-z][a-z0-9-]*$"
     },
