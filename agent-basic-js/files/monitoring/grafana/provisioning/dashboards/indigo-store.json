@@ -57,8 +57,7 @@
       "targets": [
         {
           "$$hashKey": "object:915",
-          "expr":
-            "rate(opencensus_opencensus_io_http_server_request_count[1m])",
+          "expr": "rate(opencensus_io_http_server_request_count[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "All",
@@ -67,7 +66,7 @@
         {
           "$$hashKey": "object:916",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_count_by_method{http_method=\"GET\"}[1m])",
+            "rate(opencensus_io_http_server_request_count_by_method{http_method=\"GET\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "GET",
@@ -76,7 +75,7 @@
         {
           "$$hashKey": "object:917",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_count_by_method{http_method=\"POST\"}[1m])",
+            "rate(opencensus_io_http_server_request_count_by_method{http_method=\"POST\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "POST",
@@ -159,7 +158,7 @@
         {
           "$$hashKey": "object:828",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"200\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"200\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Ok",
@@ -168,7 +167,7 @@
         {
           "$$hashKey": "object:770",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"301\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"301\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Moved",
@@ -177,7 +176,7 @@
         {
           "$$hashKey": "object:1109",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"400\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"400\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Bad Request",
@@ -186,7 +185,7 @@
         {
           "$$hashKey": "object:1151",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"401\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"401\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Unauthorized",
@@ -195,7 +194,7 @@
         {
           "$$hashKey": "object:1130",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"403\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"403\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Forbidden",
@@ -204,7 +203,7 @@
         {
           "$$hashKey": "object:1172",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"404\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"404\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Not Found",
@@ -213,7 +212,7 @@
         {
           "$$hashKey": "object:1193",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"500\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"500\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Internal Error",
@@ -222,7 +221,7 @@
         {
           "$$hashKey": "object:1214",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"502\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"502\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Bad Gateway",
@@ -231,7 +230,7 @@
         {
           "$$hashKey": "object:1235",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_count_by_status_code{http_status=\"503\"}[1m])",
+            "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"503\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Unavailable",
@@ -314,7 +313,7 @@
         {
           "$$hashKey": "object:896",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"1\"}[1m])",
+            "rate(opencensus_io_http_server_latency_bucket{le=\"1\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 1ms",
@@ -323,7 +322,7 @@
         {
           "$$hashKey": "object:1886",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"100\"}[1m])",
+            "rate(opencensus_io_http_server_latency_bucket{le=\"100\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 100ms",
@@ -332,7 +331,7 @@
         {
           "$$hashKey": "object:2020",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"1000\"}[1m])",
+            "rate(opencensus_io_http_server_latency_bucket{le=\"1000\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 1s",
@@ -341,7 +340,7 @@
         {
           "$$hashKey": "object:917",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"2000\"}[1m])",
+            "rate(opencensus_io_http_server_latency_bucket{le=\"2000\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 2s",
@@ -350,7 +349,7 @@
         {
           "$$hashKey": "object:2041",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_latency_bucket{le=\"10000\"}[1m])",
+            "rate(opencensus_io_http_server_latency_bucket{le=\"10000\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 10s",
@@ -433,7 +432,7 @@
         {
           "$$hashKey": "object:1451",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"+Inf\"}[1m])",
+            "rate(opencensus_io_http_server_request_bytes_bucket{le=\"+Inf\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "All",
@@ -442,7 +441,7 @@
         {
           "$$hashKey": "object:1301",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"1024\"}[1m])",
+            "rate(opencensus_io_http_server_request_bytes_bucket{le=\"1024\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 1kB",
@@ -451,7 +450,7 @@
         {
           "$$hashKey": "object:1472",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"4096\"}[1m])",
+            "rate(opencensus_io_http_server_request_bytes_bucket{le=\"4096\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 4kB",
@@ -460,7 +459,7 @@
         {
           "$$hashKey": "object:1493",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_request_bytes_bucket{le=\"65536\"}[1m])",
+            "rate(opencensus_io_http_server_request_bytes_bucket{le=\"65536\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 64kB",
@@ -543,7 +542,7 @@
         {
           "$$hashKey": "object:1554",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"+Inf\"}[1m])",
+            "rate(opencensus_io_http_server_response_bytes_bucket{le=\"+Inf\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "All",
@@ -552,7 +551,7 @@
         {
           "$$hashKey": "object:1778",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"1024\"}[1m])",
+            "rate(opencensus_io_http_server_response_bytes_bucket{le=\"1024\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 1kB",
@@ -561,7 +560,7 @@
         {
           "$$hashKey": "object:1799",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"4096\"}[1m])",
+            "rate(opencensus_io_http_server_response_bytes_bucket{le=\"4096\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 4kB",
@@ -570,7 +569,7 @@
         {
           "$$hashKey": "object:1820",
           "expr":
-            "rate(opencensus_opencensus_io_http_server_response_bytes_bucket{le=\"65536\"}[1m])",
+            "rate(opencensus_io_http_server_response_bytes_bucket{le=\"65536\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "<= 64kB",
