@@ -79,7 +79,7 @@
       "targets": [
         {
           "$$hashKey": "object:2971",
-          "expr": "rate(stratumn_tmpop_block_count[5m])",
+          "expr": "rate(stratumn_indigocore_tmpop_block_count[5m])",
           "format": "time_series",
           "interval": "5m",
           "intervalFactor": 1,
@@ -161,7 +161,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "stratumn_tmpop_block_count",
+          "expr": "stratumn_indigocore_tmpop_block_count",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -220,7 +220,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(stratumn_tmpop_tx_count{tx_status=\"valid\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_count{tx_status=\"valid\"}[1m])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -228,7 +229,8 @@
           "refId": "A"
         },
         {
-          "expr": "rate(stratumn_tmpop_tx_count{tx_status=\"invalid\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_count{tx_status=\"invalid\"}[1m])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -310,35 +312,40 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(stratumn_tmpop_tx_per_block_bucket{le=\"1\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_per_block_bucket{le=\"1\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "empty blocks",
           "refId": "B"
         },
         {
-          "expr": "rate(stratumn_tmpop_tx_per_block_bucket{le=\"5\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_per_block_bucket{le=\"5\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "0 < tx/block <= 5",
           "refId": "A"
         },
         {
-          "expr": "rate(stratumn_tmpop_tx_per_block_bucket{le=\"10\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_per_block_bucket{le=\"10\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "5 < tx/block <= 10",
           "refId": "C"
         },
         {
-          "expr": "rate(stratumn_tmpop_tx_per_block_bucket{le=\"50\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_per_block_bucket{le=\"50\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "10 < tx/block <= 50",
           "refId": "D"
         },
         {
-          "expr": "rate(stratumn_tmpop_tx_per_block_bucket{le=\"100\"}[1m])",
+          "expr":
+            "rate(stratumn_indigocore_tmpop_tx_per_block_bucket{le=\"100\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "50 < tx/block <= 100",
