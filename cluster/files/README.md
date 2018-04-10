@@ -6,17 +6,17 @@ It runs a sample Indigo Agent, with {{input "clusterSize"}} nodes and standard m
 
 ## Requirements
 
-- [Docker >= 1.10](https://www.docker.com/products/docker)
-- [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
-- [jq >= 1.5](https://stedolan.github.io/jq/)
+* [Docker >= 1.10](https://www.docker.com/products/docker)
+* [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
+* [jq >= 1.5](https://stedolan.github.io/jq/)
 
 Docker Compose is already included in some distributions of Docker.
 
 You can check versions by running:
 
-```
-$ docker version
-$ docker-compose version
+```sh
+docker version
+docker-compose version
 ```
 
 Your installation of Docker must bind containers to `127.0.0.1` in order for the
@@ -26,14 +26,14 @@ are using a recent release of Docker).
 To make sure that it is the case, check that the value of `$DOCKER_HOST`
 (or `%DOCKER_HOST%` on Windows) is not set:
 
-```
-$ echo $DOCKER_HOST # or echo %DOCKER_HOST% on Windows
+```sh
+echo $DOCKER_HOST # or echo %DOCKER_HOST% on Windows
 ```
 
 Also make sure Docker is running properly:
 
-```
-$ docker run hello-world
+```sh
+docker run hello-world
 ```
 
 If your installation of Docker requires `root` permissions, you can add your
@@ -44,8 +44,8 @@ doing so).
 
 To launch the development cluster locally, go to the root folder and run:
 
-```
-$ strat up
+```sh
+strat up
 ```
 
 A web user interface for the agent is available on `http://localhost:4000`.
@@ -80,6 +80,18 @@ A Docker container is created for the database.
 During development and testing, the segments will be saved to a ElasticSearch database.
 A Docker container is created for the database.
 {{- end}}
+
+## Monitoring
+
+If you chose to configure monitoring, Indigo components will exports metrics and traces.
+We use [OpenCensus](https://opencensus.io) to generate metrics and traces.
+A Prometheus agent collects the metrics and a Grafana agent provides some pre-configured dashboards to visualize them.
+We use [Jaeger](https://github.com/jaegertracing/jaeger) to visualize traces.
+
+The Grafana endpoint can be found at [http://localhost:7000](http://localhost:7000).
+The default _user/password_ is _admin/admin_.
+
+The Jaeger endpoint can be found at [http://localhost:16686](http://localhost:16686).
 
 ## Project structure
 
