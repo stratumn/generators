@@ -10,6 +10,8 @@
 # That ensures that the connection graph is symmetric and balanced,
 # i.e. each node has `total_seeds/2` outbound and `total_seeds/2` inbound seeds.
 
+rootdir=`dirname $0`
+
 total_seeds={{input "clusterSize"}}
 core_prefix=tmapp
 p2p_port=46656
@@ -26,11 +28,14 @@ echo 'Trying to create p2p meshed connections'
 for i in `seq ${total_seeds}`; do
     seeds=""
     for j in `seq $(((${total_seeds} - 1) / 2))`; do
-        seeds="${seeds} ${core_prefix}$(((${i} + ${j} - 1) % ${total_seeds} + 1))"
+        idx=$(((${i} + ${j} - 1) % ${total_seeds} + 1))
+        key=`sed -n "s/key$i=\(.*\)/\1/p" $rootdir/keys.sh`
+        seed=${core_prefix}${idx}
+        seeds="${seeds} ${key} ${seed}"
         [[ ${total_seeds} -eq 2 ]] && break
     done
     echo "${core_prefix}${i} connects to ${seeds}"
-    json_msg="seeds=["$(l=$(printf ",\"%s:${p2p_port}\"" ${seeds}); echo ${l:1})"]"
+    json_msg="seeds=["$(l=$(printf ",\"%s@%s:${p2p_port}\"" ${seeds}); echo ${l:1})"]"
     url="${core_prefix}${i}:${rpc_port}/dial_seeds"
     curl --data-urlencode "${json_msg}" "${url}"
     echo
