@@ -6,9 +6,9 @@ It runs a sample Indigo Agent, with {{input "clusterSize"}} nodes and standard m
 
 ## Requirements
 
-- [Docker >= 1.10](https://www.docker.com/products/docker)
-- [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
-- [jq >= 1.5](https://stedolan.github.io/jq/)
+* [Docker >= 1.10](https://www.docker.com/products/docker)
+* [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
+* [jq >= 1.5](https://stedolan.github.io/jq/)
 
 Docker Compose is already included in some distributions of Docker.
 
