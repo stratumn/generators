@@ -29,7 +29,7 @@ for i in `seq ${total_seeds}`; do
     seeds=""
     for j in `seq $(((${total_seeds} - 1) / 2))`; do
         idx=$(((${i} + ${j} - 1) % ${total_seeds} + 1))
-        key=`sed -n "s/key$i=\(.*\)/\1/p" $rootdir/keys.sh`
+        key=`sed -n "s/key$idx=\(.*\)/\1/p" $rootdir/keys.sh`
         seed=${core_prefix}${idx}
         seeds="${seeds} ${key} ${seed}"
         [[ ${total_seeds} -eq 2 ]] && break
