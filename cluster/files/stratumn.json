@@ -14,7 +14,7 @@
     "tm:init": "./scripts/tm-init.sh",
     "tm:post-init:linux": "./scripts/tm-linux-post-init.sh && ./arch/linux/fix-monitoring-files-ownership.sh",
     "tm:clusterize": "./scripts/tm-clusterize.sh",
-    "compose": "docker-compose -p {{input `author`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
+    "compose": "docker-compose -p {{.dir}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "build": "strat run compose build",
     "up": "strat run build && strat run compose up",
     "down": "strat run compose down",
