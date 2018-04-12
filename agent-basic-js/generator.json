@@ -1,12 +1,12 @@
 {
   "name": "agent-basic-js",
-  "version": "0.3.0-rc1",
+  "version": "0.3.0",
   "description": "A basic Javascript agent",
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {
     "generator": "agent-basic-js",
-    "agentdev": "indigocore/agent-js:dev-alpine-0.3.0-rc1",
+    "agentdev": "indigocore/agent-js:dev-alpine-0.3.0",
     "agentui": "indigocore/agent-ui:latest",
     "tmpopexplorer": "indigocore/tmpop-explorer:latest",
     "filetmpop": "indigocore/filetmpop:latest",
@@ -30,7 +30,7 @@
     "postgres": "postgres:10.1",
     "rethinkdb": "rethinkdb:2.3",
     "elasticsearch": "docker.elastic.co/elasticsearch/elasticsearch:6.2.3",
-    "chaincodeversion": "0.3.0-rc1"
+    "chaincodeversion": "0.3.0"
   },
   "filename-substitutions": {
     "PROCESS": "process"
