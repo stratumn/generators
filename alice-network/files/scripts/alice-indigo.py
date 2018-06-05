@@ -6,7 +6,7 @@ import string
 import random
 import signal
 
-# This script should be called from its parent directory, using "strat run alice:<init, config, docker, up>"
+# This script should be called from its parent directory, using "strat run alice:<init, config, up>"
 
 rootdir = os.getcwd()
 node_dir_name = "node"
@@ -52,22 +52,18 @@ def get_alice_config(node_dir, key):
 def init_config_files():
     """
     This function creates configuration files for each node.
-    It also copies a Dockerfile to the nodes directories.
     """
     print_header("INITIALIZING ALICE CONFIGURATION FILES")
     for i in range(nodes_number):
         node_dir = "%s/%s%d" % (rootdir, node_dir_name, i)
         os.mkdir(node_dir)
         print exec_alice_command(node_dir, "init")
-        subprocess.call(["cp",
-                         "%s/scripts/templates/Dockerfile" % rootdir,
-                         node_dir])
 
 
 def edit_alice_configs():
     """
     This function parses the alice.core.toml configuration file and edits
-    the bootstraping node, the indigo network, the indigo store, the ports.
+    the bootstrapping node, the indigo network, the indigo store, the ports.
     """
     print_header("EDITING ALICE CONFIGURATION FILES")
     indigo_network_id = ''.join(random.choice(
@@ -125,22 +121,6 @@ def edit_alice_configs():
         set_alice_config(node_path, "bootstrap.addresses", peer_IPs)
 
 
-def build_docker_images():
-    """
-    This function build a docker image for each node of the network.
-    Each image gets tagged with stratumn/alice:node<N>
-    """
-    print_header("BUILDING DOCKER IMAGES")
-    docker_image = "stratumn/alice"
-    docker_tag = "node"
-    for i in range(nodes_number):
-        subprocess.call(["docker",
-                         "build",
-                         "-t",
-                         "%s:%s%d" % (docker_image, docker_tag, i),
-                         "%s/%s%d" % (rootdir, node_dir_name, i)])
-
-
 def run_nodes():
     """
     This function runs `alice up` for each node of the network.
@@ -164,14 +144,12 @@ def run_nodes():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("action", help="the action you want to run",
-                        type=str, choices=["init", "config", "docker", "up"])
+                        type=str, choices=["init", "config", "up"])
     args = parser.parse_args()
 
     if args.action == "init":
         init_config_files()
     if args.action == "config":
         edit_alice_configs()
-    if args.action == "docker":
-        build_docker_images()
     if args.action == "up":
         run_nodes()

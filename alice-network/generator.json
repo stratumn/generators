@@ -37,6 +37,5 @@
         "n": "No"
       }
     }
-  },
-  "priorities": ["LICENSE", "docker-compose.yml"]
+  }
 }
