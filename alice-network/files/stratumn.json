@@ -1,0 +1,17 @@
+{
+  "name": "{{.dir}}",
+  "author": "{{input `author`}}",
+  "description": "Alice test network",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+{{- if eq (input `useGit`) `y` }}
+    "init": "strat run alice:init && strat run alice:config && git init && git add .",
+{{- else }}
+    "init": "strat run alice:init && strat run alice:config",
+    "up": "python ./scripts/alice-indigo.py up",
+{{- end}}
+    "alice:init": "python ./scripts/alice-indigo.py init",
+    "alice:config": "python ./scripts/alice-indigo.py config",
+    "alice:docker": "python ./scripts/alice-indigo.py docker"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "alice-network",
+  "version": "0.3.0",
+  "description": "An Alice network",
+  "author": "Stratumn",
+  "license": "Apache-2.0",
+  "variables": {
+    "generator": "alice-network"
+  },
+  "inputs": {
+    "author": {
+      "type": "string",
+      "prompt": "Your name",
+      "default": "{{.fullName}}",
+      "format": ".+"
+    },
+    "indigoStore": {
+      "type": "select:string",
+      "prompt": "Indigo underlying store",
+      "default": "in-memory",
+      "options": {
+        "in-memory": "Indigo's Dummy Store",
+        "postgreSQL": "Indigo's PostgreSQL Store"
+      }
+    },
+    "clusterSize": {
+      "type": "int",
+      "prompt": "Number of nodes in the cluster",
+      "default": 4
+    },
+    "useGit": {
+      "type": "select:string",
+      "prompt": "Initialize a Git repository (requires Git)",
+      "default": "n",
+      "options": {
+        "y": "Yes",
+        "n": "No"
+      }
+    }
+  },
+  "priorities": ["LICENSE", "docker-compose.yml"]
+}
