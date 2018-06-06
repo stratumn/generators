@@ -76,17 +76,24 @@ def edit_alice_configs():
             "node_dir": node_dir
         }
 
-    def node_port(node_idx): return 8900+(node_idx*20)
+    def node_port(node_idx, service):
+        service_idx = {
+            "swarm": 3,
+            "cli": 4,
+            "grpcapi": 4,
+            "metrics": 5,
+            "grpcweb": 6
+        }[service]
+        return 8900+(node_idx*20)+service_idx
 
     for i, peer in enumerate(peers.values()):
-        port_range = node_port(i)
         print "Editing configuration for %s with id %s" % (
             peer["node_dir"],
             peer["id"]
         )
         node_path = "%s/%s" % (rootdir, peer["node_dir"])
         config_values = {
-            "cli.api_address":  "/ip4/127.0.0.1/tcp/%d" % (port_range+4),
+            "cli.api_address":  "/ip4/127.0.0.1/tcp/%d" % node_port(i, "cli"),
             "indigostore.network_id": indigo_network_id,
             "indigostore.storage_type": indigo_storage_type,
             "storage.local_storage": "data/storage/files",
@@ -96,17 +103,17 @@ def edit_alice_configs():
             "contacts.filename": "data/contacts.toml",
             "kaddht.level_db_path": "data/kaddht",
             "log.writers.filename": "data/log.jsonld",
-            "grpcapi.address": "/ip4/127.0.0.1/tcp/%d" % (port_range+4),
-            "grpcweb.address": "/ip4/127.0.0.1/tcp/%d" % (port_range+6),
-            "metrics.prometheus_endpoint": "/ip4/127.0.0.1/tcp/%d" % (port_range+5),
-            "swarm.addresses": "/ip4/0.0.0.0/tcp/%d,/ip6/::/tcp/%d" % (port_range+3, port_range+3),
+            "grpcapi.address": "/ip4/127.0.0.1/tcp/%d" % node_port(i, "grpcapi"),
+            "grpcweb.address": "/ip4/127.0.0.1/tcp/%d" % node_port(i, "grpcweb"),
+            "metrics.prometheus_endpoint": "/ip4/127.0.0.1/tcp/%d" % node_port(i, "metrics"),
+            "swarm.addresses": "/ip4/0.0.0.0/tcp/%d,/ip6/::/tcp/%d" % (node_port(i, "swarm"), node_port(i, "swarm")),
             "bootstrap.min_peer_threshold": "%d" % nodes_number,
         }
         for k, v in config_values.items():
             print "Set %s to %s for node %s" % (k, v, peer["node_dir"])
             set_alice_config(node_path, k, v)
 
-        peer_IPs = ",".join(["/ip4/127.0.0.1/tcp/%d/ipfs/%s" % (node_port(node_idx)+3, peer_id)
+        peer_IPs = ",".join(["/ip4/127.0.0.1/tcp/%d/ipfs/%s" % (node_port(node_idx, "swarm"), peer_id)
                              for node_idx, peer_id in enumerate(peers.keys())
                              if peer_id != peer["id"]])
         print "Set bootstrap.addresses to %s for node %s" % (
