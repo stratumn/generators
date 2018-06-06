@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import subprocess
 import multiprocessing
 import argparse
@@ -31,22 +34,14 @@ def set_alice_config(node_dir, key, value):
     """
     This function edits a setting of the alice configuration.
     """
-    return exec_alice_command(node_dir,
-                              "config",
-                              "set",
-                              key,
-                              value,
-                              "--backup=false")
+    return exec_alice_command(node_dir, "config", "set", key, value, "--backup=false")
 
 
 def get_alice_config(node_dir, key):
     """
     This function retrieves a setting from the alice configuration.
     """
-    return exec_alice_command(node_dir,
-                              "config",
-                              "get",
-                              key)
+    return exec_alice_command(node_dir, "config", "get", key)
 
 
 def init_config_files():
