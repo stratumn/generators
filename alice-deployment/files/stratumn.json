@@ -1,0 +1,9 @@
+{
+  "name": "{{.dir}}",
+  "author": "{{input `author`}}",
+  "description": "Alice test network",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "up": "python ./scripts/alice-indigo.py up"
+  }
+}

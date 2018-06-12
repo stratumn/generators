@@ -1,0 +1,6 @@
+- src: angstwad.docker_ubuntu
+  name: ansible-role-docker
+
+- src: tersmitten.pip
+  name: pip
+
