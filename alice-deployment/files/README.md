@@ -5,11 +5,11 @@
 - Select an AWS region (currently Dublin and London are supported).
 - Go to the EC2 dashboard
   - Make sure a security group is set up (or create a new one)
-  - Check that there exist a key pair that you can use or create a new one
+  - Check that there exists a key pair that you can use or create a new one
 - Go to your IAM dasboard
   - Make sure you have an access key ID to authenticate on AWS or generate a new one for your user (and keep it in a secure location)
 
-## How to deploy an alice test network on AWS:
+## How to deploy an alice test network on AWS
 
 After generating the deployment configuration using `strat generate`, all the default settings should be set but you are free to edit them:
 
