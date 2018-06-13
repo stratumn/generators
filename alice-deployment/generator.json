@@ -47,6 +47,11 @@
       "prompt": "Your docker password",
       "format": ".+"
     },
+    "dockerEmail": {
+      "type": "string",
+      "prompt": "Your docker email",
+      "format": ".+@.+"
+    },
     "awsRegion": {
       "type": "select:string",
       "prompt": "The AWS region you want to host you network in",
