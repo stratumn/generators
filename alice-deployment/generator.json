@@ -1,0 +1,79 @@
+{
+  "name": "alice-remote-network",
+  "version": "0.3.0",
+  "description": "An Alice deployment configuration",
+  "author": "Stratumn",
+  "license": "Apache-2.0",
+  "variables": {
+    "generator": "alice-network",
+    "aliceDockerImage": "stratumn/alice:latest"
+  },
+  "inputs": {
+    "author": {
+      "type": "string",
+      "prompt": "Your name",
+      "default": "{{.fullName}}",
+      "format": ".+"
+    },
+    "awsSecretAccessKey": {
+      "type": "string",
+      "prompt": "Your AWS secret access key",
+      "format": ".+"
+    },
+    "awsAccessKeyID": {
+      "type": "string",
+      "prompt": "Your AWS access key ID",
+      "format": ".+"
+    },
+    "awsKeyPair": {
+      "type": "string",
+      "prompt": "The name of you AWS key pair",
+      "default": "alice-test-key",
+      "format": ".+"
+    },
+    "awsSecurityGroup": {
+      "type": "string",
+      "prompt": "The AWS security group",
+      "default": "alice-test-net",
+      "format": ".+"
+    },
+    "dockerLogin": {
+      "type": "string",
+      "prompt": "Your docker login",
+      "format": ".+"
+    },
+    "dockerPassword": {
+      "type": "string",
+      "prompt": "Your docker password",
+      "format": ".+"
+    },
+    "dockerEmail": {
+      "type": "string",
+      "prompt": "Your docker email",
+      "format": ".+@.+"
+    },
+    "awsRegion": {
+      "type": "select:string",
+      "prompt": "The AWS region you want to host you network in",
+      "default": "eu-west-2",
+      "options": {
+        "eu-west-2": "London",
+        "eu-west-1": "Dublin"
+      }
+    },
+    "indigoStore": {
+      "type": "select:string",
+      "prompt": "Indigo underlying store",
+      "default": "in-memory",
+      "options": {
+        "in-memory": "Indigo's Dummy Store",
+        "postgreSQL": "Indigo's PostgreSQL Store"
+      }
+    },
+    "clusterSize": {
+      "type": "int",
+      "prompt": "Number of nodes in the cluster",
+      "default": 4
+    }
+  }
+}

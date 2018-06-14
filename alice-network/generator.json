@@ -1,7 +1,7 @@
 {
-  "name": "alice-network",
+  "name": "alice-local-network",
   "version": "0.3.0",
-  "description": "An Alice network",
+  "description": "An Alice local network",
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {

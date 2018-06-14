@@ -1,0 +1,46 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: Provision a set of instances
+    ec2:
+        aws_access_key: {{ `"{{ aws_access_key_id }}"` }}
+        aws_secret_key: {{ `"{{ aws_secret_access_key }}"` }}
+        key_name: {{ `"{{ aws_key_pair }}"` }}
+        group: {{ `"{{ aws_security_group }}"` }}
+        instance_type: {{ `"{{ aws_instance_type }}"` }}
+        region: {{ `"{{ aws_region }}"` }}
+        image: {{ `"{{ aws_image }}"` }}
+        wait: true
+        count: {{ `"{{ node_count }}"` }}
+    register: ec2
+
+  - name: Add all instance public IPs to host group
+    add_host:
+      hostname: {{ `"{{ item.public_ip }}"` }}
+      groupname: ec2hosts
+    with_items: {{ `"{{ ec2.instances }}"` }}
+
+  - name: Wait for SSH to come up
+    wait_for:
+      host: {{ `"{{ item.public_dns_name }}"` }}
+      port: 22
+      delay: 20
+      timeout: 320
+      state: started
+    with_items: {{ `"{{ ec2.instances }}"` }}
+
+- name: Install python
+  hosts: ec2hosts
+  become: True
+  gather_facts: no
+  tasks:
+    # Needed in Ubuntu 16.04 (that bundles python3)
+    - name: Install python2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+- name: Configure instance(s)
+  hosts: ec2hosts
+  gather_facts: True
+  roles:
+    - nodes
