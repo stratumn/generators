@@ -9,7 +9,7 @@ import string
 import random
 import signal
 
-# This script should be called from its parent directory, using "strat run alice:<init, config, up>"
+# This script should be called from its parent directory, using "indigo-cli run alice:<init, config, up>"
 
 rootdir = os.getcwd()
 node_dir_name = "node"

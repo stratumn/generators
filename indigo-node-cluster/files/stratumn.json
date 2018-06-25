@@ -6,9 +6,9 @@
   "scripts": {
     "up": "python ./scripts/alice-indigo.py up",
 {{- if eq (input `useGit`) `y` }}
-    "init": "strat run alice:init && strat run alice:config && git init && git add .",
+    "init": "indigo-cli run alice:init && indigo-cli run alice:config && git init && git add .",
 {{- else }}
-    "init": "strat run alice:init && strat run alice:config",
+    "init": "indigo-cli run alice:init && indigo-cli run alice:config",
 {{- end}}
     "alice:init": "python ./scripts/alice-indigo.py init",
     "alice:config": "python ./scripts/alice-indigo.py config"

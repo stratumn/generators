@@ -11,7 +11,7 @@
 
 ## How to deploy an alice test network on AWS
 
-After generating the deployment configuration using `strat generate`, all the default settings should be set but you are free to edit them:
+After generating the deployment configuration using `indigo-cli generate`, all the default settings should be set but you are free to edit them:
 
 - the ansible inventory (network.ini) defines the variables that will be used for deployment.
 - the ansible configuration (ansible.cfg) defines a few settings for ansible.

@@ -4,8 +4,8 @@
 
 ## Requirements
 
-* [Docker >= 1.10](https://www.docker.com/products/docker)
-* [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
+- [Docker >= 1.10](https://www.docker.com/products/docker)
+- [Docker Compose >= 1.6](https://docs.docker.com/compose/install)
 
 Docker Compose is already included in some distributions of Docker.
 
@@ -42,7 +42,7 @@ doing so).
 To launch all the services locally, go to the root folder and run:
 
 ```sh
-strat up
+indigo-cli up
 ```
 
 {{$store := (input "developmentStore") -}}
@@ -59,7 +59,7 @@ A web user interface for the Indigo node is also available on
 Press `Ctrl^C` to stop the services.
 
 **Note:** While the agent will automatically restart if a file changes, you will
-have to run `strat up` again if you add NodeJS packages to `package.json`.
+have to run `indigo-cli up` again if you add NodeJS packages to `package.json`.
 
 {{- $fossilizer := (input "developmentFossilizer") -}}
 {{- if eq $store .dummystore}}
@@ -89,7 +89,7 @@ A Docker container is created for the database.
 ## Run tests
 
 ```sh
-strat test
+indigo-cli test
 ```
 
 ## Monitoring

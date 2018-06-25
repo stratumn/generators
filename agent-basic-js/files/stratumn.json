@@ -8,15 +8,15 @@
   "scripts": {
 {{- if eq (input `useGit`) `y` }}
 {{- if $require_tmstore }}
-    "init": "strat run tm:init && git init && git add .",
-    "init:linux": "strat run tm:init && strat run tm:post-init:linux && strat run monitoring:post-init:linux && git init && git add .",
+    "init": "indigo-cli run tm:init && git init && git add .",
+    "init:linux": "indigo-cli run tm:init && indigo-cli run tm:post-init:linux && indigo-cli run monitoring:post-init:linux && git init && git add .",
 {{- else }}
     "init": "git init && git add .",
-    "init:linux": "strat run monitoring:post-init:linux",
+    "init:linux": "indigo-cli run monitoring:post-init:linux",
 {{- end}}
 {{- else if $require_tmstore }}
-    "init": "strat run tm:init",
-    "init:linux": "strat run tm:init && strat run tm:post-init:linux && strat run monitoring:post-init:linux",
+    "init": "indigo-cli run tm:init",
+    "init:linux": "indigo-cli run tm:init && indigo-cli run tm:post-init:linux && indigo-cli run monitoring:post-init:linux",
 {{- end}}
     "monitoring:post-init:linux": "./arch/linux/fix-monitoring-files-ownership.sh",
 {{- if eq $store "tmstore" }}
@@ -32,28 +32,28 @@
     "compose": "docker-compose -p {{input `name`}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
     "compose:test": "docker-compose -p {{input `name`}}-test -f docker-compose.yml -f docker-compose.test.yml",
 {{- end }}
-    "build": "strat run compose build",
-    "build:test": "strat run compose:test build",
-    "up": "strat run build && strat run compose up",
+    "build": "indigo-cli run compose build",
+    "build:test": "indigo-cli run compose:test build",
+    "up": "indigo-cli run build && indigo-cli run compose up",
 {{- if eq $store "fabricstore" }}
-    "down": "strat run compose down && strat run clean",
+    "down": "indigo-cli run compose down && indigo-cli run clean",
 {{- else }}
-    "down": "strat run compose down",
+    "down": "indigo-cli run compose down",
 {{- end}}
 {{- if $require_tmstore }}
-    "down:test": "strat run compose:test down; rm -rf tendermint.test",
-    "down:test:linux": "strat run compose:test down; strat run tm:post-init:test:linux; rm -rf tendermint.test",
-    "test": "strat run build:test && strat run tm:init:test && strat run compose:test run agent npm test",
+    "down:test": "indigo-cli run compose:test down; rm -rf tendermint.test",
+    "down:test:linux": "indigo-cli run compose:test down; indigo-cli run tm:post-init:test:linux; rm -rf tendermint.test",
+    "test": "indigo-cli run build:test && indigo-cli run tm:init:test && indigo-cli run compose:test run agent npm test",
 {{- else }}
-    "down:test": "strat run compose:test down",
-    "test": "strat run build:test && strat run compose:test run agent npm test",
+    "down:test": "indigo-cli run compose:test down",
+    "test": "indigo-cli run build:test && indigo-cli run compose:test run agent npm test",
 {{- end}}
 {{- if eq $store "fabricstore" }}
-    "clean": "strat run clean:fabric && strat run clean:couchdb",
+    "clean": "indigo-cli run clean:fabric && indigo-cli run clean:couchdb",
     "clean:couchdb": "rm -rf fabric/data",
     "clean:fabric": "docker container rm $(docker container ls -a | grep dev-peer0.org1.example.com-pop-{{.chaincodeversion}} | awk '{print $1}') && docker rmi $(docker images | grep dev-peer0.org1.example.com-pop-{{.chaincodeversion}} | awk '{print $3}')",
 {{- end}}
-    "pull": "strat run compose pull",
-    "push": "strat run compose push"
+    "pull": "indigo-cli run compose pull",
+    "push": "indigo-cli run compose push"
   }
 }
