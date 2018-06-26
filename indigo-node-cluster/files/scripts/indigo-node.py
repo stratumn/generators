@@ -9,7 +9,7 @@ import string
 import random
 import signal
 
-# This script should be called from its parent directory, using "strat run alice:<init, config, up>"
+# This script should be called from its parent directory, using "indigo-cli run node:<init, config, up>"
 
 rootdir = os.getcwd()
 node_dir_name = "node"
@@ -22,45 +22,45 @@ def print_header(message):
     print "_"*len(message)+'\n'
 
 
-def exec_alice_command(node_dir, *args):
+def exec_node_command(node_dir, *args):
     """
-    This function runs an alice command from the provided directory.
+    This function runs an indigo-node command from the provided directory.
     """
     os.chdir(node_dir)
-    return subprocess.check_output(["alice"] + list(args))
+    return subprocess.check_output(["indigo-node"] + list(args))
 
 
-def set_alice_config(node_dir, key, value):
+def set_node_config(node_dir, key, value):
     """
-    This function edits a setting of the alice configuration.
+    This function edits a setting of the indigo node configuration.
     """
-    return exec_alice_command(node_dir, "config", "set", key, value, "--backup=false")
+    return exec_node_command(node_dir, "config", "set", key, value, "--backup=false")
 
 
-def get_alice_config(node_dir, key):
+def get_node_config(node_dir, key):
     """
-    This function retrieves a setting from the alice configuration.
+    This function retrieves a setting from the indigo node configuration.
     """
-    return exec_alice_command(node_dir, "config", "get", key)
+    return exec_node_command(node_dir, "config", "get", key)
 
 
 def init_config_files():
     """
     This function creates configuration files for each node.
     """
-    print_header("INITIALIZING ALICE CONFIGURATION FILES")
+    print_header("INITIALIZING INDIGO NODE CONFIGURATION FILES")
     for i in range(nodes_number):
         node_dir = "%s/%s%d" % (rootdir, node_dir_name, i)
         os.mkdir(node_dir)
-        print exec_alice_command(node_dir, "init")
+        print exec_node_command(node_dir, "init")
 
 
-def edit_alice_configs():
+def edit_node_configs():
     """
-    This function parses the alice.core.toml configuration file and edits
+    This function parses the indigo_node.core.toml configuration file and edits
     the bootstrapping node, the indigo network, the indigo store, the ports.
     """
-    print_header("EDITING ALICE CONFIGURATION FILES")
+    print_header("EDITING INDIGO NODE CONFIGURATION FILES")
     indigo_network_id = ''.join(random.choice(
         string.ascii_lowercase) for _ in range(10))
     indigo_storage_type = "{{input `indigoStore`}}"
@@ -69,7 +69,7 @@ def edit_alice_configs():
 
     for i, node_dir in enumerate(nodes_dir):
         node_path = "%s/%s" % (rootdir, node_dir)
-        peer_id = get_alice_config(node_path, "swarm.peer_id").strip()
+        peer_id = get_node_config(node_path, "swarm.peer_id").strip()
         print "Retrieving config data for %s:%s" % (node_dir, peer_id)
         peers[peer_id] = {
             "id": peer_id,
@@ -111,7 +111,7 @@ def edit_alice_configs():
         }
         for k, v in config_values.items():
             print "Set %s to %s for node %s" % (k, v, peer["node_dir"])
-            set_alice_config(node_path, k, v)
+            set_node_config(node_path, k, v)
 
         peer_IPs = ",".join(["/ip4/127.0.0.1/tcp/%d/ipfs/%s" % (node_port(node_idx, "swarm"), peer_id)
                              for node_idx, peer_id in enumerate(peers.keys())
@@ -120,12 +120,12 @@ def edit_alice_configs():
             peer_IPs,
             peer["node_dir"]
         )
-        set_alice_config(node_path, "bootstrap.addresses", peer_IPs)
+        set_node_config(node_path, "bootstrap.addresses", peer_IPs)
 
 
 def run_nodes():
     """
-    This function runs `alice up` for each node of the network.
+    This function runs `indigo-node up` for each node of the network.
     Logs will be displayed in stdout and the entire network
     can be shut down using Ctrl-C.
     """
@@ -136,7 +136,7 @@ def run_nodes():
     for i, node_dir in enumerate(nodes_dir):
         node_dir = "%s/%s" % (rootdir, node_dir)
         os.chdir(node_dir)
-        subprocesses.append(subprocess.Popen(['alice', 'up']))
+        subprocesses.append(subprocess.Popen(['indigo-node', 'up']))
 
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     for p in subprocesses:
@@ -152,6 +152,6 @@ if __name__ == "__main__":
     if args.action == "init":
         init_config_files()
     if args.action == "config":
-        edit_alice_configs()
+        edit_node_configs()
     if args.action == "up":
         run_nodes()

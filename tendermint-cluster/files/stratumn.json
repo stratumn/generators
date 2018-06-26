@@ -1,0 +1,24 @@
+{
+  "name": "{{.dir}}",
+  "author": "{{input `author`}}",
+  "description": "Indigo Tendermint Node test cluster",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+{{- if eq (input `useGit`) `y` }}
+    "init": "indigo-cli run tm:init && indigo-cli run tm:clusterize && git init && git add .",
+    "init:linux": "indigo-cli run tm:init && indigo-cli run tm:post-init:linux && indigo-cli run tm:clusterize && git init && git add .",
+{{- else }}
+    "init": "indigo-cli run tm:init && indigo-cli run tm:clusterize",
+    "init:linux": "indigo-cli run tm:init && indigo-cli run tm:post-init:linux && indigo-cli run tm:clusterize",
+{{- end}}
+    "tm:init": "./scripts/tm-init.sh",
+    "tm:post-init:linux": "./scripts/tm-linux-post-init.sh && ./arch/linux/fix-monitoring-files-ownership.sh",
+    "tm:clusterize": "./scripts/tm-clusterize.sh",
+    "compose": "docker-compose -p {{.dir}}-dev -f docker-compose.yml -f docker-compose.dev.yml",
+    "build": "indigo-cli run compose build",
+    "up": "indigo-cli run build && indigo-cli run compose up",
+    "down": "indigo-cli run compose down",
+    "pull": "indigo-cli run compose pull",
+    "push": "indigo-cli run compose push"
+  }
+}

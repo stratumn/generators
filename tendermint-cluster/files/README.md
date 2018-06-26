@@ -45,7 +45,7 @@ doing so).
 To launch the development cluster locally, go to the root folder and run:
 
 ```sh
-strat up
+indigo-cli up
 ```
 
 A web user interface for the agent is available on `http://localhost:4000`.

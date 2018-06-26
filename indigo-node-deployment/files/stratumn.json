@@ -1,7 +1,7 @@
 {
   "name": "{{.dir}}",
   "author": "{{input `author`}}",
-  "description": "Alice test network",
+  "description": "Indigo test network",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {}
 }

@@ -1,8 +1,8 @@
 ---
-- name: Create Alice root directory
+- name: Create Indigo Node root directory
   become: true
   file:
-    path: /usr/local/var/alice
+    path: /usr/local/var/indigo-node
     state: directory
     group: docker
     owner: 999
@@ -14,19 +14,19 @@
     password: {{ `"{{ docker_passwd }}"` }}
     email: {{ `"{{ docker_email }}"` }}
 
-- name: init alice config
+- name: init indigo node config
   docker_container:
-    name: alice_node_init
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_init
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command: init
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
 
-- name: get alice peer ID
+- name: get node peer ID
   docker_container:
-    name: alice_node_cfg
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_cfg
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     detach: False
     command:
@@ -34,23 +34,23 @@
       - get
       - swarm.peer_id
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
   register: docker_get_swarm_id
 
-- name: set alice peer ID
+- name: set node peer ID
   set_fact:
     peer_id: {{ `"{{ docker_get_swarm_id.ansible_facts.docker_container.Output | replace('\n', '') }}"` }}
     public_ip: {{ `"{{ inventory_hostname }}"` }}
 
-- name: set alice peer IDs
+- name: set node peer IDs
   set_fact:
     peer_ids: {{ `"{{ groups['ec2hosts'] | map('extract', hostvars, 'peer_id') | list }}"` }}
     peer_ip: {{ `"/ip4/{{ inventory_hostname }}/tcp/8903/ipfs/{{ hostvars[inventory_hostname].peer_id }}"` }}
 
-- name: edit alice grpc api adress
+- name: edit node grpc api adress
   docker_container:
-    name: alice_node_cfg
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_cfg
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command:
       - config
@@ -58,12 +58,12 @@
       - grpcapi.address
       - /ip4/0.0.0.0/tcp/8904
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
 
-- name: edit alice indigo store
+- name: edit node indigo store
   docker_container:
-    name: alice_node_cfg
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_cfg
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command:
       - config
@@ -71,12 +71,12 @@
       - indigostore.storage_type
       - {{ `"{{ indigo_storage_type }}"` }}
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
 
-- name: edit alice indigo network
+- name: edit node indigo network
   docker_container:
-    name: alice_node_cfg
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_cfg
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command:
       - config
@@ -84,12 +84,12 @@
       - indigostore.network_id
       - {{ `"{{ indigo_network_id }}"` }}
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
 
-- name: edit alice bootstrap addresses
+- name: edit node bootstrap addresses
   docker_container:
-    name: alice_node_cfg
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_cfg
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command:
       - config
@@ -97,12 +97,12 @@
       - bootstrap.addresses
       - {{ `"{{ groups['ec2hosts'] | map('extract', hostvars, 'peer_ip') | list | join(',') }}"` }}
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw
 
-- name: run alice node
+- name: run indigo node
   docker_container:
-    name: alice_node_run
-    image: {{ `"{{ alice_docker_image }}"` }}
+    name: indigo_node_run
+    image: {{ `"{{ node_docker_image }}"` }}
     state: started
     command: up
     ports:
@@ -111,4 +111,4 @@
     - "8905:8905"
     - "8906:8906"
     volumes:
-    - /usr/local/var/alice:/usr/local/var/alice:rw
+    - /usr/local/var/indigo-node:/usr/local/var/indigo-node:rw

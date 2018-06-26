@@ -1,12 +1,12 @@
 {
-  "name": "alice-remote-network",
+  "name": "indigo-node-remote-cluster",
   "version": "0.3.0",
-  "description": "An Alice deployment configuration",
+  "description": "A remote cluster of Indigo Nodes",
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {
-    "generator": "alice-network",
-    "aliceDockerImage": "stratumn/alice:latest"
+    "generator": "indigo-node-cluster",
+    "nodeDockerImage": "stratumn/indigo-node:latest"
   },
   "inputs": {
     "author": {
@@ -28,13 +28,13 @@
     "awsKeyPair": {
       "type": "string",
       "prompt": "The name of you AWS key pair",
-      "default": "alice-test-key",
+      "default": "indigo-node-test-key",
       "format": ".+"
     },
     "awsSecurityGroup": {
       "type": "string",
       "prompt": "The AWS security group",
-      "default": "alice-test-net",
+      "default": "indigo-node-test-net",
       "format": ".+"
     },
     "dockerLogin": {
