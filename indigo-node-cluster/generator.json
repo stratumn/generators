@@ -1,11 +1,11 @@
 {
-  "name": "alice-local-network",
+  "name": "indigo-node-local-cluster",
   "version": "0.3.0",
-  "description": "An Alice local network",
+  "description": "A local cluster of Indigo Nodes",
   "author": "Stratumn",
   "license": "Apache-2.0",
   "variables": {
-    "generator": "alice-network"
+    "generator": "indigo-node-cluster"
   },
   "inputs": {
     "author": {

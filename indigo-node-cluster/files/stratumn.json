@@ -1,16 +1,16 @@
 {
   "name": "{{.dir}}",
   "author": "{{input `author`}}",
-  "description": "Alice test network",
+  "description": "Indigo Node test network",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "up": "python ./scripts/alice-indigo.py up",
+    "up": "python ./scripts/indigo-node.py up",
 {{- if eq (input `useGit`) `y` }}
-    "init": "indigo-cli run alice:init && indigo-cli run alice:config && git init && git add .",
+    "init": "indigo-cli run node:init && indigo-cli run node:config && git init && git add .",
 {{- else }}
-    "init": "indigo-cli run alice:init && indigo-cli run alice:config",
+    "init": "indigo-cli run node:init && indigo-cli run node:config",
 {{- end}}
-    "alice:init": "python ./scripts/alice-indigo.py init",
-    "alice:config": "python ./scripts/alice-indigo.py config"
+    "node:init": "python ./scripts/indigo-node.py init",
+    "node:config": "python ./scripts/indigo-node.py config"
   }
 }
